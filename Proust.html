@@ -1,0 +1,1156 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Proust Sentence Length Waves</title>
+  <style>
+    :root {
+      --bg-top: #0f1b2d;
+      --bg-bottom: #0a0f19;
+      --raw: rgba(214, 148, 94, 0.55);      /* warm sepia */
+      --smooth: rgba(126, 195, 255, 0.7);   /* Balbec blue */
+      --band: rgba(255, 219, 160, 0.08);
+      --band-strong: rgba(255, 219, 160, 0.16);
+      --grid: rgba(255, 255, 255, 0.08);
+      --text: #e8edf5;
+      --accent: #f2d18b;
+    }
+    html, body {
+      margin: 0;
+      background: linear-gradient(180deg, var(--bg-top), var(--bg-bottom));
+      color: var(--text);
+      font-family: "Space Grotesk", "DM Sans", "Segoe UI", sans-serif;
+      overflow: hidden;
+    }
+    header {
+      position: absolute;
+      top: 16px;
+      left: 18px;
+      right: 18px;
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      mix-blend-mode: screen;
+      z-index: 10;
+    }
+    h1 { margin: 0; font-size: 20px; letter-spacing: 0.05em; }
+    p { margin: 4px 0 0; color: rgba(232, 237, 245, 0.7); font-size: 12px; }
+    #legend {
+      display: flex;
+      gap: 12px;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    #legend span { display: inline-flex; align-items: center; gap: 6px; }
+    #legend i {
+      width: 22px; height: 3px; border-radius: 4px; display: inline-block;
+      box-shadow: 0 0 8px rgba(255,255,255,0.25);
+    }
+    canvas { display: block; }
+    #canvasWrap {
+      position: absolute;
+      inset: 0;
+      overflow-x: auto;
+      overflow-y: hidden;
+      scrollbar-color: rgba(255,255,255,0.3) rgba(12,18,30,0.4);
+      z-index: 0;
+    }
+    #canvasWrap::-webkit-scrollbar { height: 10px; }
+    #canvasWrap::-webkit-scrollbar-track { background: rgba(12,18,30,0.4); }
+    #canvasWrap::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.28); border-radius: 10px; }
+    #info {
+      position: absolute;
+      left: 18px;
+      bottom: 14px;
+      max-width: 520px;
+      background: rgba(12, 18, 30, 0.65);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 10px;
+      padding: 10px 12px;
+      font-size: 12px;
+      backdrop-filter: blur(6px);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+      z-index: 11;
+    }
+    #info strong { color: var(--accent); }
+    #info .label { text-transform: uppercase; letter-spacing: 0.08em; font-size: 11px; color: rgba(232,237,245,0.7); }
+    #info .content { margin-top: 6px; line-height: 1.4; }
+    #sectionBar {
+      position: absolute;
+      left: 0; right: 0; bottom: 0;
+      height: 26px;
+      display: flex;
+      align-items: stretch;
+      font-size: 11px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: #0a0f19;
+      border-top: 1px solid rgba(255,255,255,0.12);
+      z-index: 5;
+    }
+    #sectionBar .segment {
+      display: flex;
+      align-items: center;
+      padding-left: 10px;
+      box-sizing: border-box;
+      font-weight: 600;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+    #charPanel {
+      position: absolute;
+      right: 12px;
+      top: 60px;
+      width: 210px;
+      max-height: 320px;
+      overflow-y: auto;
+      background: rgba(12, 18, 30, 0.75);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 10px;
+      padding: 8px 10px;
+      font-size: 12px;
+      color: var(--text);
+      backdrop-filter: blur(6px);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+      z-index: 12;
+      pointer-events: auto;
+    }
+    #searchRow {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 8px;
+      align-items: center;
+    }
+    #searchInput {
+      flex: 1;
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 6px;
+      padding: 6px 8px;
+      background: rgba(255,255,255,0.06);
+      color: var(--text);
+      font-size: 12px;
+      box-sizing: border-box;
+    }
+    #searchBtn {
+      background: rgba(255,255,255,0.14);
+      color: var(--text);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 6px;
+      padding: 6px 8px;
+      cursor: pointer;
+      font-size: 12px;
+    }
+    #searchBtn:hover { background: rgba(255,255,255,0.2); }
+    #charTabs {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 6px;
+      margin-bottom: 8px;
+    }
+    #charTabs button {
+      background: rgba(255,255,255,0.08);
+      color: var(--text);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 8px;
+      padding: 6px 8px;
+      cursor: pointer;
+      width: 100%;
+      height: 32px;
+      box-sizing: border-box;
+      flex: none;
+    }
+    #charTabs button:focus { outline: none; }
+    #charTabs button.active {
+      background: rgba(255,255,255,0.18);
+      border-color: rgba(255,255,255,0.24);
+    }
+    #charPanel .charRow {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin: 3px 0;
+      cursor: default;
+      pointer-events: none;
+    }
+    #charPanel .charRow input {
+      pointer-events: auto;
+      cursor: pointer;
+    }
+    #charPanel .charRow span {
+      pointer-events: none;
+    }
+    #charPanel .swatch {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      display: inline-block;
+    }
+    .draggable { cursor: grab; user-select: none; }
+    .dragging { cursor: grabbing; user-select: none; }
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/p5@1.9.2/lib/p5.min.js"></script>
+</head>
+<body>
+  <header class="draggable" id="headerBar">
+    <div>
+      <h1>In Search of Lost Time - Sentence Waves</h1>
+      <p>By Alberto Verrilli</p>
+    </div>
+    <div id="legend">
+      <span><i style="background: var(--raw)"></i>Raw length</span>
+      <span><i style="background: var(--smooth)"></i>Smoothed flow</span>
+    </div>
+  </header>
+  <div id="info" class="draggable">
+    <div class="label" id="infoLabel">Click Sentences</div>
+    <div id="hoverLabel" class="content"></div>
+    <div id="selectedLabel" class="content"></div>
+  </div>
+  <div id="charPanel" class="draggable">
+    <div id="searchRow">
+      <input id="searchInput" type="text" placeholder="Search word/phrase" />
+      <button id="searchBtn">Search</button>
+    </div>
+    <div id="charTabs">
+      <button data-tab="char" class="active">Characters</button>
+      <button data-tab="word">Words</button>
+      <button data-tab="place">Places</button>
+    </div>
+    <div id="charList"></div>
+  </div>
+  <div id="canvasWrap">
+    <div id="sectionBar"></div>
+  </div>
+
+  <script>
+    // Configuration knobs for the waveforms.
+    const config = {
+      smoothingWindow: 40,     // moving average window in sentences
+      verticalScale: 0.8,      // fraction of canvas height used for waves
+      noiseAmplitude: 35,      // y wobble via Perlin noise
+      noiseScale: 0.004,       // smoothness of noise
+      xPadding: 30,
+      pxPerSentence: 0.12,     // further zoomed out horizontal scale per sentence
+      maxCanvasWidth: 18000,   // avoid exceeding browser canvas limits
+      backgroundGrid: true,
+      defaultSectionColors: [
+        [242, 209, 139], // warm
+        [126, 195, 255], // blue
+        [255, 163, 122], // coral
+        [180, 146, 255], // purple
+        [118, 244, 200], // mint
+        [255, 233, 129], // gold
+        [255, 154, 205]  // pink
+      ],
+      hoverThrottleMs: 30,     // limit hover redraw frequency
+      characterPalette: [
+        '#ff9b9b', '#9bd2ff', '#c8ff9b', '#ffdf9b', '#d6a5ff', '#9bffd8',
+        '#ff9bdc', '#9be9ff', '#ffd29b', '#b3ff9b', '#ffb39b', '#9bd7ff'
+      ],
+      wordPalette: [
+        '#ffb347', '#47d1ff', '#6effa6', '#ffa6d8', '#c6a2ff', '#7de0ff',
+        '#ffd447', '#5effc3', '#ff7f7f', '#7fb3ff', '#ffe47f', '#b8ff7f'
+      ],
+      searchColor: '#ffd166',
+      searchMaxHits: 500
+    };
+
+    let rawLengths = [];
+    let smoothLengths = [];
+    let sentences = [];
+    let sentenceStarts = [];
+    let ready = false;
+    let wavePaths;
+    let textContent = [];
+    let textRaw = '';
+    let markers = [];
+    let layout = { xStart: 0, xEnd: 0, step: 0, baseY: 0 };
+    let hoverIdx = null;
+    let selectedIdx = null;
+    let selectedTabName = null;
+    let sampleStep = 1;
+    let lastHoverRedraw = 0;
+    let longestIdx = null;
+    const entityDefs = [
+      // Characters
+      { name: 'Swann', aliases: ["Swann's", 'Swann'], type: 'char' },
+      { name: 'Odette', aliases: ['Odette'], type: 'char' },
+      { name: 'Gilberte', aliases: ['Gilberte'], type: 'char' },
+      { name: 'Albertine', aliases: ['Albertine'], type: 'char' },
+      { name: 'Charlus', aliases: ['Charlus'], type: 'char' },
+      { name: 'Saint-Loup', aliases: ['Saint-Loup', 'Saint Loup', 'Robert'], type: 'char' },
+      { name: 'Françoise', aliases: ['Fran\u00e7oise', 'Francoise'], type: 'char' },
+      { name: 'Legrandin', aliases: ['Legrandin'], type: 'char' },
+      { name: 'Bloch', aliases: ['Bloch'], type: 'char' },
+      { name: 'Norpois', aliases: ['Norpois'], type: 'char' },
+      { name: 'Verdurin', aliases: ['Verdurin'], type: 'char' },
+      { name: 'Morel', aliases: ['Morel'], type: 'char' },
+      { name: 'Vinteuil', aliases: ['Vinteuil'], type: 'char' },
+      { name: 'Duc de Guermantes', aliases: ['Duc de Guermantes'], type: 'char' },
+      { name: 'Bergotte', aliases: ['Bergotte'], type: 'char' },
+      { name: 'Elstir', aliases: ['Elstir'], type: 'char' },
+      { name: 'Rachel', aliases: ['Rachel'], type: 'char' },
+      { name: 'Jupien', aliases: ['Jupien'], type: 'char' },
+      // Words / motifs
+      { name: 'Habit', aliases: ['habit'], type: 'word' },
+      { name: 'Suddenly', aliases: ['suddenly'], type: 'word' },
+      { name: 'Magic Lantern', aliases: ['magic lantern'], type: 'word' },
+      { name: 'Sonata', aliases: ['sonata', 'little phrase'], type: 'word' },
+      { name: 'Madeleine', aliases: ['madeleine'], type: 'word' },
+      { name: 'Memory', aliases: ['memory', 'remember'], type: 'word' },
+      { name: 'Dream', aliases: ['dream', 'dreams'], type: 'word' },
+      { name: 'Jealousy', aliases: ['jealous', 'jealousy'], type: 'word' },
+      { name: 'Love', aliases: ['love', 'lover', 'lovers', 'Lover'], type: 'word' },
+      { name: 'Steeple', aliases: ['steeple', 'steeples'], type: 'word' },
+      { name: 'Time', aliases: ['time'], type: 'word' },
+      { name: 'Sleep', aliases: ['sleep', 'asleep', 'slept'], type: 'word' },
+      { name: 'Death', aliases: ['death', 'dying', 'dead'], type: 'word' },
+      { name: 'Light', aliases: ['light', 'lights'], type: 'word' },
+      { name: 'Shadow', aliases: ['shadow', 'shade'], type: 'word' },
+      { name: 'Smell', aliases: ['smell', 'scent', 'perfume'], type: 'word' },
+      { name: 'Taste', aliases: ['taste', 'flavour', 'flavor'], type: 'word' },
+      { name: 'Sound', aliases: ['sound', 'sounds'], type: 'word' },
+      { name: 'Music', aliases: ['music'], type: 'word' },
+      { name: 'Color', aliases: ['color', 'colors', 'colour', 'colours'], type: 'word' },
+      { name: 'Vision', aliases: ['vision', 'gaze', 'look'], type: 'word' },
+      { name: 'Painting', aliases: ['painting', 'painter', 'paintings'], type: 'word' },
+      { name: 'Picture', aliases: ['picture', 'portrait', 'pictures'], type: 'word' },
+      { name: 'Theatre', aliases: ['theatre', 'theater'], type: 'word' },
+      { name: 'Book', aliases: ['book', 'books'], type: 'word' },
+      { name: 'Writing', aliases: ['writing', 'writer', 'writers'], type: 'word' },
+      // Places
+      { name: 'Balbec', aliases: ['Balbec'], type: 'place' },
+      { name: 'Guermantes', aliases: ['Guermantes'], type: 'place' },
+      { name: 'Paris', aliases: ['Paris'], type: 'place' },
+      { name: 'Combray', aliases: ['Combray'], type: 'place' },
+      { name: 'France', aliases: ['France'], type: 'place' },
+      { name: 'Venise', aliases: ['Venise', 'Venice'], type: 'place' },
+      { name: 'Élysées', aliases: ['Élysées', 'Elysees'], type: 'place' },
+      { name: 'Champs', aliases: ['Champs'], type: 'place' },
+      { name: 'Méséglise', aliases: ['Méséglise', 'Meseglise'], type: 'place' },
+      { name: 'Doncières', aliases: ['Doncières', 'Doncieres'], type: 'place' },
+    ];
+
+    let entityColors = {};
+    let entityOccurrences = {}; // name -> [sentenceIdx]
+    let selectedEntities = new Set();
+    let charHits = []; // for click detection of tabs
+    let hoverTab = null;
+    let suppressClick = false;
+    let suppressClickTarget = null;
+    let activeTab = 'char';
+    let searchEntityName = null;
+    let searchTerm = null;
+
+    const bookMarkers = [
+      { label: "Swann's Way", key: "SWANN'S WAY" },
+      { label: 'Within a Budding Grove', key: 'WITHIN A BUDDING GROVE' },
+      { label: 'The Guermantes Way', key: 'THE GUERMANTES WAY' },
+      { label: 'Sodom and Gomorrah', key: 'SODOM AND GOMORRAH' },
+      { label: 'The Captive', key: 'THE CAPTIVE' },
+      { label: 'The Fugitive', key: 'THE FUGITIVE' },
+      { label: 'Time Regained', key: 'TIME REGAINED' }
+    ];
+    const expectedRatios = [468, 624, 584, 592, 399, 352, 532]; // relative lengths by pages
+
+    function preload() {
+      // Load via p5 so Live Server/file hosting works.
+      textContent = loadStrings('InSearchOfLostTime.txt');
+    }
+
+    function setup() {
+      pixelDensity(1); // reduces overdraw on high-DPI for speed
+      const text = textContent.join('\n');
+      prepareData(text);
+      const totalWidth = computeWidth();
+      createCanvas(totalWidth, windowHeight).parent('canvasWrap');
+      computePaths();
+      ready = true;
+      noLoop(); // draw only after data is prepared
+      redraw();
+    }
+
+    function windowResized() {
+      if (!ready) return;
+      const totalWidth = computeWidth();
+      resizeCanvas(totalWidth, windowHeight);
+      computePaths();
+      redraw();
+    }
+
+    function prepareData(text) {
+      textRaw = text;
+      rawLengths = [];
+      smoothLengths = [];
+      sentences = [];
+      sentenceStarts = [];
+
+      const split = splitSentencesWithOffsets(text);
+      sentences = split.sentences;
+      sentenceStarts = split.starts;
+      rawLengths = sentences.map(s => s.split(/\s+/).filter(Boolean).length);
+      smoothLengths = rollingAverage(rawLengths, config.smoothingWindow);
+      markers = buildMarkers(text);
+      longestIdx = computeLongestByHeader('SODOM AND GOMORRAH');
+      if (longestIdx == null) {
+        // Fallback to global longest.
+        let maxLen = -1;
+        for (let i = 0; i < sentences.length; i++) {
+          const len = sentences[i].split(/\s+/).filter(Boolean).length;
+          if (len > maxLen) {
+            maxLen = len;
+            longestIdx = i;
+          }
+        }
+      }
+      buildCharacterIndex();
+      renderCharacterControls(activeTab);
+    }
+
+    function rollingAverage(arr, windowSize) {
+      const res = [];
+      const half = Math.floor(windowSize / 2);
+      for (let i = 0; i < arr.length; i++) {
+        const start = max(0, i - half);
+        const end = min(arr.length, i + half);
+        const slice = arr.slice(start, end);
+        const avg = slice.reduce((a, b) => a + b, 0) / slice.length;
+        res.push(avg);
+      }
+      return res;
+    }
+
+    function rollingChange(arr, windowSize) {
+      const res = [];
+      for (let i = 0; i < arr.length; i++) {
+        const prev = max(0, i - windowSize);
+        const delta = arr[i] - arr[prev];
+        res.push(delta);
+      }
+      return res;
+    }
+
+    function computePaths() {
+      if (!rawLengths.length) return;
+      const maxLen = max(rawLengths);
+      const minLen = min(rawLengths);
+      const usableHeight = height * config.verticalScale;
+      const baseY = height * (1 - config.verticalScale) / 2 + usableHeight / 2;
+      const xStart = config.xPadding;
+      const xEnd = width - config.xPadding;
+      const step = (xEnd - xStart) / max(1, (rawLengths.length - 1));
+      layout = { xStart, xEnd, step, baseY, usableHeight };
+
+      wavePaths = { raw: [], smooth: [] };
+      sampleStep = Math.max(1, Math.ceil(rawLengths.length / 8000)); // cap vertex count for speed
+
+      for (let i = 0; i < rawLengths.length; i++) {
+        const x = xStart + i * step;
+        const hue = sectionColorForIdx(i);
+        const n = noise(i * config.noiseScale, frameCount * 0.0005);
+        const rawNorm = (rawLengths[i] - minLen) / (maxLen - minLen);
+        const smoothNorm = (smoothLengths[i] - minLen) / (maxLen - minLen);
+
+        const rawY = baseY - (rawNorm - 0.5) * usableHeight + (n - 0.5) * config.noiseAmplitude;
+        const smoothY = baseY - (smoothNorm - 0.5) * usableHeight * 0.85 + (n - 0.5) * config.noiseAmplitude * 0.5;
+
+        wavePaths.raw.push({ x, y: rawY, hue });
+        wavePaths.smooth.push({ x, y: smoothY, hue });
+      }
+
+      buildSectionBar();
+    }
+
+    function sectionColorForIdx(idx) {
+      const m = markerForIdx(idx);
+      if (m && m.colorArr) return m.colorArr;
+      const palette = config.defaultSectionColors;
+      const index = m ? markers.indexOf(m) : 0;
+      const chosen = palette[index % palette.length];
+      if (m) m.colorArr = chosen;
+      return chosen;
+    }
+
+    function renderBackground() {
+      background(color(getCSS('--bg-bottom')));
+      if (config.backgroundGrid) {
+        stroke(color(getCSS('--grid')));
+        strokeWeight(1);
+        const lines = 24;
+        for (let i = 0; i <= lines; i++) {
+          const y = map(i, 0, lines, 0, height);
+          const alpha = 0.05 + 0.3 * abs(0.5 - i / lines);
+          stroke(255, 255, 255, 255 * alpha);
+          line(0, y, width, y);
+        }
+      }
+    }
+
+    function drawWaves() {
+      noFill();
+      blendMode(ADD);
+
+      strokeWeight(1.4);
+      drawPath(wavePaths.raw, getCSS('--raw'));
+      strokeWeight(2.4);
+      drawPath(wavePaths.smooth, getCSS('--smooth'));
+
+      blendMode(BLEND);
+    }
+
+    function drawPath(points, colorStr) {
+      const c = color(colorStr);
+      beginShape();
+      for (let i = 0; i < points.length; i += sampleStep) {
+        const p = points[i];
+        // section hue modulation across path
+        stroke(
+          (red(c) + p.hue[0] * 0.45),
+          (green(c) + p.hue[1] * 0.45),
+          (blue(c) + p.hue[2] * 0.45),
+          alpha(c)
+        );
+        curveVertex(p.x, p.y);
+      }
+      endShape();
+    }
+
+    function getCSS(varName) {
+      return getComputedStyle(document.documentElement).getPropertyValue(varName).trim();
+    }
+
+    function markerForIdx(idx) {
+      if (!markers.length) return null;
+      let current = markers[0];
+      for (const m of markers) {
+        if (idx >= m.idx) current = m;
+        else break;
+      }
+      return current;
+    }
+
+    function drawMarkers() {
+      if (!markers.length) return;
+      for (let i = 0; i < markers.length; i++) {
+        const startIdx = markers[i].idx;
+        const endIdx = (i < markers.length - 1) ? markers[i + 1].idx : rawLengths.length - 1;
+        const x1 = layout.xStart + startIdx * layout.step;
+        const x2 = layout.xStart + endIdx * layout.step;
+        noStroke();
+        fill(markers[i].band || markers[i].color || getCSS('--band'));
+        rect(x1, 0, (x2 - x1), height);
+
+        fill(255, 255, 255, 140);
+        textSize(10);
+        textAlign(LEFT, TOP);
+        text(markers[i].label, x1 + 6, 8 + (i % 2) * 14);
+      }
+    }
+
+    function drawHighlight(idx, col) {
+      if (idx == null || idx < 0 || idx >= wavePaths.smooth.length) return;
+      const p = wavePaths.smooth[idx];
+      stroke(col);
+      strokeWeight(1.2);
+      line(p.x, 0, p.x, height);
+      fill(col);
+      noStroke();
+      circle(p.x, p.y, 8);
+    }
+
+    function buildMarkers(text) {
+      const totalRatio = expectedRatios.reduce((a, b) => a + b, 0);
+      const markersOrdered = [];
+      const desired = bookMarkers.length;
+
+      let lastOffset = 0;
+      bookMarkers.forEach((bm, i) => {
+        const expectedOffset = Math.floor((expectedRatios.slice(0, i).reduce((a, b) => a + b, 0) / totalRatio) * text.length);
+        const regex = new RegExp(`\\b${bm.key}\\b`, 'gi');
+        const hits = [];
+        let m;
+        while ((m = regex.exec(text)) !== null) hits.push(m.index);
+        const pick = hits.length ? hits.reduce((best, pos) => (best == null || Math.abs(pos - expectedOffset) < Math.abs(best - expectedOffset) ? pos : best), null) : null;
+        const chosenOffset = pick != null ? pick : expectedOffset;
+        // Avoid going backwards
+        const adjustedOffset = Math.max(lastOffset, chosenOffset);
+        lastOffset = adjustedOffset;
+        const idx = sentenceIndexFromOffset(adjustedOffset);
+        markersOrdered.push({ label: bm.label, idx });
+      });
+
+      // Ensure start marker
+      if (!markersOrdered.find(m => m.idx === 0)) {
+        markersOrdered.unshift({ label: bookMarkers[0].label, idx: 0 });
+      }
+
+      // Assign colors cycling palette (still used for bottom bar).
+      const palette = config.defaultSectionColors;
+      return markersOrdered
+        .sort((a, b) => a.idx - b.idx)
+        .map((m, i) => ({
+          ...m,
+          colorArr: palette[i % palette.length],
+          color: `rgba(${palette[i % palette.length].join(',')},0.3)`,
+          band: `rgba(${palette[i % palette.length].join(',')},0.12)`
+        }));
+    }
+
+    function sentenceIndexFromOffset(offset) {
+      // Find the latest sentence whose start is <= offset.
+      let idx = 0;
+      for (let i = 0; i < sentenceStarts.length; i++) {
+        if (sentenceStarts[i] <= offset) idx = i;
+        else break;
+      }
+      return idx;
+    }
+
+    function headerOffset(key) {
+      if (!textRaw) return null;
+      const regex = new RegExp(`\\b${key}\\b`, 'i');
+      const m = regex.exec(textRaw);
+      return m ? m.index : null;
+    }
+
+    function computeLongestByHeader(key) {
+      const startOffset = headerOffset(key);
+      if (startOffset == null) return null;
+      // Find next header after this one
+      const offsets = bookMarkers
+        .map(b => headerOffset(b.key))
+        .filter(o => o != null)
+        .sort((a, b) => a - b);
+      const nextOffset = offsets.find(o => o > startOffset) ?? textRaw.length;
+      const startIdx = sentenceIndexFromOffset(startOffset);
+      const endIdx = sentenceIndexFromOffset(nextOffset) - 1;
+      let maxLen = -1;
+      let maxIdx = null;
+      for (let i = startIdx; i <= endIdx; i++) {
+        const len = sentences[i]?.split(/\s+/).filter(Boolean).length || 0;
+        if (len > maxLen) {
+          maxLen = len;
+          maxIdx = i;
+        }
+      }
+      return maxIdx;
+    }
+
+    function splitSentencesWithOffsets(text) {
+      const sentencesOut = [];
+      const startsOut = [];
+      const pattern = /(?<!\b(?:M|MM|Mme|Mmes|Mlle|Mlles|Mr|Mrs|Ms|Dr|St|Ste|Sr|Jr|etc))(?<=[.!?])\s+(?=[A-Z0-9“"'])/g;
+      let last = 0;
+      let m;
+      while ((m = pattern.exec(text)) !== null) {
+        const end = m.index;
+        const chunk = text.slice(last, end).trim();
+        if (chunk.length) {
+          sentencesOut.push(chunk);
+          startsOut.push(last);
+        }
+        last = m.index + m[0].length;
+      }
+      const tail = text.slice(last).trim();
+      if (tail.length) {
+        sentencesOut.push(tail);
+        startsOut.push(last);
+      }
+      return { sentences: sentencesOut, starts: startsOut };
+    }
+
+    function buildSectionBar() {
+      const bar = document.getElementById('sectionBar');
+      bar.innerHTML = '';
+      if (!markers.length) return;
+      bar.style.width = `${width}px`;
+      const total = rawLengths.length - 1;
+      markers.forEach((m, i) => {
+        const endIdx = (i < markers.length - 1) ? markers[i + 1].idx : total;
+        const widthPct = Math.max(1, Math.round(((endIdx - m.idx) / total) * 100));
+        const seg = document.createElement('div');
+        seg.className = 'segment';
+        seg.style.flexBasis = `${widthPct}%`;
+        seg.style.flexGrow = `${widthPct}`;
+        seg.style.background = `rgba(${m.colorArr.join(',')},0.45)`;
+        seg.style.color = '#0a0f19';
+        seg.textContent = m.label;
+        bar.appendChild(seg);
+      });
+    }
+
+    function computeWidth() {
+      // Ensure enough horizontal space to see all sentences, minimum viewport width.
+      if (!rawLengths || rawLengths.length === 0) return windowWidth;
+      const target = config.xPadding * 2 + config.pxPerSentence * rawLengths.length;
+      return min(config.maxCanvasWidth, max(windowWidth, Math.ceil(target)));
+    }
+
+    function nearestSentenceIdx(x) {
+      if (!layout.step) return null;
+      // mouseX from p5 is already adjusted for the scrollable canvas; no extra scrollX needed.
+      const idx = Math.round((x - layout.xStart) / layout.step);
+      if (idx < 0 || idx >= rawLengths.length) return null;
+      return idx;
+    }
+
+    function ensureVisible(idx) {
+      const wrap = document.getElementById('canvasWrap');
+      if (!wrap || !layout.step) return;
+      const targetX = layout.xStart + idx * layout.step;
+      const padding = 60;
+      if (targetX < wrap.scrollLeft + padding) {
+        wrap.scrollLeft = Math.max(0, targetX - padding);
+      } else if (targetX > wrap.scrollLeft + wrap.clientWidth - padding) {
+        wrap.scrollLeft = targetX - wrap.clientWidth + padding;
+      }
+    }
+
+    function mouseMoved() {
+      const hit = charHits.find(h => Math.abs(mouseX - h.x) < 10 && mouseY < 30);
+      if (hit?.name !== hoverTab?.name || hit?.idx !== hoverTab?.idx) {
+        hoverTab = hit || null;
+        redraw();
+      }
+    }
+
+    function mouseClicked() {
+      const panel = document.getElementById('charPanel');
+      const infoBox = document.getElementById('info');
+      const header = document.getElementById('headerBar');
+      const t = window.event ? window.event.target : null;
+      const isOverlay = t && ((panel && panel.contains(t)) || (infoBox && infoBox.contains(t)) || (header && header.contains(t)));
+      if (suppressClick) {
+        suppressClick = false;
+        if (suppressClickTarget && t && suppressClickTarget.contains(t)) {
+          suppressClickTarget = null;
+          return;
+        }
+        suppressClickTarget = null;
+      }
+      if (isOverlay) return;
+      // Character tab hit test
+      const hit = charHits.find(h => Math.abs(mouseX - h.x) <= h.w / 2 && mouseY >= h.y && mouseY <= h.y + h.h);
+      if (hit) {
+        selectedIdx = hit.idx;
+        selectedTabName = hit.name;
+        ensureVisible(selectedIdx);
+        updateInfo(true);
+        redraw();
+        return;
+      }
+      // If clicking near the longest tab, snap to it.
+      if (longestIdx != null && wavePaths.smooth[longestIdx]) {
+        const targetX = wavePaths.smooth[longestIdx].x;
+        const tabHeight = 18;
+        const tabWidth = 10;
+        if (Math.abs(mouseX - targetX) <= tabWidth / 2 && mouseY >= 0 && mouseY <= tabHeight) {
+          selectedIdx = longestIdx;
+          selectedTabName = null;
+          ensureVisible(selectedIdx);
+          updateInfo(true);
+          redraw();
+          return;
+        }
+      }
+      selectedIdx = nearestSentenceIdx(mouseX);
+      selectedTabName = null;
+      updateInfo(true);
+      redraw();
+    }
+
+    // Keyboard navigation of selected sentence.
+    document.addEventListener('keydown', (e) => {
+      if (selectedIdx == null) return;
+      if (e.shiftKey && (e.key === 'ArrowRight' || e.key === 'ArrowLeft') && selectedTabName) {
+        const occ = characterOccurrences[selectedTabName] || [];
+        if (occ.length) {
+          const currentPos = occ.findIndex(i => i >= selectedIdx);
+          let idxPos = currentPos;
+          if (idxPos === -1) idxPos = occ.length - 1;
+          if (e.key === 'ArrowRight' && idxPos < occ.length - 1) idxPos++;
+          if (e.key === 'ArrowLeft' && idxPos > 0) idxPos--;
+          selectedIdx = occ[idxPos];
+          ensureVisible(selectedIdx);
+          updateInfo(true);
+          redraw();
+          return;
+        }
+      }
+      if (e.key === 'ArrowRight') {
+        selectedIdx = Math.min(rawLengths.length - 1, selectedIdx + 1);
+        ensureVisible(selectedIdx);
+        updateInfo(true);
+        redraw();
+      } else if (e.key === 'ArrowLeft') {
+        selectedIdx = Math.max(0, selectedIdx - 1);
+        ensureVisible(selectedIdx);
+        updateInfo(true);
+        redraw();
+      }
+    });
+
+    // Smooth horizontal scroll with mouse wheel/trackpad.
+    document.addEventListener('wheel', (e) => {
+      const wrap = document.getElementById('canvasWrap');
+      if (!wrap) return;
+      // If vertical scroll is bigger than horizontal, treat it as horizontal pan.
+      if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
+        wrap.scrollLeft += e.deltaY * 0.7;
+        e.preventDefault();
+      }
+    }, { passive: false });
+
+    function draw() {
+      if (!ready) return;
+      renderBackground();
+      drawWaves();
+      drawCharacterTabs();
+      drawLongestMarker();
+      drawHighlight(selectedIdx, 'rgba(242,209,139,0.8)');
+    }
+
+    function drawLongestMarker() {
+      if (longestIdx == null || !wavePaths.smooth.length) return;
+      const p = wavePaths.smooth[longestIdx];
+      const tabHeight = 18;
+      const tabWidth = 10;
+      stroke('rgba(255,255,255,0.6)');
+      strokeWeight(1);
+      line(p.x, 0, p.x, height);
+      noStroke();
+      fill('rgba(242,209,139,0.9)');
+      rect(p.x - tabWidth / 2, 0, tabWidth, tabHeight, 3);
+    }
+
+    function drawCharacterTabs() {
+      if (!selectedEntities.size || !wavePaths.smooth.length) return;
+      charHits = [];
+      selectedEntities.forEach((name) => {
+        const colorStr = entityColors[name] || '#ffffff';
+        const occ = entityOccurrences[name] || [];
+        const tabHeight = 12;
+        const tabWidth = 8;
+        occ.forEach(idx => {
+          if (!wavePaths.smooth[idx]) return;
+          const p = wavePaths.smooth[idx];
+          const c = color(colorStr);
+          const hovered = hoverTab && hoverTab.name === name && hoverTab.idx === idx;
+          const alphaFill = hovered ? 230 : 170;
+          const alphaStroke = hovered ? 200 : 70;
+          stroke(red(c), green(c), blue(c), alphaStroke);
+          strokeWeight(0.8);
+          line(p.x, 0, p.x, height);
+          noStroke();
+          fill(red(c), green(c), blue(c), alphaFill);
+          rect(p.x - tabWidth / 2, 0, tabWidth, tabHeight, 3);
+          charHits.push({ x: p.x, y: 0, w: tabWidth, h: tabHeight, idx, name });
+        });
+      });
+    }
+
+    function sentenceSummary(idx) {
+      if (idx == null) return '';
+      const text = sentences[idx] || '';
+      const section = lookupSection(idx);
+      return `#${idx + 1}${section ? ' - ' + section : ''}: ${text}`;
+    }
+
+    function lookupSection(idx) {
+      const m = markerForIdx(idx);
+      return m ? m.label : null;
+    }
+
+    function updateInfo(isClick = false) {
+      const hoverLabel = document.getElementById('hoverLabel');
+      const selectedLabel = document.getElementById('selectedLabel');
+      const infoLabel = document.getElementById('infoLabel');
+      hoverLabel.textContent = '';
+      if (selectedIdx != null) {
+        infoLabel.textContent = sentenceSummaryHeader(selectedIdx);
+        selectedLabel.innerHTML = sentenceSummaryBody(selectedIdx);
+      } else {
+        infoLabel.textContent = 'Select Sentences';
+        selectedLabel.textContent = 'Click a sentence to lock it.';
+      }
+      if (isClick && selectedIdx != null) {
+        // briefly flash border for feedback
+        document.getElementById('info').style.borderColor = 'rgba(242,209,139,0.6)';
+        setTimeout(() => { document.getElementById('info').style.borderColor = 'rgba(255,255,255,0.08)'; }, 220);
+      }
+    }
+
+    function escapeHTML(str) {
+      return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    }
+
+    function escapeRegExp(str) {
+      return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    }
+
+    function sentenceSummaryHeader(idx) {
+      const section = lookupSection(idx);
+      return `Selected #${idx + 1}${section ? ' - ' + section : ''}`;
+    }
+
+    function sentenceSummaryBody(idx) {
+      const text = sentences[idx] || '';
+      return highlightMatched(text, selectedTabName);
+    }
+
+    function highlightMatched(text, name) {
+      if (!name) return escapeHTML(text);
+      // If search entity, bold the search term.
+      if (searchEntityName && name === searchEntityName && searchTerm) {
+        const re = new RegExp(`\\b(${escapeRegExp(searchTerm)})\\b`, 'gi');
+        return escapeHTML(text).replace(re, '<strong>$1</strong>');
+      }
+
+      const def = entityDefs.find(e => e.name === name) || { aliases: [] };
+      let escaped = escapeHTML(text);
+      if (def.aliases && def.aliases.length) {
+        def.aliases.forEach(alias => {
+          const re = new RegExp(`\\b(${escapeRegExp(alias)})\\b`, 'gi');
+          escaped = escaped.replace(re, '<strong>$1</strong>');
+        });
+      }
+      return escaped;
+    }
+
+    function applySearchTerm(term) {
+      // Clear previous search entity.
+      if (searchEntityName) {
+        selectedEntities.delete(searchEntityName);
+        delete entityOccurrences[searchEntityName];
+        delete entityColors[searchEntityName];
+        searchEntityName = null;
+        searchTerm = null;
+      }
+      const name = `Search: ${term}`;
+      const regex = new RegExp(`\\b${escapeRegExp(term)}\\b`, 'gi');
+      const occ = [];
+      for (let i = 0; i < sentences.length; i++) {
+        if (regex.test(sentences[i])) occ.push(i);
+      }
+      if (occ.length === 0) {
+        alert('No matches found.');
+        return;
+      }
+      if (occ.length > config.searchMaxHits) {
+        alert(`Too many matches (${occ.length}). Try a more specific term.`);
+        return;
+      }
+      searchEntityName = name;
+      searchTerm = term;
+      entityOccurrences[name] = occ;
+      entityColors[name] = config.searchColor;
+      selectedEntities.add(name);
+      selectedTabName = name;
+      // Jump to first occurrence
+      selectedIdx = occ[0];
+      ensureVisible(selectedIdx);
+      renderCharacterControls(activeTab);
+      redraw();
+      updateInfo(true);
+    }
+
+    function buildCharacterIndex() {
+      entityOccurrences = {};
+      entityColors = {};
+      charHits = [];
+      const charPalette = config.characterPalette;
+      const wordPalette = config.wordPalette;
+      entityDefs.forEach((c, idx) => {
+        const palette = c.type === 'word' ? wordPalette : charPalette;
+        const color = palette[idx % palette.length];
+        entityColors[c.name] = color;
+        const regexes = c.aliases.map(a => new RegExp(`\\b${a}\\b`, 'i'));
+        const occ = [];
+        for (let i = 0; i < sentences.length; i++) {
+          const s = sentences[i];
+          if (regexes.some(r => r.test(s))) {
+            occ.push(i);
+          }
+        }
+        entityOccurrences[c.name] = occ;
+      });
+      // Remove stale search entity if any.
+      if (searchEntityName) {
+        delete entityOccurrences[searchEntityName];
+        delete entityColors[searchEntityName];
+        selectedEntities.delete(searchEntityName);
+        searchEntityName = null;
+        searchTerm = null;
+      }
+    }
+
+    function renderCharacterControls(activeTab = 'char') {
+      const list = document.getElementById('charList');
+      if (!list) return;
+      list.innerHTML = '';
+      entityDefs
+        .filter(e => e.type === activeTab)
+        .forEach((c) => {
+          const wrapper = document.createElement('div');
+          wrapper.className = 'charRow';
+          const cb = document.createElement('input');
+          cb.type = 'checkbox';
+          cb.value = c.name;
+          cb.checked = selectedEntities.has(c.name);
+          cb.addEventListener('change', (e) => {
+            if (e.target.checked) {
+              selectedEntities.add(c.name);
+            } else {
+              selectedEntities.delete(c.name);
+              if (searchEntityName === c.name) searchEntityName = null;
+            }
+            redraw();
+          });
+          const swatch = document.createElement('span');
+          swatch.className = 'swatch';
+          swatch.style.background = entityColors[c.name] || '#fff';
+          const txt = document.createElement('span');
+          txt.textContent = c.name;
+          wrapper.appendChild(cb);
+          wrapper.appendChild(swatch);
+          wrapper.appendChild(txt);
+          list.appendChild(wrapper);
+        });
+
+      // Inject active search result if present.
+      if (searchEntityName && activeTab === 'word') {
+        const wrapper = document.createElement('div');
+        wrapper.className = 'charRow';
+        const cb = document.createElement('input');
+        cb.type = 'checkbox';
+        cb.value = searchEntityName;
+        cb.checked = selectedEntities.has(searchEntityName);
+        cb.addEventListener('change', (e) => {
+          if (e.target.checked) {
+            selectedEntities.add(searchEntityName);
+          } else {
+            selectedEntities.delete(searchEntityName);
+          }
+          redraw();
+        });
+        const swatch = document.createElement('span');
+        swatch.className = 'swatch';
+        swatch.style.background = entityColors[searchEntityName] || config.searchColor;
+        const txt = document.createElement('span');
+        txt.textContent = searchEntityName;
+        wrapper.appendChild(cb);
+        wrapper.appendChild(swatch);
+        wrapper.appendChild(txt);
+        list.appendChild(wrapper);
+      }
+    }
+
+    // Initial info text.
+    document.addEventListener('DOMContentLoaded', () => updateInfo());
+
+    // Draggable panels
+    (function enableDragging() {
+      const draggableEls = [document.getElementById('headerBar'), document.getElementById('info'), document.getElementById('charPanel')].filter(Boolean);
+      let dragTarget = null;
+      let offsetX = 0;
+      let offsetY = 0;
+      let dragMoved = false;
+      let dragStarted = false;
+      let dragOrigWidth = '';
+      let dragOrigHeight = '';
+      let dragLastTarget = null;
+
+      draggableEls.forEach(el => {
+        el.addEventListener('mousedown', (e) => {
+          dragTarget = el;
+          dragLastTarget = el;
+          dragStarted = false;
+          dragMoved = false;
+          const rect = el.getBoundingClientRect();
+          offsetX = e.clientX - rect.left;
+          offsetY = e.clientY - rect.top;
+          dragOrigWidth = el.style.width;
+          dragOrigHeight = el.style.height;
+          document.body.style.userSelect = 'none';
+        });
+      });
+
+      window.addEventListener('mousemove', (e) => {
+        if (!dragTarget) return;
+        const rect = dragTarget.getBoundingClientRect();
+        const dx = e.clientX - (rect.left + offsetX);
+        const dy = e.clientY - (rect.top + offsetY);
+        if (!dragStarted && (Math.abs(dx) + Math.abs(dy) > 2)) {
+          // Start dragging: fix dimensions and positioning once.
+          dragStarted = true;
+          dragTarget.classList.add('dragging');
+          const computed = getComputedStyle(dragTarget);
+          dragTarget.style.width = computed.width;
+          dragTarget.style.height = computed.height;
+          dragTarget.style.left = rect.left + 'px';
+          dragTarget.style.top = rect.top + 'px';
+          dragTarget.style.right = 'auto';
+          dragTarget.style.bottom = 'auto';
+        }
+        if (dragStarted) {
+          const x = e.clientX - offsetX;
+          const y = e.clientY - offsetY;
+          dragTarget.style.left = `${x}px`;
+          dragTarget.style.top = `${y}px`;
+          dragMoved = true;
+        }
+      });
+
+      window.addEventListener('mouseup', () => {
+        if (dragTarget) dragTarget.classList.remove('dragging');
+        document.body.style.userSelect = '';
+        if (dragMoved) {
+          suppressClick = true;
+          suppressClickTarget = dragLastTarget;
+        }
+        if (dragTarget) {
+          dragTarget.style.width = dragOrigWidth;
+          dragTarget.style.height = dragOrigHeight;
+        }
+        dragTarget = null;
+        dragStarted = false;
+      });
+    })();
+
+    // Tab wiring
+    (function initTabs() {
+      const tabs = document.querySelectorAll('#charTabs button');
+      const panel = document.getElementById('charPanel');
+      if (panel) {
+        panel.addEventListener('wheel', (e) => {
+          e.stopPropagation();
+        }, { passive: true });
+      }
+      tabs.forEach(btn => {
+        btn.addEventListener('click', () => {
+          tabs.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          activeTab = btn.getAttribute('data-tab') || 'char';
+          renderCharacterControls(activeTab);
+        });
+      });
+      const searchInput = document.getElementById('searchInput');
+      const searchBtn = document.getElementById('searchBtn');
+      const runSearch = () => {
+        if (!searchInput) return;
+        const term = searchInput.value.trim();
+        if (!term) return;
+        applySearchTerm(term);
+      };
+      if (searchBtn) searchBtn.addEventListener('click', runSearch);
+      if (searchInput) {
+        searchInput.addEventListener('keypress', (e) => {
+          if (e.key === 'Enter') runSearch();
+        });
+      }
+    })();
+  </script>
+</body>
+</html>

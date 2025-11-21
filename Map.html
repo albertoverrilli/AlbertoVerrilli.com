@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Interactive World Map</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <link rel="stylesheet" href="Style.css">
+    <style>
+        #map { height: 500px; }
+    </style>
+</head>
+<body>
+    <div id="map"></div>
+    
+    <button class="button-30" onclick="window.location.href='index.html'">Back</button>
+    
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script>
+        // Initialize the map centered on latitude 0, longitude 0, with a zoom level of 2
+        var map = L.map('map').setView([0, 0], 2);
+
+        // Add the base map layer
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a>',
+            maxZoom: 18
+        }).addTo(map);
+
+        // Define what happens on each feature (in this case, countries)
+        function onEachFeature(feature, layer) {
+            if (feature.properties && feature.properties.name) {
+                layer.bindPopup(feature.properties.name);
+            }
+        }
+
+        // Specify the path to your GeoJSON data
+        var geojsonPath = 'C:\Users\alber\Documents\public_html\custom.geo.json';
+
+        // Add the GeoJSON layer
+        fetch(geojsonPath)
+            .then(function(response){
+                return response.json();
+            })
+            .then(function(data){
+                L.geoJSON(data, {
+                    onEachFeature: onEachFeature
+                }).addTo(map);
+            });
+    </script>
+</body>
+</html>

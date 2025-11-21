@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Alberto Verrilli</title>
+<meta charset="UTF-8">
+<link rel="icon" href="http://www.albertoverrilli.com/favicon-32x32.ico" type="image/x-icon">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="Style.css">
+<!--<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+-->
+
+<style>
+@import url("https://cdn.jsdelivr.net/gh/tonsky/FiraCode@1.207/distr/fira_code.css");
+
+
+</style>
+</head>
+<body class="text-color" bgcolor="">
+
+<div class="bgimg w3-display-container w3-animate-opacity w3-text-white">
+    <div class="text-color">
+      <p class="w3-display-topleft w3-padding-large w3-xlarge">Alberto Verrilli</p>
+      <div class="w3-display-middle">
+    
+        <h1>____________</h1>
+        <hr style="margin:auto;width:40%">
+        <p class="w3-small w3-center" >Alberto Verrilli</p>
+    </div>
+  </div>
+  <div class="w3-display-bottomleft w3-padding-large">
+<button class="button-30" role="button" onClick=window.location.href='index.html';>Back</button>
+
+
+<form id="myForm" action="https://formspree.io/f/mjvqvopl" method="POST">
+  <input class="input" id="userInput" type="text" placeholder="Leave Feedback" name="userFeedback">
+  <button class="button-30" type="submit">Submit</button>
+</form>
+
+
+
+
+
+
+
+
+
+<script>
+    
+    
+    const colorsList = ["#1f4437", "#2d394d", "#05385b", "#132237", "#191826", "#0f1f2c", "#161821", "#002b36", "#091f2c", "#1a0e25", "#121520", "#101820", "#081426", "#0d1c1c", "#0b0e13", "#030613"]
+    const textColorList = ["#88dbdf", "#ff7a90", "#d6686f", "#5cdb95", "#ebb723", "#4a6fb5", "#56c3b7", "#d2d4de", "#859900", "#a288d9", "#99de1e", "#676e8a", "#cf6bdd", "#ef6d49", "#f0e800", "#60759f", "#60759f"]
+    
+    const rColors = Math.floor(Math.random() * colorsList.length);
+    const bg_Color = colorsList[rColors]
+    
+    const rColorss = Math.floor(Math.random() * colorsList.length);
+    const text_Color = textColorList[rColorss];
+    
+    
+    document.bgColor = bg_Color;
+    //document.documentElement.style.setProperty("--heading_color", "red");
+    document.documentElement.style.setProperty("--text_color", text_Color);
+    // form sumbit
+    document.getElementById('myForm').addEventListener('submit', function(e) {
+        e.preventDefault(); // This prevents the form from being submitted normally
+
+        const formData = new FormData(this);
+
+        fetch(this.action, {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'Accept': 'application/json'
+            }
+        }).then(response => {
+            if (response.ok) {
+                return response.json();
+            } else {
+                throw new Error('Error: ' + response.statusText);
+            }
+        }).then(data => {
+            document.getElementById('userInput').value = ''; // Clears the input box
+        }).catch(error => {
+            console.error(error);
+        });
+    });
+    
+    
+    
+</script> <!-- Button 30 script, and random color and text --> 
+
+
+
+  </div>
+</div>
+
+</body>
+</html>

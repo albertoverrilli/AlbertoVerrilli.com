@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>AHHH: Affordable Housing and Homeless Help</title>
+  <style>
+
+    body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #121212;
+}
+
+header {
+  background-color: #121212;
+  color: white;
+  text-align: center;
+  padding: 1rem;
+}
+
+a {
+    text-decoration: none;
+}
+nav {
+  background-color: #c4bfb5;
+  text-align: center;
+}
+
+nav ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+nav li {
+  display: inline-block;
+  margin: 0 1rem;
+}
+
+nav a {
+  color: black;
+  text-decoration: none;
+  padding: 1rem;
+}
+
+nav a:hover {
+  background-color: #ddd;
+}
+
+main {
+  padding: 1rem;
+  color: #c4bfb5;
+}
+
+section {
+  margin-bottom: 2rem;
+}
+
+form {
+  margin: 1rem 0;
+  color: #c4bfb5;
+}
+
+label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: #c4bfb5;
+}
+
+input[type="text"] {
+  padding: 0.5rem;
+  width: 100%;
+  box-sizing: border-box;
+  color: #c4bfb5;
+  background-color : #d1d1d1; 
+
+
+button[type="submit"] {
+  background-color: #c4bfb5;
+  color: white;
+  padding: 0.5rem 1rem;
+  border: none;
+  cursor: pointer;
+}
+
+</style>
+</head>
+
+
+<body>
+  <header>
+    <h1>AHHH: Affordable Housing and Homeless Help</h1>
+  </header>
+  <nav>
+    <ul>
+      <li><a href="#search">Search for Housing</a></li>
+      <li><a href="#apply">Apply for Assistance</a></li>
+      <li><a href="#shelters">Find Shelters</a></li>
+    </ul>
+  </nav>
+  <main>
+    <section id="search">
+      <h2>Search for Available Affordable Housing</h2>
+      <form>
+        <label for="location">Enter your location:</label>
+        <input type="text" id="location" name="location">
+        <button type="submit" onclick="Search()">Search</button>
+        <button onclick="audio1.play();">Audio</button>
+      </form>
+    </section>
+    <section id="apply">
+      <h2>Apply for Housing Assistance</h2>
+      <form>
+        <label for="income">Enter your annual income:</label>
+        <input type="text" id="income" name="income">
+        <button type="submit" onclick="Apply()">Apply</button>
+        <button type="submit" onclick="audio2.play();">Audio</button>
+      </form>
+    </section>
+    <section id="shelters">
+      <h2>Find Homeless Shelters and Services</h2>
+      <form>
+        <label for="location">Enter your location:</label>
+        <input type="text" id="location2" name="location">
+        <button type="submit" onclick="Search2()">Search</button>
+        <button type="submit" onclick="audio3.play();">Audio</button>
+      </form>
+      <section>
+      <h2>Housing Assistance</h2>
+      <ul>
+        <li><a href="https://www.hud.gov/program_offices/public_indian_housing/programs/hcv">Housing Choice Voucher Program</a></li>
+        <li><a href="https://www.hud.gov/program_offices/public_indian_housing/programs/ph">Public Housing</a></li>
+        <li><a href="https://www.hud.gov/program_offices/housing/mfh/homeownership/home" text-decoration="none">Homeownership Programs</a></li>
+      </ul>
+    </section>
+    <section>
+      <h2>Homeless Shelters</h2>
+      <ul>
+        <li><a href="https://www.homelessshelterdirectory.org/">Homeless Shelter Directory</a></li>
+        <li><a href="https://www.shelterlistings.org/">Shelter Listings</a></li>
+        <li><a href="https://www.redcross.org/get-help/disaster-relief-and-recovery-services/find-an-open-shelter.html">Red Cross Shelters</a></li>
+      </ul>
+    </section>
+    <section>
+      <h2>Job Assistance</h2>
+      <ul>
+        <li><a href="https://www.careeronestop.org/">CareerOneStop</a></li>
+        <li><a href="https://www.dol.gov/agencies/workforce-investment-act">Workforce Investment Act</a></li>
+        <li><a href="https://www.sba.gov/business-guide/launch-your-business/find-funding-resources">Small Business Administration</a></li>
+      </ul>
+    </section>
+    </section>
+  </main>
+<script>
+function Search(){
+    const location = document.getElementById("location").value;
+
+    window.open(`https://www.google.com/search?q=affordable+housing+in+${location}`);
+};
+function Search2(){
+    const location = document.getElementById("location2").value;
+
+    window.open(`https://www.google.com/search?q=Homeless+Shelters+and+Services+in+${location}`);
+};
+function Apply(){
+    const income = document.getElementById("income").value;
+
+    window.open(`https://www.google.com/search?q=Apply+for+Housing+Assistance+at+${income}+income`);
+};
+
+const audio1 = new Audio();
+audio1.src = "/Searchforavailablehousing.mp3";
+const audio2 = new Audio();
+audio2.src = "/applyforhousingassistance.mp3";
+const audio3 = new Audio();
+audio3.src = "/findhomelesssheltersandservices.mp3";
+
+
+
+</script>
+</body>
+
+</html>

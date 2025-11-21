@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<body>
+<!-- The form where user can choose a file to upload -->
+<form action="/uploads" method="post" enctype="multipart/form-data">
+  <!-- File selection input field -->
+  <input type="file" id="file" name="file">
+  <!-- Submit button to trigger file upload -->
+  <input type="submit" value="Upload">
+  <!-- Container where download link will be appended -->
+  <div id="downloadButtonContainer"></div>
+</form>
+</body>
+</html>
+
+<script>
+// Add an event listener to the form for the 'submit' event
+document.querySelector('form').addEventListener('submit', function(event) {
+    // Prevent the default form submission action
+    event.preventDefault();
+
+    // Create a new FormData object
+    var formData = new FormData();
+    // Append the file selected by the user to the FormData object
+    const file = document.querySelector('#file').files[0];
+    console.log(file); // Log the file to the console
+    formData.append('file', file);
+
+    // Send a POST request to the '/Protected/uploads' route with the FormData object
+    fetch('/Protected/uploads', {
+    method: 'POST',
+    body: formData
+    })
+    .then(response => response.text())
+    .then(filename => {
+        // Create download button
+        var downloadButtonContainer = document.querySelector('#downloadButtonContainer');
+        var downloadButton = document.createElement('a');
+        downloadButton.href = '/Protected/uploads/' + filename;
+        downloadButton.innerText = 'Download file';
+        downloadButton.download = filename;
+        downloadButton.classList.add('btn', 'btn-primary'); // Add classes if you're using a CSS framework like Bootstrap
+        downloadButtonContainer.appendChild(downloadButton);
+    })
+    .catch(error => console.error(error));
+});
+</script>
