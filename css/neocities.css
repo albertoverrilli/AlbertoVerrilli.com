@@ -38,7 +38,7 @@ body {
 
 /* Navigation Sidebar */
 .nav-sidebar {
-    background-color: #000000;
+    background-color: rgba(0, 0, 0, 0.8);
     border: 2px solid #ffffff;
     width: 200px;
     padding: 20px;
@@ -75,7 +75,7 @@ body {
 
 /* Main Content Box */
 .main-content {
-    background-color: #000000;
+    background-color: rgba(0, 0, 0, 0.8);
     border: 2px solid #ffffff;
     flex-grow: 1;
     min-height: 80vh;

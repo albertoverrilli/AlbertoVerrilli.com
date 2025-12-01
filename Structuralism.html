@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Structuralism - Alberto Verrilli</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Times New Roman', serif;
+            background-color: #f9fafb;
+            /* bg-gray-50 */
+            color: #111827;
+            /* text-gray-900 */
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .back-button {
+            position: fixed;
+            top: 1rem;
+            left: 1rem;
+            padding: 0.5rem 1rem;
+            background-color: #000;
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+            font-family: monospace;
+            text-transform: uppercase;
+            border: 2px solid #000;
+            transition: all 0.2s;
+            z-index: 100;
+        }
+
+        .back-button:hover {
+            background-color: #fff;
+            color: #000;
+        }
+
+        .container {
+            padding: 2rem;
+            width: 100%;
+            max-width: 1200px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        h1 {
+            font-size: 1.875rem;
+            /* 3xl */
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            letter-spacing: -0.025em;
+        }
+
+        .canvas-wrapper {
+            background-color: #fff;
+            padding: 1rem;
+            border-radius: 0.25rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            border: 1px solid #d1d5db;
+            /* border-gray-300 */
+            width: 100%;
+            max-width: 900px;
+            margin-bottom: 1.5rem;
+        }
+
+        canvas {
+            width: 100%;
+            height: auto;
+            border: 1px solid #4b5563;
+            /* border-gray-600 */
+            background-color: #fff;
+            display: block;
+        }
+
+        .description {
+            margin-top: 1.5rem;
+            max-width: 48rem;
+            /* max-w-3xl */
+            text-align: center;
+        }
+
+        .description p {
+            font-size: 1.125rem;
+            /* text-lg */
+            font-style: italic;
+            line-height: 1.625;
+        }
+
+        .highlight-red {
+            color: #b91c1c;
+            /* text-red-700 */
+            font-weight: 700;
+        }
+
+        .legend {
+            margin-top: 1rem;
+            margin-bottom: 2rem;
+            display: flex;
+            gap: 1.5rem;
+            font-size: 0.875rem;
+            /* text-sm */
+            color: #4b5563;
+            /* text-gray-600 */
+            font-family: sans-serif;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .legend-line {
+            width: 1.25rem;
+            height: 0.125rem;
+            background-color: #000;
+        }
+
+        .legend-dotted {
+            width: 1.25rem;
+            height: 0.125rem;
+            border-top: 2px dotted #000;
+        }
+
+        .legend-red {
+            width: 1.25rem;
+            height: 0.25rem;
+            background-color: #b91c1c;
+        }
+
+        .principles-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+            width: 100%;
+            max-width: 1200px;
+        }
+
+        @media (min-width: 768px) {
+            .principles-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .principles-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        .card {
+            background-color: #fff;
+            padding: 1rem;
+            border: 1px solid #d1d5db;
+            border-radius: 0.25rem;
+            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            transition: box-shadow 0.2s;
+        }
+
+        .card:hover {
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+
+        .card-full-width {
+            grid-column: 1 / -1;
+        }
+
+        .card h3 {
+            font-weight: 700;
+            font-size: 1.125rem;
+            /* text-lg */
+            color: #1f2937;
+            /* text-gray-800 */
+            margin-top: 0;
+            margin-bottom: 0.5rem;
+            border-bottom: 1px solid #e5e7eb;
+            padding-bottom: 0.25rem;
+        }
+
+        .card p {
+            color: #374151;
+            /* text-gray-700 */
+            font-size: 0.875rem;
+            /* text-sm */
+            line-height: 1.625;
+            margin: 0;
+        }
+    </style>
+</head>
+
+<body>
+
+    <a href="Diagrams.html" class="back-button">← Back</a>
+
+    <div class="container">
+        <h1>Deleuze's 7 Principles of Structuralism as Seen Through Althusser</h1>
+
+        <div class="canvas-wrapper">
+            <canvas id="structureCanvas" width="1000" height="600"></canvas>
+        </div>
+
+        <div class="description">
+            <p>
+                The "Structural Lack" (Object = x) circulates between the Economic and Ideological series.
+                The <span class="highlight-red">Subject ($)</span> is represented by the red line: it is not a fixed
+                point,
+                but the agency that is "subjected" to the empty square, shifting positions as the lack moves.
+            </p>
+        </div>
+
+        <div class="legend">
+            <div class="legend-item">
+                <div class="legend-line"></div>
+                <span>Symbolic Order</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-dotted"></div>
+                <span>Homology</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-red"></div>
+                <span class="highlight-red">Subject ($)</span>
+            </div>
+        </div>
+
+        <div class="principles-grid">
+            <!-- Cards injected by JS -->
+        </div>
+    </div>
+
+    <script>
+        // Configuration Constants
+        const WIDTH = 1000;
+        const HEIGHT = 600;
+        const SERIES_1_X = 250;
+        const SERIES_2_X = 750;
+        const START_Y = 180;
+        const SPACING_Y = 120;
+
+        // Deleuze's 7 Principles
+        const principles = [
+            {
+                title: "I. The Symbolic",
+                desc: "A third order distinct from the Real and the Imaginary. It is the structure itself, the unconscious infrastructure."
+            },
+            {
+                title: "II. Local or Positional",
+                desc: "Meaning is not intrinsic to elements but results from their position in a topological space. 'Places prevail over occupants.'"
+            },
+            {
+                title: "III. The Differential & Singular",
+                desc: "Elements are defined only by their reciprocal differences (like phonemes) and singularities (critical points)."
+            },
+            {
+                title: "IV. The Differenciator",
+                desc: "The structure is 'virtual' (real but not actual). It actualizes itself by differentiating into concrete species and parts."
+            },
+            {
+                title: "V. Seriality",
+                desc: "Structure is never a single chain; it requires at least two divergent series (e.g., Economic Base & Ideological Superstructure)."
+            },
+            {
+                title: "VI. The Empty Square",
+                desc: "A paradoxical object (Object = x) that belongs to no series but circulates between them, articulating the structure."
+            },
+            {
+                title: "VII. Subject & Practice",
+                desc: "The subject is not a person but the agency that follows the path of the Empty Square. Praxis is the mutation of these structural positions."
+            }
+        ];
+
+        // Data: Althusserian Mode of Production
+        const seriesA = [
+            { label: "CAPITALIST", sub: "(Owner)" },
+            { label: "WORKER", sub: "(Labor Power)" },
+            { label: "STATE", sub: "(Regulation)" },
+            { label: "MANAGER", sub: "(Control)" }
+        ];
+
+        const seriesB = [
+            { label: "CITIZEN", sub: "(Legal Subject)" },
+            { label: "BELIEVER", sub: "(Ideological Subject)" },
+            { label: "SUBJECT-OF-RIGHT", sub: "(Juridical)" },
+            { label: "FREE AGENT", sub: "(Market Subject)" }
+        ];
+
+        // Pre-calculate positions for nodes
+        const nodesA = seriesA.map((item, i) => ({
+            ...item,
+            x: SERIES_1_X,
+            y: START_Y + i * SPACING_Y
+        }));
+
+        const nodesB = seriesB.map((item, i) => ({
+            ...item,
+            x: SERIES_2_X,
+            y: START_Y + i * SPACING_Y
+        }));
+
+        const allNodes = [...nodesA, ...nodesB];
+
+        // Object X properties
+        const objectX = {
+            label: "STRUCTURAL LACK",
+            sub: "(Surplus / Class Struggle)",
+            w: 160,
+            h: 60
+        };
+
+        // Render Principles Cards
+        const grid = document.querySelector('.principles-grid');
+        principles.forEach((p, idx) => {
+            const card = document.createElement('div');
+            card.className = 'card';
+            if (idx === 6) card.classList.add('card-full-width');
+
+            card.innerHTML = `
+                <h3>${p.title}</h3>
+                <p>${p.desc}</p>
+            `;
+            grid.appendChild(card);
+        });
+
+        // Canvas Setup
+        const canvas = document.getElementById('structureCanvas');
+        const ctx = canvas.getContext('2d');
+        let time = 0;
+        let animationFrameId;
+
+        const drawTitles = (ctx) => {
+            ctx.fillStyle = "#000";
+            ctx.textAlign = "center";
+
+            ctx.font = "bold 22px Garamond, serif";
+            ctx.fillText("SERIES I: ECONOMIC", SERIES_1_X, 80);
+            ctx.font = "italic 16px Garamond, serif";
+            ctx.fillText("(Roles of Production)", SERIES_1_X, 105);
+
+            ctx.font = "bold 22px Garamond, serif";
+            ctx.fillText("SERIES II: IDEOLOGICAL", SERIES_2_X, 80);
+            ctx.font = "italic 16px Garamond, serif";
+            ctx.fillText("(Subject Positions)", SERIES_2_X, 105);
+        };
+
+        const drawLinks = (ctx) => {
+            ctx.lineWidth = 2;
+            ctx.strokeStyle = "#e0e0e0";
+
+            // 1. SOLID LINES (Vertical)
+            ctx.setLineDash([]);
+
+            // Series A Vertical
+            ctx.beginPath();
+            ctx.moveTo(SERIES_1_X, START_Y);
+            ctx.lineTo(SERIES_1_X, START_Y + (seriesA.length - 1) * SPACING_Y);
+            ctx.stroke();
+
+            // Series B Vertical
+            ctx.beginPath();
+            ctx.moveTo(SERIES_2_X, START_Y);
+            ctx.lineTo(SERIES_2_X, START_Y + (seriesB.length - 1) * SPACING_Y);
+            ctx.stroke();
+
+            // 2. DOTTED LINES (Horizontal Homologies)
+            ctx.strokeStyle = "#ccc";
+            ctx.setLineDash([5, 8]);
+
+            for (let i = 0; i < seriesA.length; i++) {
+                let y = START_Y + i * SPACING_Y;
+                ctx.beginPath();
+                ctx.moveTo(SERIES_1_X + 60, y);
+                ctx.lineTo(SERIES_2_X - 60, y);
+                ctx.stroke();
+            }
+
+            ctx.setLineDash([]);
+        };
+
+        const drawSeriesNodes = (ctx) => {
+            ctx.textAlign = "center";
+            ctx.textBaseline = "middle";
+            const boxW = 160;
+            const boxH = 50;
+
+            const drawBox = (node) => {
+                // Draw Box Background
+                ctx.fillStyle = "#fff";
+                ctx.fillRect(node.x - boxW / 2, node.y - boxH / 2, boxW, boxH);
+                ctx.strokeStyle = "#333";
+                ctx.lineWidth = 1;
+                ctx.strokeRect(node.x - boxW / 2, node.y - boxH / 2, boxW, boxH);
+
+                // Text
+                ctx.fillStyle = "#000";
+                ctx.font = "bold 13px Garamond, serif";
+                ctx.fillText(node.label, node.x, node.y - 8);
+                ctx.font = "italic 12px Garamond, serif";
+                ctx.fillText(node.sub, node.x, node.y + 8);
+            };
+
+            allNodes.forEach(drawBox);
+        };
+
+        const animate = () => {
+            // Update time
+            time += 0.005;
+
+            // Clear Canvas
+            ctx.clearRect(0, 0, WIDTH, HEIGHT);
+
+            // Draw Static Elements
+            drawTitles(ctx);
+            drawLinks(ctx);
+            drawSeriesNodes(ctx);
+
+            // Calculate Object Position (Figure 8 movement)
+            const centerX = WIDTH / 2;
+            const centerY = START_Y + (seriesA.length - 1) * SPACING_Y / 2;
+            const amplitudeX = 320;
+            const amplitudeY = 220;
+
+            const currentObjX = centerX + amplitudeX * Math.cos(time);
+            const currentObjY = centerY + amplitudeY * Math.sin(2 * time) * 0.8;
+
+            // --- FIND NEAREST NODE FOR SUBJECT CONNECTION ---
+            let minDistance = Infinity;
+            let nearestNode = null;
+
+            allNodes.forEach(node => {
+                const dx = node.x - currentObjX;
+                const dy = node.y - currentObjY;
+                const dist = Math.sqrt(dx * dx + dy * dy);
+                if (dist < minDistance) {
+                    minDistance = dist;
+                    nearestNode = node;
+                }
+            });
+
+            // --- DRAW THE SUBJECT LINE ---
+            if (nearestNode) {
+                ctx.beginPath();
+                ctx.moveTo(currentObjX, currentObjY);
+                ctx.lineTo(nearestNode.x, nearestNode.y);
+                ctx.strokeStyle = "#b91c1c"; // Red
+                ctx.lineWidth = 3;
+                ctx.stroke();
+
+                // Draw Subject Symbol ($) on the line
+                const midX = (currentObjX + nearestNode.x) / 2;
+                const midY = (currentObjY + nearestNode.y) / 2;
+
+                // White circle background for text
+                ctx.beginPath();
+                ctx.arc(midX, midY, 15, 0, Math.PI * 2);
+                ctx.fillStyle = "#fff";
+                ctx.fill();
+                ctx.strokeStyle = "#b91c1c";
+                ctx.lineWidth = 2;
+                ctx.stroke();
+
+                ctx.fillStyle = "#b91c1c";
+                ctx.font = "bold 16px 'Courier New', monospace";
+                ctx.textAlign = "center";
+                ctx.textBaseline = "middle";
+                ctx.fillText("$", midX, midY + 1); // $ = Subject (S barre)
+
+                // Label "Subject" near the marker
+                ctx.font = "bold 12px Garamond, serif";
+                ctx.fillText("Subject", midX, midY - 20);
+            }
+
+            // --- DRAW THE EMPTY SQUARE & TRAIL ---
+            // Draw Trail
+            for (let i = 1; i < 15; i++) {
+                let prevTime = time - (i * 0.03);
+                let prevX = centerX + amplitudeX * Math.cos(prevTime);
+                let prevY = centerY + amplitudeY * Math.sin(2 * prevTime) * 0.8;
+
+                ctx.globalAlpha = 0.15 - (i * 0.01);
+                ctx.beginPath();
+                ctx.rect(prevX - objectX.w / 2, prevY - objectX.h / 2, objectX.w, objectX.h);
+                ctx.fillStyle = "#555";
+                ctx.fill();
+            }
+            ctx.globalAlpha = 1.0;
+
+            // Draw The Object Box
+            ctx.beginPath();
+            ctx.rect(currentObjX - objectX.w / 2, currentObjY - objectX.h / 2, objectX.w, objectX.h);
+            ctx.fillStyle = "#fff";
+            ctx.fill();
+
+            ctx.lineWidth = 2;
+            ctx.setLineDash([6, 4]); // Dashed
+            ctx.strokeStyle = "#000";
+            ctx.stroke();
+            ctx.setLineDash([]); // Reset
+
+            // Label
+            ctx.textAlign = "center";
+            ctx.textBaseline = "alphabetic";
+            ctx.fillStyle = "#000";
+            ctx.font = "bold 13px Garamond, serif";
+            ctx.fillText(objectX.label, currentObjX, currentObjY - 7);
+            ctx.font = "italic 11px Garamond, serif";
+            ctx.fillText(objectX.sub, currentObjX, currentObjY + 10);
+
+            animationFrameId = requestAnimationFrame(animate);
+        };
+
+        // Start Animation
+        animate();
+
+    </script>
+</body>
+
+</html>
