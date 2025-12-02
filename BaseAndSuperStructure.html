@@ -325,325 +325,360 @@
                             </div>
                         </div>
                     </div>
+                </div>
 
-                    <script>
-                        // Initialize Lucide icons
-                        lucide.createIcons();
+                <div class="info-box">
+                    <h2><i data-lucide="activity"></i> Structural Dynamics</h2>
+                    <ul class="dynamics-list">
+                        <li class="dynamics-item">
+                            <span class="text-red" style="font-size: 1.2em;">&#8635;</span>
+                            <div>
+                                <strong>Reproduction (Loops):</strong>
+                                <span style="color: #4b5563;">The Superstructure maintains and reproduces the relations
+                                    of production. Ideology ensures submission to the established order.</span>
+                            </div>
+                        </li>
+                        <li class="dynamics-item">
+                            <span style="font-size: 1.2em;">&#8593;</span>
+                            <div>
+                                <strong>Determination (Dashed Lines):</strong>
+                                <span style="color: #4b5563;">The Economic Base determines the Superstructure "in the
+                                    last instance".</span>
+                            </div>
+                        </li>
+                        <li class="dynamics-item">
+                            <span class="text-blue" style="font-size: 1.2em;">&#8634;</span>
+                            <div>
+                                <strong>Relative Autonomy (Arcs):</strong>
+                                <span style="color: #4b5563;">The Superstructure has its own specific effectivity and is
+                                    not a simple reflection of the Base. It can react back upon the Base.</span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
 
-                        // --- CONFIGURATION ---
-                        const width = 800;
-                        const height = 800;
-                        const centerX = width / 2;
-                        const centerY = height / 2;
+                <script>
+                    // Initialize Lucide icons
+                    lucide.createIcons();
 
-                        const radii = {
-                            center: 110, // MoP (Bedrock)
-                            econ: 190,   // Economic Interface
-                            pol: 270,    // Political Ring
-                            ideo: 350    // Ideological Ring
+                    // --- CONFIGURATION ---
+                    const width = 800;
+                    const height = 800;
+                    const centerX = width / 2;
+                    const centerY = height / 2;
+
+                    const radii = {
+                        center: 110, // MoP (Bedrock)
+                        econ: 190,   // Economic Interface
+                        pol: 270,    // Political Ring
+                        ideo: 350    // Ideological Ring
+                    };
+
+                    // --- DATA STRUCTURE ---
+                    const layers = {
+                        center: {
+                            id: 'center',
+                            label: "MODE OF PRODUCTION",
+                            subLabel: "Infrastructure",
+                            color: "#111827",
+                            textColor: "#ffffff",
+                            desc: "THE INFRASTRUCTURE. UNITY OF FORCES & RELATIONS. DETERMINANT IN THE LAST INSTANCE.",
+                            nodes: [
+                                { id: 'forces', label: 'FORCES', angle: 330, detail: "Labour Power, Tools, Raw Materials" },
+                                { id: 'relations', label: 'RELATIONS', angle: 150, detail: "Ownership, Exploitation, Class Division" }
+                            ]
+                        },
+                        econ: {
+                            id: 'econ',
+                            label: "ECONOMIC LEVEL",
+                            color: "#f3f4f6",
+                            textColor: "#000000",
+                            desc: "THE SPHERE OF CIRCULATION & EXCHANGE.",
+                            nodes: [
+                                { id: 'dist', label: 'DISTRIBUTION', angle: 45 },
+                                { id: 'exch', label: 'EXCHANGE', angle: 135 },
+                                { id: 'cons', label: 'CONSUMPTION', angle: 225 },
+                                { id: 'circ', label: 'CIRCULATION', angle: 315 }
+                            ]
+                        },
+                        pol: {
+                            id: 'pol',
+                            label: "POLITICO-LEGAL (RSA)",
+                            color: "#e5e7eb",
+                            textColor: "#000000",
+                            desc: "REPRESSIVE STATE APPARATUS. MONOPOLY OF VIOLENCE.",
+                            nodes: [
+                                { id: 'state', label: 'STATE', angle: 0 },
+                                { id: 'gov', label: 'GOV', angle: 45 },
+                                { id: 'admin', label: 'ADMIN', angle: 90 },
+                                { id: 'army', label: 'ARMY', angle: 135 },
+                                { id: 'police', label: 'POLICE', angle: 180 },
+                                { id: 'courts', label: 'COURTS', angle: 225 },
+                                { id: 'prisons', label: 'PRISONS', angle: 270 },
+                                { id: 'law', label: 'LAW', angle: 315 }
+                            ]
+                        },
+                        ideo: {
+                            id: 'ideo',
+                            label: "IDEOLOGICAL (ISA)",
+                            color: "#d1d5db",
+                            textColor: "#000000",
+                            desc: "IDEOLOGICAL STATE APPARATUSES. INTERPELLATION OF SUBJECTS.",
+                            nodes: [
+                                { id: 'edu', label: 'SCHOOL', angle: 0 },
+                                { id: 'fam', label: 'FAMILY', angle: 45 },
+                                { id: 'rel', label: 'CHURCH', angle: 90 },
+                                { id: 'med', label: 'MEDIA', angle: 135 },
+                                { id: 'cul', label: 'CULTURE', angle: 180 },
+                                { id: 'pol_isa', label: 'PARTIES', angle: 225 },
+                                { id: 'uni', label: 'UNIONS', angle: 270 },
+                                { id: 'leg_isa', label: 'LEGAL', angle: 315 }
+                            ]
+                        }
+                    };
+
+                    // --- HELPER FUNCTIONS ---
+                    const getPos = (r, angleDeg) => {
+                        const angleRad = (angleDeg - 90) * (Math.PI / 180);
+                        return {
+                            x: centerX + r * Math.cos(angleRad),
+                            y: centerY + r * Math.sin(angleRad)
                         };
+                    };
 
-                        // --- DATA STRUCTURE ---
-                        const layers = {
-                            center: {
-                                id: 'center',
-                                label: "MODE OF PRODUCTION",
-                                subLabel: "Infrastructure",
-                                color: "#111827",
-                                textColor: "#ffffff",
-                                desc: "THE INFRASTRUCTURE. UNITY OF FORCES & RELATIONS. DETERMINANT IN THE LAST INSTANCE.",
-                                nodes: [
-                                    { id: 'forces', label: 'FORCES', angle: 330, detail: "Labour Power, Tools, Raw Materials" },
-                                    { id: 'relations', label: 'RELATIONS', angle: 150, detail: "Ownership, Exploitation, Class Division" }
-                                ]
-                            },
-                            econ: {
-                                id: 'econ',
-                                label: "ECONOMIC LEVEL",
-                                color: "#f3f4f6",
-                                textColor: "#000000",
-                                desc: "THE SPHERE OF CIRCULATION & EXCHANGE.",
-                                nodes: [
-                                    { id: 'dist', label: 'DISTRIBUTION', angle: 45 },
-                                    { id: 'exch', label: 'EXCHANGE', angle: 135 },
-                                    { id: 'cons', label: 'CONSUMPTION', angle: 225 },
-                                    { id: 'circ', label: 'CIRCULATION', angle: 315 }
-                                ]
-                            },
-                            pol: {
-                                id: 'pol',
-                                label: "POLITICO-LEGAL (RSA)",
-                                color: "#e5e7eb",
-                                textColor: "#000000",
-                                desc: "REPRESSIVE STATE APPARATUS. MONOPOLY OF VIOLENCE.",
-                                nodes: [
-                                    { id: 'state', label: 'STATE', angle: 270 },
-                                    { id: 'gov', label: 'GOV', angle: 300 },
-                                    { id: 'admin', label: 'ADMIN', angle: 330 },
-                                    { id: 'army', label: 'ARMY', angle: 0 },
-                                    { id: 'police', label: 'POLICE', angle: 30 },
-                                    { id: 'courts', label: 'COURTS', angle: 60 },
-                                    { id: 'prisons', label: 'PRISONS', angle: 90 },
-                                    { id: 'law', label: 'LAW', angle: 240 }
-                                ]
-                            },
-                            ideo: {
-                                id: 'ideo',
-                                label: "IDEOLOGICAL (ISA)",
-                                color: "#d1d5db",
-                                textColor: "#000000",
-                                desc: "IDEOLOGICAL STATE APPARATUSES. INTERPELLATION OF SUBJECTS.",
-                                nodes: [
-                                    { id: 'edu', label: 'SCHOOL', angle: 45 },
-                                    { id: 'fam', label: 'FAMILY', angle: 15 },
-                                    { id: 'rel', label: 'CHURCH', angle: 345 },
-                                    { id: 'med', label: 'MEDIA', angle: 315 },
-                                    { id: 'cul', label: 'CULTURE', angle: 285 },
-                                    { id: 'pol_isa', label: 'PARTIES', angle: 135 },
-                                    { id: 'uni', label: 'UNIONS', angle: 165 },
-                                    { id: 'leg_isa', label: 'LEGAL', angle: 195 }
-                                ]
-                            }
-                        };
+                    const svg = document.getElementById('marxist-map');
+                    const tooltip = document.getElementById('tooltip');
+                    const emptyState = document.getElementById('empty-state');
+                    const activeContent = document.getElementById('active-content');
+                    const detailLabel = document.getElementById('detail-label');
+                    const detailDesc = document.getElementById('detail-desc');
+                    const detailList = document.getElementById('detail-list');
 
-                        // --- HELPER FUNCTIONS ---
-                        const getPos = (r, angleDeg) => {
-                            const angleRad = (angleDeg - 90) * (Math.PI / 180);
-                            return {
-                                x: centerX + r * Math.cos(angleRad),
-                                y: centerY + r * Math.sin(angleRad)
-                            };
-                        };
+                    let activeLayerId = null;
 
-                        const svg = document.getElementById('marxist-map');
-                        const tooltip = document.getElementById('tooltip');
-                        const emptyState = document.getElementById('empty-state');
-                        const activeContent = document.getElementById('active-content');
-                        const detailLabel = document.getElementById('detail-label');
-                        const detailDesc = document.getElementById('detail-desc');
-                        const detailList = document.getElementById('detail-list');
+                    function setActiveLayer(id) {
+                        activeLayerId = id;
 
-                        let activeLayerId = null;
+                        if (id) {
+                            const layer = layers[id];
+                            emptyState.style.display = 'none';
+                            activeContent.classList.add('active');
 
-                        function setActiveLayer(id) {
-                            activeLayerId = id;
+                            detailLabel.textContent = layer.label;
+                            detailDesc.textContent = layer.desc;
 
-                            if (id) {
-                                const layer = layers[id];
-                                emptyState.style.display = 'none';
-                                activeContent.classList.add('active');
-
-                                detailLabel.textContent = layer.label;
-                                detailDesc.textContent = layer.desc;
-
-                                detailList.innerHTML = layer.nodes.map(n => `
+                            detailList.innerHTML = layer.nodes.map(n => `
                     <li class="index-item">
                         <span style="font-weight: 700;">${n.label}</span>
                         ${n.detail ? `<span style="color: #6b7280; font-size: 10px; text-transform: uppercase;">${n.detail}</span>` : ''}
                     </li>
                 `).join('');
-                            } else {
-                                emptyState.style.display = 'flex';
-                                activeContent.classList.remove('active');
-                            }
+                        } else {
+                            emptyState.style.display = 'flex';
+                            activeContent.classList.remove('active');
                         }
+                    }
 
-                        function showTooltip(text, type) {
-                            tooltip.innerHTML = text;
-                            tooltip.classList.add('visible');
+                    function showTooltip(text, type) {
+                        tooltip.innerHTML = text;
+                        tooltip.classList.add('visible');
+                    }
+
+                    function hideTooltip() {
+                        tooltip.classList.remove('visible');
+                    }
+
+                    // --- RENDER FUNCTIONS ---
+
+                    function createSVGElement(tag, attrs) {
+                        const el = document.createElementNS("http://www.w3.org/2000/svg", tag);
+                        for (const [key, value] of Object.entries(attrs)) {
+                            el.setAttribute(key, value);
                         }
+                        return el;
+                    }
 
-                        function hideTooltip() {
-                            tooltip.classList.remove('visible');
-                        }
+                    function renderMap() {
+                        // 1. Rings and Nodes
+                        ['ideo', 'pol', 'econ'].forEach(layerKey => {
+                            const layer = layers[layerKey];
+                            const r = radii[layerKey];
 
-                        // --- RENDER FUNCTIONS ---
+                            const group = createSVGElement('g', { class: 'cursor-pointer' });
+                            group.onclick = () => setActiveLayer(layerKey);
 
-                        function createSVGElement(tag, attrs) {
-                            const el = document.createElementNS("http://www.w3.org/2000/svg", tag);
-                            for (const [key, value] of Object.entries(attrs)) {
-                                el.setAttribute(key, value);
-                            }
-                            return el;
-                        }
-
-                        function renderMap() {
-                            // 1. Rings and Nodes
-                            ['ideo', 'pol', 'econ'].forEach(layerKey => {
-                                const layer = layers[layerKey];
-                                const r = radii[layerKey];
-
-                                const group = createSVGElement('g', { class: 'cursor-pointer' });
-                                group.onclick = () => setActiveLayer(layerKey);
-
-                                // Circle
-                                const circle = createSVGElement('circle', {
-                                    cx: centerX, cy: centerY, r: r,
-                                    fill: 'none', stroke: 'black', 'stroke-width': '1.5',
-                                    class: 'hover-stroke transition-all'
-                                });
-                                group.appendChild(circle);
-
-                                // Nodes
-                                layer.nodes.forEach(node => {
-                                    const pos = getPos(r - (layerKey === 'econ' ? 35 : 40), node.angle);
-                                    const nodeGroup = createSVGElement('g', {});
-
-                                    // Shape
-                                    let shape;
-                                    const size = layerKey === 'econ' ? 4 : 6;
-                                    if (layerKey === 'pol') {
-                                        shape = createSVGElement('rect', {
-                                            x: pos.x - size, y: pos.y - size, width: size * 2, height: size * 2,
-                                            fill: 'white', stroke: 'black', 'stroke-width': '2'
-                                        });
-                                    } else if (layerKey === 'ideo') {
-                                        shape = createSVGElement('circle', {
-                                            cx: pos.x, cy: pos.y, r: size,
-                                            fill: 'white', stroke: 'black', 'stroke-width': '2'
-                                        });
-                                    } else { // econ
-                                        shape = createSVGElement('path', {
-                                            d: `M ${pos.x} ${pos.y - size} L ${pos.x + size} ${pos.y} L ${pos.x} ${pos.y + size} L ${pos.x - size} ${pos.y} Z`,
-                                            fill: 'black'
-                                        });
-                                    }
-                                    nodeGroup.appendChild(shape);
-
-                                    // Text
-                                    const text = createSVGElement('text', {
-                                        x: pos.x, y: pos.y + (layerKey === 'econ' ? 15 : 20),
-                                        'text-anchor': 'middle', 'font-size': layerKey === 'econ' ? '9' : '10',
-                                        fill: 'black', class: 'uppercase tracking-widest'
-                                    });
-                                    text.textContent = node.label;
-                                    nodeGroup.appendChild(text);
-
-                                    group.appendChild(nodeGroup);
-                                });
-
-                                // Label
-                                const label = createSVGElement('text', {
-                                    x: centerX, y: centerY - r + 35,
-                                    'text-anchor': 'middle', 'font-size': '12',
-                                    fill: 'black', class: 'uppercase tracking-[0.2em]',
-                                    style: 'fill: black; stroke: white; stroke-width: 4px; paint-order: stroke;' // Outline effect for readability
-                                });
-                                const labelText = createSVGElement('tspan', { style: 'stroke: none;' }); // Actual text
-                                labelText.textContent = layerKey === 'ideo' ? "LEVEL III: IDEOLOGICAL" : (layerKey === 'pol' ? "LEVEL II: POLITICAL" : "LEVEL I: ECONOMIC");
-                                label.appendChild(labelText);
-                                group.appendChild(label);
-
-                                svg.appendChild(group);
+                            // Circle
+                            const circle = createSVGElement('circle', {
+                                cx: centerX, cy: centerY, r: r,
+                                fill: 'none', stroke: 'black', 'stroke-width': '1.5',
+                                class: 'hover-stroke transition-all'
                             });
+                            group.appendChild(circle);
 
-                            // 2. Arrows (Determination)
-                            const detGroup = createSVGElement('g', { class: 'opacity-100 pointer-events-none' });
-                            [0, 45, 90, 135, 180, 225, 270, 315].forEach(angle => {
-                                const start = getPos(radii.center + 5, angle);
-                                const end = getPos(radii.ideo + 30, angle);
-                                const line = createSVGElement('line', {
-                                    x1: start.x, y1: start.y, x2: end.x, y2: end.y,
-                                    stroke: 'black', 'stroke-width': '1', 'stroke-dasharray': '2,4'
-                                });
-                                detGroup.appendChild(line);
-                            });
-                            svg.appendChild(detGroup);
-
-                            // 3. Reproduction Arrows
-                            const repGroup = createSVGElement('g', {});
-                            const repPaths = [
-                                { startRing: 'ideo', angle: 25 },
-                                { startRing: 'pol', angle: 145 },
-                                { startRing: 'econ', angle: 265 }
-                            ];
-                            repPaths.forEach(p => {
-                                const start = getPos(radii[p.startRing], p.angle);
-                                const end = getPos(radii.center, p.angle - 20);
-                                const cp = getPos(radii[p.startRing] + 80, p.angle + 20);
-
-                                const pathGroup = createSVGElement('g', { class: 'cursor-pointer group' });
-                                pathGroup.onmouseenter = () => showTooltip('<span class="text-red">[ REPRODUCTION LOOP ]</span>');
-                                pathGroup.onmouseleave = hideTooltip;
-
-                                const path = createSVGElement('path', {
-                                    d: `M ${start.x} ${start.y} Q ${cp.x} ${cp.y} ${end.x} ${end.y}`,
-                                    fill: 'none', stroke: 'black', 'stroke-width': '2',
-                                    'marker-end': 'url(#arrowhead-solid)',
-                                    class: 'opacity-100 transition-all group-hover-stroke-red'
-                                });
-                                pathGroup.appendChild(path);
-                                repGroup.appendChild(pathGroup);
-                            });
-                            svg.appendChild(repGroup);
-
-                            // 4. Autonomy Arrows
-                            const autoGroup = createSVGElement('g', { class: 'cursor-pointer group' });
-                            autoGroup.onmouseenter = () => showTooltip('<span class="text-blue">[ RELATIVE AUTONOMY ]</span>');
-                            autoGroup.onmouseleave = hideTooltip;
-
-                            [radii.econ, radii.pol, radii.ideo].forEach(r => {
-                                [0, 120, 240].forEach(deg => {
-                                    const startAngle = deg * (Math.PI / 180);
-                                    const endAngle = (deg + 60) * (Math.PI / 180);
-                                    const start = { x: centerX + r * Math.cos(startAngle), y: centerY + r * Math.sin(startAngle) };
-                                    const end = { x: centerX + r * Math.cos(endAngle), y: centerY + r * Math.sin(endAngle) };
-
-                                    const path = createSVGElement('path', {
-                                        d: `M ${start.x} ${start.y} A ${r} ${r} 0 0 1 ${end.x} ${end.y}`,
-                                        fill: 'none', stroke: 'black', 'stroke-width': '1.5',
-                                        'stroke-dasharray': '4,2', 'marker-end': 'url(#arrowhead-open)',
-                                        class: 'opacity-50 transition-all group-hover-opacity-100 group-hover-stroke-blue'
-                                    });
-                                    autoGroup.appendChild(path);
-                                });
-                            });
-                            svg.appendChild(autoGroup);
-
-                            // 5. Center (MoP)
-                            const centerGroup = createSVGElement('g', { class: 'cursor-pointer' });
-                            centerGroup.onclick = () => setActiveLayer('center');
-
-                            const centerCircle = createSVGElement('circle', { cx: centerX, cy: centerY, r: radii.center, fill: 'black' });
-                            centerGroup.appendChild(centerCircle);
-
-                            const centerDash = createSVGElement('circle', {
-                                cx: centerX, cy: centerY, r: radii.center + 5,
-                                fill: 'none', stroke: 'black', 'stroke-width': '1', 'stroke-dasharray': '4,2'
-                            });
-                            centerGroup.appendChild(centerDash);
-
-                            layers.center.nodes.forEach(node => {
-                                const pos = getPos(radii.center - 40, node.angle);
+                            // Nodes
+                            layer.nodes.forEach(node => {
+                                const pos = getPos(r - (layerKey === 'econ' ? 35 : 40), node.angle);
                                 const nodeGroup = createSVGElement('g', {});
-                                const poly = createSVGElement('polygon', {
-                                    points: `${pos.x},${pos.y - 8} ${pos.x + 8},${pos.y + 8} ${pos.x - 8},${pos.y + 8}`,
-                                    fill: 'white'
-                                });
-                                nodeGroup.appendChild(poly);
+
+                                // Shape
+                                let shape;
+                                const size = layerKey === 'econ' ? 4 : 6;
+                                if (layerKey === 'pol') {
+                                    shape = createSVGElement('rect', {
+                                        x: pos.x - size, y: pos.y - size, width: size * 2, height: size * 2,
+                                        fill: 'white', stroke: 'black', 'stroke-width': '2'
+                                    });
+                                } else if (layerKey === 'ideo') {
+                                    shape = createSVGElement('circle', {
+                                        cx: pos.x, cy: pos.y, r: size,
+                                        fill: 'white', stroke: 'black', 'stroke-width': '2'
+                                    });
+                                } else { // econ
+                                    shape = createSVGElement('path', {
+                                        d: `M ${pos.x} ${pos.y - size} L ${pos.x + size} ${pos.y} L ${pos.x} ${pos.y + size} L ${pos.x - size} ${pos.y} Z`,
+                                        fill: 'black'
+                                    });
+                                }
+                                nodeGroup.appendChild(shape);
+
+                                // Text
                                 const text = createSVGElement('text', {
-                                    x: pos.x, y: pos.y + 24, 'text-anchor': 'middle', 'font-size': '10',
-                                    fill: 'white', class: 'uppercase tracking-wider'
+                                    x: pos.x, y: pos.y + (layerKey === 'econ' ? 15 : 20),
+                                    'text-anchor': 'middle', 'font-size': layerKey === 'econ' ? '9' : '10',
+                                    fill: 'black', class: 'uppercase tracking-widest'
                                 });
                                 text.textContent = node.label;
                                 nodeGroup.appendChild(text);
-                                centerGroup.appendChild(nodeGroup);
+
+                                group.appendChild(nodeGroup);
                             });
 
-                            const centerLabel = createSVGElement('text', {
-                                x: centerX, y: centerY, 'text-anchor': 'middle', 'font-size': '11',
-                                fill: 'white', class: 'uppercase tracking-widest', 'dominant-baseline': 'middle'
+                            // Label
+                            const label = createSVGElement('text', {
+                                x: centerX, y: centerY - r + 35,
+                                'text-anchor': 'middle', 'font-size': '12',
+                                fill: 'black', class: 'uppercase tracking-[0.2em]',
+                                style: 'fill: black; stroke: white; stroke-width: 4px; paint-order: stroke;' // Outline effect for readability
                             });
-                            centerLabel.textContent = "MEANS OF PRODUCTION [BASE]";
-                            centerGroup.appendChild(centerLabel);
+                            const labelText = createSVGElement('tspan', { style: 'stroke: none;' }); // Actual text
+                            labelText.textContent = layerKey === 'ideo' ? "LEVEL III: IDEOLOGICAL" : (layerKey === 'pol' ? "LEVEL II: POLITICAL" : "LEVEL I: ECONOMIC");
+                            label.appendChild(labelText);
+                            group.appendChild(label);
 
-                            svg.appendChild(centerGroup);
-                        }
+                            svg.appendChild(group);
+                        });
 
-                        // Initialize
-                        renderMap();
+                        // 2. Arrows (Determination)
+                        const detGroup = createSVGElement('g', { class: 'opacity-100 pointer-events-none' });
+                        [0, 45, 90, 135, 180, 225, 270, 315].forEach(angle => {
+                            const start = getPos(radii.center + 5, angle);
+                            const end = getPos(radii.ideo + 30, angle);
+                            const line = createSVGElement('line', {
+                                x1: start.x, y1: start.y, x2: end.x, y2: end.y,
+                                stroke: 'black', 'stroke-width': '1', 'stroke-dasharray': '2,4'
+                            });
+                            detGroup.appendChild(line);
+                        });
+                        svg.appendChild(detGroup);
 
-                    </script>
+                        // 3. Reproduction Arrows
+                        const repGroup = createSVGElement('g', {});
+                        const repPaths = [
+                            { startRing: 'ideo', angle: 25 },
+                            { startRing: 'pol', angle: 145 },
+                            { startRing: 'econ', angle: 265 }
+                        ];
+                        repPaths.forEach(p => {
+                            const start = getPos(radii[p.startRing], p.angle);
+                            const end = getPos(radii.center, p.angle - 20);
+                            const cp = getPos(radii[p.startRing] + 80, p.angle + 20);
+
+                            const pathGroup = createSVGElement('g', { class: 'cursor-pointer group' });
+                            pathGroup.onmouseenter = () => showTooltip('<span class="text-red">[ REPRODUCTION LOOP ]</span>');
+                            pathGroup.onmouseleave = hideTooltip;
+
+                            const path = createSVGElement('path', {
+                                d: `M ${start.x} ${start.y} Q ${cp.x} ${cp.y} ${end.x} ${end.y}`,
+                                fill: 'none', stroke: 'black', 'stroke-width': '2',
+                                'marker-end': 'url(#arrowhead-solid)',
+                                class: 'opacity-100 transition-all group-hover-stroke-red'
+                            });
+                            pathGroup.appendChild(path);
+                            repGroup.appendChild(pathGroup);
+                        });
+                        svg.appendChild(repGroup);
+
+                        // 4. Autonomy Arrows
+                        const autoGroup = createSVGElement('g', { class: 'cursor-pointer group' });
+                        autoGroup.onmouseenter = () => showTooltip('<span class="text-blue">[ RELATIVE AUTONOMY ]</span>');
+                        autoGroup.onmouseleave = hideTooltip;
+
+                        [radii.econ, radii.pol, radii.ideo].forEach(r => {
+                            [0, 120, 240].forEach(deg => {
+                                const startAngle = deg * (Math.PI / 180);
+                                const endAngle = (deg + 60) * (Math.PI / 180);
+                                const start = { x: centerX + r * Math.cos(startAngle), y: centerY + r * Math.sin(startAngle) };
+                                const end = { x: centerX + r * Math.cos(endAngle), y: centerY + r * Math.sin(endAngle) };
+
+                                const path = createSVGElement('path', {
+                                    d: `M ${start.x} ${start.y} A ${r} ${r} 0 0 1 ${end.x} ${end.y}`,
+                                    fill: 'none', stroke: 'black', 'stroke-width': '1.5',
+                                    'stroke-dasharray': '4,2', 'marker-end': 'url(#arrowhead-open)',
+                                    class: 'opacity-50 transition-all group-hover-opacity-100 group-hover-stroke-blue'
+                                });
+                                autoGroup.appendChild(path);
+                            });
+                        });
+                        svg.appendChild(autoGroup);
+
+                        // 5. Center (MoP)
+                        const centerGroup = createSVGElement('g', { class: 'cursor-pointer' });
+                        centerGroup.onclick = () => setActiveLayer('center');
+
+                        const centerCircle = createSVGElement('circle', { cx: centerX, cy: centerY, r: radii.center, fill: 'black' });
+                        centerGroup.appendChild(centerCircle);
+
+                        const centerDash = createSVGElement('circle', {
+                            cx: centerX, cy: centerY, r: radii.center + 5,
+                            fill: 'none', stroke: 'black', 'stroke-width': '1', 'stroke-dasharray': '4,2'
+                        });
+                        centerGroup.appendChild(centerDash);
+
+                        layers.center.nodes.forEach(node => {
+                            const pos = getPos(radii.center - 40, node.angle);
+                            const nodeGroup = createSVGElement('g', {});
+                            const poly = createSVGElement('polygon', {
+                                points: `${pos.x},${pos.y - 8} ${pos.x + 8},${pos.y + 8} ${pos.x - 8},${pos.y + 8}`,
+                                fill: 'white'
+                            });
+                            nodeGroup.appendChild(poly);
+                            const text = createSVGElement('text', {
+                                x: pos.x, y: pos.y + 24, 'text-anchor': 'middle', 'font-size': '10',
+                                fill: 'white', class: 'uppercase tracking-wider'
+                            });
+                            text.textContent = node.label;
+                            nodeGroup.appendChild(text);
+                            centerGroup.appendChild(nodeGroup);
+                        });
+
+                        const centerLabel = createSVGElement('text', {
+                            x: centerX, y: centerY, 'text-anchor': 'middle', 'font-size': '14',
+                            fill: 'white', class: 'uppercase tracking-widest', 'dominant-baseline': 'middle',
+                            'font-weight': 'bold'
+                        });
+                        centerLabel.textContent = "MODE OF PRODUCTION [BASE]";
+                        centerGroup.appendChild(centerLabel);
+
+                        svg.appendChild(centerGroup);
+                    }
+
+                    // Initialize
+                    renderMap();
+
+                </script>
+            </div>
+        </div>
+    </div>
 </body>
 
 </html>
