@@ -1,0 +1,811 @@
+<?xml version="1.0"?>
+<graph xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:cy="http://www.cytoscape.org" xmlns="http://www.cs.rpi.edu/XGMML" directed="1">
+<node id="11809">
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#FinalInfo" type="string" cy:type="String"/>
+<att name="name" value="1978: died after mysterious fall down staircase" type="string" cy:type="String"/>
+</node>
+<node id="708">
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#Person" type="string" cy:type="String"/>
+<att name="name" value="Joseph Severin" type="string" cy:type="String"/>
+</node>
+<node id="11806">
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#FinalInfo" type="string" cy:type="String"/>
+<att name="name" value="1981: target of US Customs probe" type="string" cy:type="String"/>
+</node>
+<node id="741">
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#Institution" type="string" cy:type="String"/>
+<att name="name" value="Cmdt. Piet Marais" type="string" cy:type="String"/>
+</node>
+<node id="742">
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#Person" type="string" cy:type="String"/>
+<att name="name" value="Piet Smith" type="string" cy:type="String"/>
+</node>
+<node id="11802">
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#Person" type="string" cy:type="String"/>
+<att name="name" value="Deny Zeederberg" type="string" cy:type="String"/>
+</node>
+<node id="745">
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#Person" type="string" cy:type="String"/>
+<att name="name" value="Col. P.M. Lombard" type="string" cy:type="String"/>
+</node>
+<node id="739">
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#Institution" type="string" cy:type="String"/>
+<att name="name" value="Volkskas Bank - Pretoria -" type="string" cy:type="String"/>
+</node>
+<node id="11195">
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#Person" type="string" cy:type="String"/>
+<att name="name" value="P.W. Botha pm 1978-84" type="string" cy:type="String"/>
+</node>
+<node id="736">
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#Institution" type="string" cy:type="String"/>
+<att name="name" value="South African Defense Ministry" type="string" cy:type="String"/>
+</node>
+<node id="737">
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#Person" type="string" cy:type="String"/>
+<att name="name" value="Mobutu Sese Seko r. Zaire 1964-" type="string" cy:type="String"/>
+</node>
+<node id="11191">
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#Person" type="string" cy:type="String"/>
+<att name="name" value="Holden Roberto cmdr. Angolan FNLA" type="string" cy:type="String"/>
+</node>
+<node id="731">
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#Person" type="string" cy:type="String"/>
+<att name="name" value="J. Swart" type="string" cy:type="String"/>
+</node>
+<node id="730">
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#Person" type="string" cy:type="String"/>
+<att name="name" value="M.J. Smith" type="string" cy:type="String"/>
+</node>
+<node id="95">
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#Person" type="string" cy:type="String"/>
+<att name="name" value="Mark Thatcher" type="string" cy:type="String"/>
+</node>
+<node id="733">
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#Institution" type="string" cy:type="String"/>
+<att name="name" value="Cementation Engineers - J'berg -" type="string" cy:type="String"/>
+</node>
+<node id="11184">
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#Institution" type="string" cy:type="String"/>
+<att name="name" value="P&amp;E Eustice Ltd. - J'berg -" type="string" cy:type="String"/>
+</node>
+<node id="728">
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#Person" type="string" cy:type="String"/>
+<att name="name" value="James Guerin" type="string" cy:type="String"/>
+</node>
+<node id="729">
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#Institution" type="string" cy:type="String"/>
+<att name="name" value="Int'l Signal &amp; Control - Penn -" type="string" cy:type="String"/>
+</node>
+<node id="11178">
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#Institution" type="string" cy:type="String"/>
+<att name="name" value="Credite Bank - Antwerp -" type="string" cy:type="String"/>
+</node>
+<node id="703">
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#Institution" type="string" cy:type="String"/>
+<att name="name" value="SIDEM" type="string" cy:type="String"/>
+</node>
+<node id="11175">
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#Institution" type="string" cy:type="String"/>
+<att name="name" value="Heckler und Koch - Oberndorf - W Ger" type="string" cy:type="String"/>
+</node>
+<node id="11173">
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#Institution" type="string" cy:type="String"/>
+<att name="name" value="Tampella Industries - Helsinki -" type="string" cy:type="String"/>
+</node>
+<node id="718">
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#Institution" type="string" cy:type="String"/>
+<att name="name" value="Commerce Int'l - Brussels -" type="string" cy:type="String"/>
+</node>
+<node id="11170">
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#Person" type="string" cy:type="String"/>
+<att name="name" value="John Clancey CIA c. 1970s" type="string" cy:type="String"/>
+</node>
+<node id="706">
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#Person" type="string" cy:type="String"/>
+<att name="name" value="Jack Frost" type="string" cy:type="String"/>
+</node>
+<node id="11166">
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#FinalInfo" type="string" cy:type="String"/>
+<att name="name" value="1979: target of US Customs probe" type="string" cy:type="String"/>
+</node>
+<node id="719">
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#Institution" type="string" cy:type="String"/>
+<att name="name" value="Colet Trading Est. - Liecht -" type="string" cy:type="String"/>
+</node>
+<node id="722">
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#Institution" type="string" cy:type="String"/>
+<att name="name" value="South African Marine - NY -" type="string" cy:type="String"/>
+</node>
+<node id="11155">
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#Institution" type="string" cy:type="String"/>
+<att name="name" value="Atlas Aircraft Corp - So Afr. -" type="string" cy:type="String"/>
+</node>
+<node id="721">
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#Person" type="string" cy:type="String"/>
+<att name="name" value="Jacobus Coetzee" type="string" cy:type="String"/>
+</node>
+<node id="707">
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#Person" type="string" cy:type="String"/>
+<att name="name" value="Jacques Heymann" type="string" cy:type="String"/>
+</node>
+<node id="11148">
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#Institution" type="string" cy:type="String"/>
+<att name="name" value="FFE Int'l - Belgium -" type="string" cy:type="String"/>
+</node>
+<node id="711">
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#Person" type="string" cy:type="String"/>
+<att name="name" value="Saad Gabr" type="string" cy:type="String"/>
+</node>
+<node id="673">
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#Person" type="string" cy:type="String"/>
+<att name="name" value="Jean Duronsoy" type="string" cy:type="String"/>
+</node>
+<node id="11142">
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#Institution" type="string" cy:type="String"/>
+<att name="name" value="Gechem - Brussels -" type="string" cy:type="String"/>
+</node>
+<node id="11140">
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#Institution" type="string" cy:type="String"/>
+<att name="name" value="Societe Generale de Belgique - Brussels -" type="string" cy:type="String"/>
+</node>
+<node id="670">
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#Institution" type="string" cy:type="String"/>
+<att name="name" value="Saudi National Guard" type="string" cy:type="String"/>
+</node>
+<node id="744">
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#Institution" type="string" cy:type="String"/>
+<att name="name" value="Armscor of South Africa - Pretoria -" type="string" cy:type="String"/>
+</node>
+<node id="714">
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#Person" type="string" cy:type="String"/>
+<att name="name" value="Yitzhak Rabin" type="string" cy:type="String"/>
+</node>
+<node id="715">
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#Institution" type="string" cy:type="String"/>
+<att name="name" value="Israel Defense Ministry" type="string" cy:type="String"/>
+</node>
+<node id="713">
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#Person" type="string" cy:type="String"/>
+<att name="name" value="Dov Peleg" type="string" cy:type="String"/>
+</node>
+<node id="712">
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#Person" type="string" cy:type="String"/>
+<att name="name" value="Shaul Eisenberg" type="string" cy:type="String"/>
+</node>
+<node id="11130">
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#Institution" type="string" cy:type="String"/>
+<att name="name" value="Chamberlain Manufactoring - Scranton -" type="string" cy:type="String"/>
+</node>
+<node id="11743">
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#FinalInfo" type="string" cy:type="String"/>
+<att name="name" value="1980: plead guilty to arms smuggling; 6 months in prison/1" type="string" cy:type="String"/>
+</node>
+<node id="11127">
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#Person" type="string" cy:type="String"/>
+<att name="name" value="Rodgers Gregory" type="string" cy:type="String"/>
+</node>
+<node id="11125">
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#FinalInfo" type="string" cy:type="String"/>
+<att name="name" value="1979: target of US Customs probe; co dissolved; paid $100k fine" type="string" cy:type="String"/>
+</node>
+<node id="11123">
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#Institution" type="string" cy:type="String"/>
+<att name="name" value="SRC/US - N.Tray Vt -" type="string" cy:type="String"/>
+</node>
+<node id="660">
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#Institution" type="string" cy:type="String"/>
+<att name="name" value="Dutch Defense Ministry" type="string" cy:type="String"/>
+</node>
+<node id="11118">
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#Institution" type="string" cy:type="String"/>
+<att name="name" value="Eurometaal BV - Holland -" type="string" cy:type="String"/>
+</node>
+<node id="671">
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#Institution" type="string" cy:type="String"/>
+<att name="name" value="Eurosystems - Brussels -" type="string" cy:type="String"/>
+</node>
+<node id="11116">
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#Institution" type="string" cy:type="String"/>
+<att name="name" value="Israel Military Industries - Tel Aviv -" type="string" cy:type="String"/>
+</node>
+<node id="666">
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#Institution" type="string" cy:type="String"/>
+<att name="name" value="Explosives Rio Tinto - Spain -" type="string" cy:type="String"/>
+</node>
+<node id="11112">
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#Institution" type="string" cy:type="String"/>
+<att name="name" value="H&amp;FI - Belgium -" type="string" cy:type="String"/>
+</node>
+<node id="668">
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#Person" type="string" cy:type="String"/>
+<att name="name" value="Paul Rigo" type="string" cy:type="String"/>
+</node>
+<node id="665">
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#Person" type="string" cy:type="String"/>
+<att name="name" value="Luis Palacio" type="string" cy:type="String"/>
+</node>
+<node id="667">
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#Institution" type="string" cy:type="String"/>
+<att name="name" value="SRC Int'l - Brussels -" type="string" cy:type="String"/>
+</node>
+<node id="704">
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#Institution" type="string" cy:type="String"/>
+<att name="name" value="Colet Trading Est. - Canada -" type="string" cy:type="String"/>
+</node>
+<node id="657">
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#FinalInfo" type="string" cy:type="String"/>
+<att name="name" value="1980: target of US Customs probe" type="string" cy:type="String"/>
+</node>
+<node id="659">
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#Institution" type="string" cy:type="String"/>
+<att name="name" value="Paragon Holdings - Caymans -" type="string" cy:type="String"/>
+</node>
+<node id="11102">
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#Institution" type="string" cy:type="String"/>
+<att name="name" value="Poudreries Reunis de Belgique - Brussels -" type="string" cy:type="String"/>
+</node>
+<node id="720">
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#Institution" type="string" cy:type="String"/>
+<att name="name" value="Sommerset Chemicals - So Afr -" type="string" cy:type="String"/>
+</node>
+<node id="11098">
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#Institution" type="string" cy:type="String"/>
+<att name="name" value="Globus Reitcrai - Hamburg -" type="string" cy:type="String"/>
+</node>
+<node id="724">
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#Institution" type="string" cy:type="String"/>
+<att name="name" value="Space Capital Int'l - Amsterdam -" type="string" cy:type="String"/>
+</node>
+<node id="732">
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#Person" type="string" cy:type="String"/>
+<att name="name" value="Steve Adams" type="string" cy:type="String"/>
+</node>
+<node id="11093">
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#Institution" type="string" cy:type="String"/>
+<att name="name" value="Barreros Hermanos Int'l - Barcelona -" type="string" cy:type="String"/>
+</node>
+<node id="676">
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#Person" type="string" cy:type="String"/>
+<att name="name" value="Patrick Giles" type="string" cy:type="String"/>
+</node>
+<node id="677">
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#Institution" type="string" cy:type="String"/>
+<att name="name" value="Canadian Technical Industries" type="string" cy:type="String"/>
+</node>
+<node id="11089">
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#Person" type="string" cy:type="String"/>
+<att name="name" value="Frank Nel" type="string" cy:type="String"/>
+</node>
+<node id="678">
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#Person" type="string" cy:type="String"/>
+<att name="name" value="Klaus Urbatzka" type="string" cy:type="String"/>
+</node>
+<node id="725">
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#Institution" type="string" cy:type="String"/>
+<att name="name" value="Shefford Electronics - Quebec -" type="string" cy:type="String"/>
+</node>
+<node id="11085">
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#Institution" type="string" cy:type="String"/>
+<att name="name" value="Seagrams Corp - Montreal -" type="string" cy:type="String"/>
+</node>
+<node id="681">
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#Person" type="string" cy:type="String"/>
+<att name="name" value="Peter Bronfman" type="string" cy:type="String"/>
+</node>
+<node id="679">
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#Person" type="string" cy:type="String"/>
+<att name="name" value="Ed Bronfman" type="string" cy:type="String"/>
+</node>
+<node id="11081">
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#Institution" type="string" cy:type="String"/>
+<att name="name" value="EDPER Corp - Canada -" type="string" cy:type="String"/>
+</node>
+<node id="11079">
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#Person" type="string" cy:type="String"/>
+<att name="name" value="Arthur Cockwell" type="string" cy:type="String"/>
+</node>
+<node id="11077">
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#Institution" type="string" cy:type="String"/>
+<att name="name" value="Great West Saddlery - Canada -" type="string" cy:type="String"/>
+</node>
+<node id="685">
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#Person" type="string" cy:type="String"/>
+<att name="name" value="Gen. James Gavin" type="string" cy:type="String"/>
+</node>
+<node id="11074">
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#Institution" type="string" cy:type="String"/>
+<att name="name" value="Arthur D. Little Co. Cambridge Mass" type="string" cy:type="String"/>
+</node>
+<node id="687">
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#Person" type="string" cy:type="String"/>
+<att name="name" value="Jean de Valpine" type="string" cy:type="String"/>
+</node>
+<node id="688">
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#Institution" type="string" cy:type="String"/>
+<att name="name" value="Memorial Drive Trust" type="string" cy:type="String"/>
+</node>
+<node id="11699">
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#FinalInfo" type="string" cy:type="String"/>
+<att name="name" value="1980: plead guilty to arms smuggling; 6 months in prison/2" type="string" cy:type="String"/>
+</node>
+<node id="11068">
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#Person" type="string" cy:type="String"/>
+<att name="name" value="Gerry Bull founder, chmn" type="string" cy:type="String"/>
+</node>
+<node id="11066">
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#Institution" type="string" cy:type="String"/>
+<att name="name" value="Commercial Credit Corp - Canada -" type="string" cy:type="String"/>
+</node>
+<node id="11064">
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#Institution" type="string" cy:type="String"/>
+<att name="name" value="First Penn Bank - Phila -" type="string" cy:type="String"/>
+</node>
+<node id="11062">
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#Person" type="string" cy:type="String"/>
+<att name="name" value="Robert Bennett" type="string" cy:type="String"/>
+</node>
+<node id="11060">
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#Person" type="string" cy:type="String"/>
+<att name="name" value="Sterling Cole dir IAEC" type="string" cy:type="String"/>
+</node>
+<node id="696">
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#Institution" type="string" cy:type="String"/>
+<att name="name" value="Space Research Corp - US/Canada -" type="string" cy:type="String"/>
+</node>
+<node id="11058">
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#Person" type="string" cy:type="String"/>
+<att name="name" value="Stanley Pottinger" type="string" cy:type="String"/>
+</node>
+<edge source="11809" target="708">
+<att name="amount" type="string" cy:type="String"/>
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#Final" type="string" cy:type="String"/>
+</edge>
+<edge source="708" target="11102">
+<att name="amount" type="string" cy:type="String"/>
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#InfluenceControl" type="string" cy:type="String"/>
+</edge>
+<edge source="11806" target="744">
+<att name="amount" type="string" cy:type="String"/>
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#Final" type="string" cy:type="String"/>
+</edge>
+<edge source="741" target="744">
+<att name="amount" type="string" cy:type="String"/>
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#InfluenceControl" type="string" cy:type="String"/>
+</edge>
+<edge source="742" target="744">
+<att name="amount" type="string" cy:type="String"/>
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#InfluenceControl" type="string" cy:type="String"/>
+</edge>
+<edge source="11802" target="744">
+<att name="amount" type="string" cy:type="String"/>
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#InfluenceControl" type="string" cy:type="String"/>
+</edge>
+<edge source="745" target="744">
+<att name="amount" type="string" cy:type="String"/>
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#InfluenceControl" type="string" cy:type="String"/>
+</edge>
+<edge source="739" target="11064">
+<att name="amount" type="string" cy:type="String"/>
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#FinancialTransaction" type="string" cy:type="String"/>
+</edge>
+<edge source="11195" target="736">
+<att name="amount" type="string" cy:type="String"/>
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#InfluenceControl" type="string" cy:type="String"/>
+</edge>
+<edge source="736" target="744">
+<att name="amount" type="string" cy:type="String"/>
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#InfluenceControl" type="string" cy:type="String"/>
+</edge>
+<edge source="737" target="11191">
+<att name="amount" type="string" cy:type="String"/>
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#Association" type="string" cy:type="String"/>
+</edge>
+<edge source="731" target="733">
+<att name="amount" type="string" cy:type="String"/>
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#InfluenceControl" type="string" cy:type="String"/>
+</edge>
+<edge source="730" target="733">
+<att name="amount" type="string" cy:type="String"/>
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#InfluenceControl" type="string" cy:type="String"/>
+</edge>
+<edge source="733" target="95">
+<att name="amount" type="string" cy:type="String"/>
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#Association" type="string" cy:type="String"/>
+</edge>
+<edge source="733" target="11184">
+<att name="amount" type="string" cy:type="String"/>
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#InfluenceControl" type="string" cy:type="String"/>
+</edge>
+<edge source="728" target="729">
+<att name="amount" type="string" cy:type="String"/>
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#InfluenceControl" type="string" cy:type="String"/>
+</edge>
+<edge source="11178" target="718">
+<att name="amount" type="string" cy:type="String"/>
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#FinancialTransaction" type="string" cy:type="String"/>
+</edge>
+<edge source="718" target="703">
+<att name="amount" type="string" cy:type="String"/>
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#Association" type="string" cy:type="String"/>
+</edge>
+<edge source="718" target="11175">
+<att name="amount" type="string" cy:type="String"/>
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#Association" type="string" cy:type="String"/>
+</edge>
+<edge source="718" target="11173">
+<att name="amount" type="string" cy:type="String"/>
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#Association" type="string" cy:type="String"/>
+</edge>
+<edge source="718" target="11170">
+<att name="amount" type="string" cy:type="String"/>
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#Association" type="string" cy:type="String"/>
+</edge>
+<edge source="706" target="11170">
+<att name="amount" type="string" cy:type="String"/>
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#Association" type="string" cy:type="String"/>
+</edge>
+<edge source="706" target="11148">
+<att name="amount" type="string" cy:type="String"/>
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#InfluenceControl" type="string" cy:type="String"/>
+</edge>
+<edge source="11166" target="719">
+<att name="amount" type="string" cy:type="String"/>
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#Final" type="string" cy:type="String"/>
+</edge>
+<edge source="719" target="704">
+<att name="amount" type="string" cy:type="String"/>
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#InfluenceControl" type="string" cy:type="String"/>
+</edge>
+<edge source="722" target="11098">
+<att name="amount" type="string" cy:type="String"/>
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#InfluenceControl" type="string" cy:type="String"/>
+</edge>
+<edge source="721" target="744">
+<att name="amount" type="string" cy:type="String"/>
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#InfluenceControl" type="string" cy:type="String"/>
+</edge>
+<edge source="721" target="724">
+<att name="amount" type="string" cy:type="String"/>
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#InfluenceControl" type="string" cy:type="String"/>
+</edge>
+<edge source="707" target="706">
+<att name="amount" type="string" cy:type="String"/>
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#Association" type="string" cy:type="String"/>
+</edge>
+<edge source="707" target="724">
+<att name="amount" type="string" cy:type="String"/>
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#InfluenceControl" type="string" cy:type="String"/>
+</edge>
+<edge source="707" target="11102">
+<att name="amount" type="string" cy:type="String"/>
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#Association" type="string" cy:type="String"/>
+</edge>
+<edge source="707" target="11112">
+<att name="amount" type="string" cy:type="String"/>
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#InfluenceControl" type="string" cy:type="String"/>
+</edge>
+<edge source="11148" target="11112">
+<att name="amount" type="string" cy:type="String"/>
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#InfluenceControl" type="string" cy:type="String"/>
+</edge>
+<edge source="711" target="11102">
+<att name="amount" type="string" cy:type="String"/>
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#InfluenceControl" type="string" cy:type="String"/>
+</edge>
+<edge source="673" target="11142">
+<att name="amount" type="string" cy:type="String"/>
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#InfluenceControl" type="string" cy:type="String"/>
+</edge>
+<edge source="11140" target="11142">
+<att name="amount" type="string" cy:type="String"/>
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#InfluenceControl" type="string" cy:type="String"/>
+</edge>
+<edge source="11140" target="671">
+<att name="amount" type="string" cy:type="String"/>
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#InfluenceControl" type="string" cy:type="String"/>
+</edge>
+<edge source="744" target="739">
+<att name="amount" type="string" cy:type="String"/>
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#FinancialTransaction" type="string" cy:type="String"/>
+</edge>
+<edge source="744" target="11191">
+<att name="amount" type="string" cy:type="String"/>
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#Association" type="string" cy:type="String"/>
+</edge>
+<edge source="744" target="11184">
+<att name="amount" type="string" cy:type="String"/>
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#SaleTransfer" type="string" cy:type="String"/>
+</edge>
+<edge source="744" target="729">
+<att name="amount" type="string" cy:type="String"/>
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#Association" type="string" cy:type="String"/>
+</edge>
+<edge source="744" target="11178">
+<att name="amount" type="string" cy:type="String"/>
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#FinancialTransaction" type="string" cy:type="String"/>
+</edge>
+<edge source="744" target="718">
+<att name="amount" type="string" cy:type="String"/>
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#Association" type="string" cy:type="String"/>
+</edge>
+<edge source="744" target="719">
+<att name="amount" type="string" cy:type="String"/>
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#InfluenceControl" type="string" cy:type="String"/>
+</edge>
+<edge source="744" target="720">
+<att name="amount" type="string" cy:type="String"/>
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#Association" type="string" cy:type="String"/>
+</edge>
+<edge source="744" target="722">
+<att name="amount" type="string" cy:type="String"/>
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#InfluenceControl" type="string" cy:type="String"/>
+</edge>
+<edge source="744" target="724">
+<att name="amount" type="string" cy:type="String"/>
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#InfluenceControl" type="string" cy:type="String"/>
+</edge>
+<edge source="744" target="11116">
+<att name="amount" type="string" cy:type="String"/>
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#Association" type="string" cy:type="String"/>
+</edge>
+<edge source="714" target="715">
+<att name="amount" type="string" cy:type="String"/>
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#InfluenceControl" type="string" cy:type="String"/>
+</edge>
+<edge source="715" target="11116">
+<att name="amount" type="string" cy:type="String"/>
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#InfluenceControl" type="string" cy:type="String"/>
+</edge>
+<edge source="713" target="11116">
+<att name="amount" type="string" cy:type="String"/>
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#InfluenceControl" type="string" cy:type="String"/>
+</edge>
+<edge source="712" target="711">
+<att name="amount" type="string" cy:type="String"/>
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#Association" type="string" cy:type="String"/>
+</edge>
+<edge source="712" target="11116">
+<att name="amount" type="string" cy:type="String"/>
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#InfluenceControl" type="string" cy:type="String"/>
+</edge>
+<edge source="11130" target="11123">
+<att name="amount" type="string" cy:type="String"/>
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#Association" type="string" cy:type="String"/>
+</edge>
+<edge source="11743" target="11127">
+<att name="amount" type="string" cy:type="String"/>
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#Final" type="string" cy:type="String"/>
+</edge>
+<edge source="11127" target="11123">
+<att name="amount" type="string" cy:type="String"/>
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#InfluenceControl" type="string" cy:type="String"/>
+</edge>
+<edge source="11125" target="696">
+<att name="amount" type="string" cy:type="String"/>
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#Final" type="string" cy:type="String"/>
+</edge>
+<edge source="660" target="11118">
+<att name="amount" type="string" cy:type="String"/>
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#Association" type="string" cy:type="String"/>
+</edge>
+<edge source="660" target="696">
+<att name="amount" type="string" cy:type="String"/>
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#Association" type="string" cy:type="String"/>
+</edge>
+<edge source="11118" target="11116">
+<att name="amount" type="string" cy:type="String"/>
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#Association" type="string" cy:type="String"/>
+</edge>
+<edge source="11118" target="667">
+<att name="amount" type="string" cy:type="String"/>
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#InfluenceControl" type="string" cy:type="String"/>
+</edge>
+<edge source="671" target="670">
+<att name="amount" type="string" cy:type="String"/>
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#Association" type="string" cy:type="String"/>
+</edge>
+<edge source="671" target="11118">
+<att name="amount" type="string" cy:type="String"/>
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#InfluenceControl" type="string" cy:type="String"/>
+</edge>
+<edge source="11116" target="11123">
+<att name="amount" type="string" cy:type="String"/>
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#Association" type="string" cy:type="String"/>
+</edge>
+<edge source="11116" target="667">
+<att name="amount" type="string" cy:type="String"/>
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#Association" type="string" cy:type="String"/>
+</edge>
+<edge source="666" target="667">
+<att name="amount" type="string" cy:type="String"/>
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#Association" type="string" cy:type="String"/>
+</edge>
+<edge source="11112" target="11102">
+<att name="amount" type="string" cy:type="String"/>
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#Association" type="string" cy:type="String"/>
+</edge>
+<edge source="11112" target="667">
+<att name="amount" type="string" cy:type="String"/>
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#InfluenceControl" type="string" cy:type="String"/>
+</edge>
+<edge source="668" target="11102">
+<att name="amount" type="string" cy:type="String"/>
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#InfluenceControl" type="string" cy:type="String"/>
+</edge>
+<edge source="668" target="667">
+<att name="amount" type="string" cy:type="String"/>
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#InfluenceControl" type="string" cy:type="String"/>
+</edge>
+<edge source="665" target="667">
+<att name="amount" type="string" cy:type="String"/>
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#InfluenceControl" type="string" cy:type="String"/>
+</edge>
+<edge source="704" target="11112">
+<att name="amount" type="string" cy:type="String"/>
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#InfluenceControl" type="string" cy:type="String"/>
+</edge>
+<edge source="704" target="667">
+<att name="amount" type="string" cy:type="String"/>
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#Association" type="string" cy:type="String"/>
+</edge>
+<edge source="704" target="659">
+<att name="amount" type="string" cy:type="String"/>
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#Association" type="string" cy:type="String"/>
+</edge>
+<edge source="657" target="659">
+<att name="amount" type="string" cy:type="String"/>
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#Final" type="string" cy:type="String"/>
+</edge>
+<edge source="11102" target="720">
+<att name="amount" type="string" cy:type="String"/>
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#Association" type="string" cy:type="String"/>
+</edge>
+<edge source="724" target="677">
+<att name="amount" type="string" cy:type="String"/>
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#InfluenceControl" type="string" cy:type="String"/>
+</edge>
+<edge source="732" target="733">
+<att name="amount" type="string" cy:type="String"/>
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#InfluenceControl" type="string" cy:type="String"/>
+</edge>
+<edge source="732" target="677">
+<att name="amount" type="string" cy:type="String"/>
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#InfluenceControl" type="string" cy:type="String"/>
+</edge>
+<edge source="11093" target="744">
+<att name="amount" type="string" cy:type="String"/>
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#Association" type="string" cy:type="String"/>
+</edge>
+<edge source="11093" target="11098">
+<att name="amount" type="string" cy:type="String"/>
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#Association" type="string" cy:type="String"/>
+</edge>
+<edge source="11093" target="696">
+<att name="amount" type="string" cy:type="String"/>
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#Association" type="string" cy:type="String"/>
+</edge>
+<edge source="11093" target="677">
+<att name="amount" type="string" cy:type="String"/>
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#Association" type="string" cy:type="String"/>
+</edge>
+<edge source="676" target="677">
+<att name="amount" type="string" cy:type="String"/>
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#Association" type="string" cy:type="String"/>
+</edge>
+<edge source="11089" target="744">
+<att name="amount" type="string" cy:type="String"/>
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#InfluenceControl" type="string" cy:type="String"/>
+</edge>
+<edge source="11089" target="11155">
+<att name="amount" type="string" cy:type="String"/>
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#InfluenceControl" type="string" cy:type="String"/>
+</edge>
+<edge source="11089" target="725">
+<att name="amount" type="string" cy:type="String"/>
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#InfluenceControl" type="string" cy:type="String"/>
+</edge>
+<edge source="678" target="725">
+<att name="amount" type="string" cy:type="String"/>
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#InfluenceControl" type="string" cy:type="String"/>
+</edge>
+<edge source="681" target="11081">
+<att name="amount" type="string" cy:type="String"/>
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#InfluenceControl" type="string" cy:type="String"/>
+</edge>
+<edge source="679" target="11081">
+<att name="amount" type="string" cy:type="String"/>
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#InfluenceControl" type="string" cy:type="String"/>
+</edge>
+<edge source="11081" target="11085">
+<att name="amount" type="string" cy:type="String"/>
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#InfluenceControl" type="string" cy:type="String"/>
+</edge>
+<edge source="11081" target="11077">
+<att name="amount" type="string" cy:type="String"/>
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#InfluenceControl" type="string" cy:type="String"/>
+</edge>
+<edge source="11079" target="11077">
+<att name="amount" type="string" cy:type="String"/>
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#InfluenceControl" type="string" cy:type="String"/>
+</edge>
+<edge source="11077" target="696">
+<att name="amount" type="string" cy:type="String"/>
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#InfluenceControl" type="string" cy:type="String"/>
+</edge>
+<edge source="685" target="11074">
+<att name="amount" type="string" cy:type="String"/>
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#InfluenceControl" type="string" cy:type="String"/>
+</edge>
+<edge source="11074" target="688">
+<att name="amount" type="string" cy:type="String"/>
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#InfluenceControl" type="string" cy:type="String"/>
+</edge>
+<edge source="687" target="688">
+<att name="amount" type="string" cy:type="String"/>
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#InfluenceControl" type="string" cy:type="String"/>
+</edge>
+<edge source="688" target="696">
+<att name="amount" type="string" cy:type="String"/>
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#InfluenceControl" type="string" cy:type="String"/>
+</edge>
+<edge source="11699" target="11068">
+<att name="amount" type="string" cy:type="String"/>
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#Final" type="string" cy:type="String"/>
+</edge>
+<edge source="11068" target="696">
+<att name="amount" type="string" cy:type="String"/>
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#InfluenceControl" type="string" cy:type="String"/>
+</edge>
+<edge source="11066" target="696">
+<att name="amount" type="string" cy:type="String"/>
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#FinancialTransaction" type="string" cy:type="String"/>
+</edge>
+<edge source="11064" target="696">
+<att name="amount" type="string" cy:type="String"/>
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#FinancialTransaction" type="string" cy:type="String"/>
+</edge>
+<edge source="11062" target="696">
+<att name="amount" type="string" cy:type="String"/>
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#Association" type="string" cy:type="String"/>
+</edge>
+<edge source="11060" target="696">
+<att name="amount" type="string" cy:type="String"/>
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#InfluenceControl" type="string" cy:type="String"/>
+</edge>
+<edge source="696" target="11123">
+<att name="amount" type="string" cy:type="String"/>
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#InfluenceControl" type="string" cy:type="String"/>
+</edge>
+<edge source="696" target="667">
+<att name="amount" type="string" cy:type="String"/>
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#InfluenceControl" type="string" cy:type="String"/>
+</edge>
+<edge source="696" target="659">
+<att name="amount" type="string" cy:type="String"/>
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#InfluenceControl" type="string" cy:type="String"/>
+</edge>
+<edge source="696" target="11102">
+<att name="amount" type="string" cy:type="String"/>
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#Association" type="string" cy:type="String"/>
+</edge>
+<edge source="696" target="720">
+<att name="amount" type="string" cy:type="String"/>
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#Association" type="string" cy:type="String"/>
+</edge>
+<edge source="696" target="11098">
+<att name="amount" type="string" cy:type="String"/>
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#Association" type="string" cy:type="String"/>
+</edge>
+<edge source="696" target="677">
+<att name="amount" type="string" cy:type="String"/>
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#InfluenceControl" type="string" cy:type="String"/>
+</edge>
+<edge source="696" target="725">
+<att name="amount" type="string" cy:type="String"/>
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#InfluenceControl" type="string" cy:type="String"/>
+</edge>
+<edge source="11058" target="696">
+<att name="amount" type="string" cy:type="String"/>
+<att name="type" value="http://www.lombardinetworks.net/lombardi.owl#InfluenceControl" type="string" cy:type="String"/>
+</edge>
+</graph>

@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dialectical Materialism - Interactive</title>
+    <style>
+        body {
+            margin: 0;
+            background-color: #1a1a1a;
+            color: white;
+            font-family: sans-serif;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        #stage {
+            position: relative;
+            width: 80vw;
+            /* Aspect ratio 16:9 approx */
+            height: 45vw;
+            max-height: 80vh;
+            max-width: 142vh;
+            background: #000;
+            box-shadow: 0 0 50px rgba(0, 0, 0, 0.5);
+        }
+
+        video,
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        /* Click Zones */
+        .click-zone {
+            position: absolute;
+            cursor: pointer;
+            /* border: 1px solid rgba(255,0,0,0.3); Debugging */
+            z-index: 10;
+        }
+
+        #zone-super {
+            top: 10%;
+            left: 20%;
+            width: 60%;
+            height: 30%;
+        }
+
+        #zone-base {
+            bottom: 10%;
+            left: 20%;
+            width: 60%;
+            height: 30%;
+        }
+
+        #back-btn {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            padding: 10px 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid white;
+            color: white;
+            cursor: pointer;
+            z-index: 20;
+            display: none;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        #back-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .placeholder-msg {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            color: #555;
+            pointer-events: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="stage">
+        <div class="placeholder-msg">
+            <h2>Manim Content Not Found</h2>
+            <p>Please run <code>generate_diagram.py</code> to generate assets.</p>
+        </div>
+
+        <!-- Media Container -->
+        <div id="media-container">
+            <!-- Initial State: Static Image of Overview (last frame of Overview scene) -->
+            <img id="main-display" src="media/images/generate_diagram/Overview_ManimCE_v0.18.1.png"
+                onerror="this.style.display='none'">
+            <video id="transition-player" style="display:none;" muted playsinline></video>
+        </div>
+
+        <!-- Interaction Zones (Only active in Overview) -->
+        <div id="zone-super" class="click-zone" onclick="zoomTo('super')"></div>
+        <div id="zone-base" class="click-zone" onclick="zoomTo('base')"></div>
+
+        <button id="back-btn" onclick="goBack()">Return to Overview</button>
+    </div>
+
+    <script>
+        const state = {
+            current: 'overview', // overview, base, super
+        };
+
+        const paths = {
+            overview_img: 'media/images/generate_diagram/Overview_ManimCE_v0.18.1.png',
+
+            zoom_base_vid: 'media/videos/generate_diagram/1080p60/ZoomBase.mp4',
+            base_detail_img: 'media/images/generate_diagram/BaseDetail_ManimCE_v0.18.1.png',
+
+            zoom_super_vid: 'media/videos/generate_diagram/1080p60/ZoomSuperstructure.mp4',
+            super_detail_img: 'media/images/generate_diagram/SuperstructureDetail_ManimCE_v0.18.1.png'
+        };
+
+        const display = document.getElementById('main-display');
+        const player = document.getElementById('transition-player');
+        const backBtn = document.getElementById('back-btn');
+        const zoneSuper = document.getElementById('zone-super');
+        const zoneBase = document.getElementById('zone-base');
+
+        function zoomTo(target) {
+            if (state.current !== 'overview') return;
+
+            // Disable zones
+            zoneSuper.style.display = 'none';
+            zoneBase.style.display = 'none';
+
+            let videoSrc, finalImg;
+
+            if (target === 'base') {
+                videoSrc = paths.zoom_base_vid;
+                finalImg = paths.base_detail_img;
+                state.current = 'base';
+            } else {
+                videoSrc = paths.zoom_super_vid;
+                finalImg = paths.super_detail_img;
+                state.current = 'super';
+            }
+
+            // Play transition
+            display.style.display = 'none';
+            player.src = videoSrc;
+            player.style.display = 'block';
+            player.play();
+
+            player.onended = () => {
+                player.style.display = 'none';
+                display.src = finalImg;
+                display.style.display = 'block';
+                backBtn.style.display = 'block';
+            };
+
+            // Fallback if video fails (e.g. not generated yet)
+            player.onerror = () => {
+                console.log("Video not found, skipping to image");
+                player.style.display = 'none';
+                display.src = finalImg;
+                display.style.display = 'block';
+                backBtn.style.display = 'block';
+            };
+        }
+
+        function goBack() {
+            // Simple cut back to overview for now (reverse video is harder without pre-rendering it)
+            state.current = 'overview';
+
+            backBtn.style.display = 'none';
+            display.src = paths.overview_img;
+
+            // Re-enable zones
+            zoneSuper.style.display = 'block';
+            zoneBase.style.display = 'block';
+        }
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Anatomy of a TikTok Myth - Alberto Verrilli</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://unpkg.com/framer-motion@10.16.4/dist/framer-motion.js"></script>
+    <style>
+        body {
+            margin: 0;
+            font-family: monospace;
+        }
+
+        /* Custom scrollbar to match the aesthetic if needed */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #888;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState } = React;
+        const { motion, AnimatePresence } = window.Motion;
+
+        // --- ICONS ---
+        const BookOpen = ({ size = 24, className = "" }) => (
+            <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" /><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" /></svg>
+        );
+        const MousePointer2 = ({ size = 24, className = "" }) => (
+            <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="m12 6 6 6-6 6" /><path d="M2 12h16" /></svg>
+        );
+
+        const TikTokMythMap = () => {
+            // We keep track of hover state to highlight specific connections
+            const [hoveredSection, setHoveredSection] = useState(null);
+
+            // --- DATA ---
+            const sections = {
+                inoculation: {
+                    id: 'inoculation',
+                    side: 'left',
+                    title: "II. THE INOCULATION",
+                    sub: "Visual: Minecraft Parkour",
+                    // Target on image (The Background/Left Blocks) relative to image size
+                    target: { x: 25, y: 65 },
+                    myth: "FRICTIONLESS CONSUMPTION",
+                    barthes: {
+                        sr: "Geometric blocks, Repetitive jumping",
+                        sd: "Gameplay, Kinetic satisfaction",
+                        sign: "Visual 'Sludge'",
+                        myth_sd: "Inoculation against boredom. The visual loop occupies the eye to allow passive audio intake."
+                    }
+                },
+                text: {
+                    id: 'text',
+                    side: 'right',
+                    title: "III. THE ANCHOR",
+                    sub: "Caption: 'THE NFC CHIP SELFIE'",
+                    // Target on image (The Text)
+                    target: { x: 50, y: 30 },
+                    myth: "MEMETIC REALITY",
+                    barthes: {
+                        sr: "Impact Font, Nonsense Phrase",
+                        sd: "Meme Format, Internet Dialect",
+                        sign: "Cultural Insider Code",
+                        myth_sd: "The 'Anchor' (Ancrage). It directs the reading, validating the viewer as part of the 'in-group'."
+                    }
+                },
+                authority: {
+                    id: 'authority',
+                    side: 'right',
+                    title: "I. THE AUTHORITY",
+                    sub: "Figure: Rick Sanchez",
+                    // Target on image (Rick's Face)
+                    target: { x: 75, y: 45 },
+                    myth: "CYNICAL INTELLECT",
+                    barthes: {
+                        sr: "Lab Coat, Tone, Morty",
+                        sd: "Mad Scientist, Nihilism, Truth",
+                        sign: "The Rick Persona",
+                        myth_sd: "Naturalized Intelligence. Cynicism is accepted as truth without need for evidence."
+                    }
+                }
+            };
+
+            // Fixed Container Configuration
+            const containerWidth = 1200;
+            const imageWidth = 350;
+            const imageHeight = 600;
+            const cardWidth = 300;
+
+            // Calculate Horizontal Positions
+            const centerX = containerWidth / 2;
+            const imageLeftX = centerX - (imageWidth / 2);
+            const imageRightX = centerX + (imageWidth / 2);
+
+            // Card Positions (Absolute)
+            const cardPositions = {
+                inoculation: { x: 50, y: 320 }, // Left (shifted up)
+                text: { x: 850, y: 20 },        // Right Top (shifted up)
+                authority: { x: 850, y: 520 }   // Right Bottom (shifted up)
+            };
+
+            return (
+                <div className="flex flex-col items-center w-full min-h-screen bg-white text-black font-mono p-4">
+
+                    <a href="Diagrams.html" className="fixed top-4 left-4 z-50 border-2 border-black px-4 py-2 font-bold hover:bg-black hover:text-white transition-colors uppercase">
+                        ← Back
+                    </a>
+
+                    {/* HEADER */}
+                    <div className="z-10 max-w-4xl text-center mb-2 w-full border-b-2 border-black pb-2 bg-white/90 backdrop-blur-sm">
+                        <h1 className="text-3xl md:text-4xl font-bold tracking-tighter">THE ANATOMY OF A TIKTOK MYTH</h1>
+                        <p className="text-xs uppercase tracking-widest text-gray-500 mt-2">Rick / Minecraft / Truth</p>
+                    </div>
+
+                    {/* MAIN CONTAINER */}
+                    <div
+                        className="relative flex-shrink-0 mx-auto origin-top"
+                        style={{
+                            width: containerWidth,
+                            height: 850
+                        }}
+                    >
+
+                        {/* --- CENTRAL SPECIMEN --- */}
+                        <div
+                            className="absolute border-4 border-black bg-gray-100 shadow-[20px_20px_0px_0px_rgba(0,0,0,0.15)] z-0"
+                            style={{
+                                width: imageWidth,
+                                height: imageHeight,
+                                left: imageLeftX,
+                                top: 20
+                            }}
+                        >
+                            <div className="absolute inset-0 flex items-center justify-center overflow-hidden bg-black">
+                                <img
+                                    src="img/RIckMorty.png"
+                                    alt="Rick and Morty Minecraft Meme"
+                                    className="w-full h-full object-cover opacity-100"
+                                />
+                            </div>
+
+                            {/* HOTSPOTS ON IMAGE */}
+                            {Object.entries(sections).map(([key, section]) => (
+                                <div
+                                    key={key}
+                                    onMouseEnter={() => setHoveredSection(key)}
+                                    onMouseLeave={() => setHoveredSection(null)}
+                                    className={`absolute w-5 h-5 rounded-full border-2 border-black flex items-center justify-center z-50 transition-all duration-300
+                            ${hoveredSection === key || !hoveredSection ? 'bg-white scale-125' : 'bg-white opacity-50'}
+                        `}
+                                    style={{
+                                        left: `${section.target.x}%`,
+                                        top: `${section.target.y}%`,
+                                        transform: 'translate(-50%, -50%)',
+                                        boxShadow: '0 0 0 4px rgba(255,255,255,0.5)'
+                                    }}
+                                >
+                                    <div className="w-2 h-2 bg-black rounded-full" />
+                                </div>
+                            ))}
+                        </div>
+
+                        {/* --- CONNECTING LINES (SVG LAYER) --- */}
+                        <svg className="absolute inset-0 w-full h-full pointer-events-none z-10 overflow-visible">
+
+                            {Object.entries(sections).map(([key, s]) => {
+                                const isHovered = hoveredSection === key;
+                                const isDimmed = hoveredSection && !isHovered;
+
+                                // Calculate Start Point (On the Image)
+                                const startX = imageLeftX + (imageWidth * (s.target.x / 100));
+                                const startY = 20 + (imageHeight * (s.target.y / 100)); // 20 is top offset of image
+
+                                // Calculate End Point (At the Card)
+                                // Left card connects to its right edge. Right cards connect to their left edge.
+                                const cardX = cardPositions[key].x;
+                                const cardY = cardPositions[key].y + 40; // Connect somewhat near the top of the card (near title)
+
+                                const endX = s.side === 'left' ? cardX + cardWidth : cardX;
+                                const endY = cardY;
+
+                                return (
+                                    <g key={key} className={`transition-opacity duration-300 ${isDimmed ? 'opacity-20' : 'opacity-100'}`}>
+                                        {/* Main Connector Line - Simple Line, No Markers */}
+                                        <line
+                                            x1={startX} y1={startY}
+                                            x2={endX} y2={endY}
+                                            stroke="black"
+                                            strokeWidth={isHovered ? 3 : 1.5}
+                                        />
+                                    </g>
+                                )
+                            })}
+                        </svg>
+
+                        {/* --- BARTHES DIAGRAM CARDS --- */}
+                        {Object.entries(sections).map(([key, section]) => {
+                            const isHovered = hoveredSection === key;
+                            const isDimmed = hoveredSection && !isHovered;
+
+                            return (
+                                <div
+                                    key={key}
+                                    onMouseEnter={() => setHoveredSection(key)}
+                                    onMouseLeave={() => setHoveredSection(null)}
+                                    className={`absolute border-2 border-black bg-white p-4 shadow-[10px_10px_0px_0px_rgba(0,0,0,0.1)] z-20 transition-all duration-300
+                            ${isDimmed ? 'opacity-40 grayscale blur-[1px]' : 'opacity-100'}
+                            ${isHovered ? 'scale-105 shadow-[15px_15px_0px_0px_rgba(0,0,0,0.2)] z-30' : ''}
+                        `}
+                                    style={{
+                                        width: cardWidth,
+                                        left: cardPositions[key].x,
+                                        top: cardPositions[key].y
+                                    }}
+                                >
+                                    {/* Header */}
+                                    <div className="border-b-2 border-black pb-2 mb-4 flex justify-between items-start">
+                                        <div>
+                                            <h2 className="font-bold text-lg leading-none">{section.title}</h2>
+                                            <p className="text-xs text-gray-500 uppercase mt-1">{section.sub}</p>
+                                        </div>
+                                        <BookOpen size={16} className="text-gray-400" />
+                                    </div>
+
+                                    {/* BARTHES DIAGRAM: The Staggered System */}
+                                    <div className="text-[10px] font-mono border border-black mb-4">
+
+                                        {/* 1. LANGUAGE (First Order) */}
+                                        <div className="flex border-b border-black bg-gray-50">
+                                            <div className="w-1/2 p-2 border-r border-black relative">
+                                                <span className="block font-bold mb-1 text-[9px] text-gray-500 uppercase">1. Signifier</span>
+                                                <span className="italic leading-tight block">{section.barthes.sr}</span>
+                                            </div>
+                                            <div className="w-1/2 p-2">
+                                                <span className="block font-bold mb-1 text-[9px] text-gray-500 uppercase">2. Signified</span>
+                                                <span className="italic leading-tight block">{section.barthes.sd}</span>
+                                            </div>
+                                        </div>
+
+                                        {/* 3. SIGN = I. SIGNIFIER (The Pivot) */}
+                                        <div className="p-2 border-b-4 border-black bg-gray-100 text-center relative">
+                                            <span className="block font-bold mb-1 text-[9px] text-gray-500 uppercase">3. SIGN (Meaning) &rarr; I. SIGNIFIER (Form)</span>
+                                            <span className="font-bold text-xs uppercase block py-1">{section.barthes.sign}</span>
+
+                                            {/* Visual Arrow down */}
+                                            <div className="absolute left-1/2 -bottom-3 -translate-x-1/2 w-0 h-0 border-l-[6px] border-l-transparent border-r-[6px] border-r-transparent border-t-[8px] border-t-black"></div>
+                                        </div>
+
+                                        {/* II. MYTH (Second Order) */}
+                                        <div className="p-3 bg-black text-white">
+                                            <div className="flex justify-between items-end mb-2">
+                                                <span className="font-bold text-gray-400">II. SIGNIFIED</span>
+                                                <span className="font-bold text-[10px] bg-white text-black px-1">MYTH</span>
+                                            </div>
+                                            <p className="text-xs leading-relaxed font-bold">
+                                                {section.barthes.myth_sd}
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    {/* Analysis Text */}
+                                    <div className="text-xs text-justify leading-relaxed border-l-2 border-black pl-3 text-gray-600">
+                                        <span className="font-bold text-black block mb-1">EFFECT: {section.myth}</span>
+                                        {key === 'inoculation' && "The gameplay inoculates the viewer against boredom, occupying the eye to allow passive audio intake."}
+                                        {key === 'text' && "The text anchors the image, validating the viewer as an 'insider' who understands the meme culture."}
+                                        {key === 'authority' && "Rick's persona acts as a shorthand for intellectual dominance, bypassing the need for actual evidence."}
+                                    </div>
+
+                                </div>
+                            )
+                        })}
+
+                    </div>
+
+                </div>
+            );
+        };
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<TikTokMythMap />);
+    </script>
+</body>
+
+</html>
