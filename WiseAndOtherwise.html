@@ -858,20 +858,57 @@
                 const name = document.getElementById('player-name').value;
                 if (!code || !name) return alert('Enter code and name');
 
+                // Visual Feedback
+                const btn = document.querySelector('#view-player-join button:not([style*="transparent"])');
+                if (btn) {
+                    btn.innerText = "Connecting...";
+                    btn.disabled = true;
+                }
+
                 app.role = 'player';
                 app.peer = new Peer();
 
+                // Timeout Safety
+                const connectionTimeout = setTimeout(() => {
+                    if (app.conn && !app.conn.open) {
+                        alert("Connection timed out. Host not found or network issue.");
+                        if (btn) { btn.innerText = "Join"; btn.disabled = false; }
+                        app.peer.destroy();
+                    }
+                }, 10000); // 10s timeout
+
+                app.peer.on('error', (err) => {
+                    console.error(err);
+                    clearTimeout(connectionTimeout);
+                    alert("Connection Error: " + err.type);
+                    if (btn) { btn.innerText = "Join"; btn.disabled = false; }
+                });
+
                 app.peer.on('open', (id) => {
                     // Connect to host
-                    const conn = app.peer.connect('wao-host-' + code);
+                    const conn = app.peer.connect('wao-host-' + code, {
+                        reliable: true
+                    });
                     app.conn = conn;
 
                     conn.on('open', () => {
+                        clearTimeout(connectionTimeout);
                         conn.send({ type: 'JOIN', name: name });
+                        if (btn) { btn.innerText = "Join"; btn.disabled = false; } // Reset for future
                     });
 
                     conn.on('data', (data) => player.handleHostData(data));
-                    conn.on('close', () => alert('Disconnected from host'));
+
+                    conn.on('close', () => {
+                        alert('Disconnected from host');
+                        app.home();
+                    });
+
+                    conn.on('error', (err) => {
+                        console.error('Conn Error', err);
+                        alert('Connection Failed: ' + err);
+                        if (btn) { btn.innerText = "Join"; btn.disabled = false; }
+                    });
                 });
             },
 
