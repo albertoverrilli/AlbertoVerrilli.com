@@ -1,0 +1,237 @@
+Here is a dataset of proverbial phrases scraped from the requested Wikipedia page.
+
+**Dataset: Proverbial Phrases**
+
+1. A bad excuse is better than none.
+2. A bad penny always turns up.
+3. A bad workman blames his tools.
+4. A bird in the hand is worth two in the bush.
+5. A cat may look at a king.
+6. A chain is only as strong as its weakest link.
+7. A dog is a man's best friend.
+8. A drowning man will clutch at a straw.
+9. A fool and his money are soon parted.
+10. A friend in need is a friend indeed.
+11. A friend to everyone is a friend to no one.
+12. A journey of a thousand miles begins with a single step.
+13. A leopard cannot change its spots.
+14. A little learning is a dangerous thing.
+15. A man can do what he wills but he cannot will what he wills.
+16. A mill cannot grind with the water that is past.
+17. A miss is as good as a mile.
+18. A new language is a new life.
+19. A penny saved is a penny earned.
+20. A picture is worth a thousand words.
+21. A rising tide lifts all boats.
+22. A rolling stone gathers no moss.
+23. A ship in a harbour is safe, but that's not what a ship is for.
+24. A stitch in time saves nine.
+25. Bad money drives out good.
+26. Bad news travels fast.
+27. Barking dogs seldom bite.
+28. Beauty is in the eye of the beholder.
+29. Beauty is only skin deep.
+30. Before setting out on a mission of vengeance, dig two graves.
+31. Beggars cannot be choosers.
+32. Behind every great man, there is a great woman.
+33. Better late than never.
+34. Better safe than sorry.
+35. Better to remain silent and be thought a fool than to speak and remove all doubt.
+36. Better wear out than rust out.
+37. Beware of Greeks bearing gifts.
+38. Big fish eat little fish.
+39. Birds of a feather flock together.
+40. Blood is thicker than water.
+41. Born with a silver spoon in one's mouth.
+42. Count your blessings.
+43. Courage is the measure of a Man, Beauty is the measure of a Woman.
+44. Cowards may die many times before their death.
+45. Cream rises.
+46. Crime does not pay.
+47. Criss-cross, applesauce.
+48. Cross the stream where it is shallowest.
+49. Curiosity killed the cat.
+50. Cut your coat according to your cloth.
+51. Do not change horses in midstream.
+52. Do not count your chickens before they are hatched.
+53. Do not cross the bridge till you come to it.
+54. Do not cry over spilled milk.
+55. Do not cut off your nose to spite your face.
+56. Do not dish it if you can't take it.
+57. Do not judge a book by its cover.
+58. Do not keep a dog and bark yourself.
+59. Do not let the bastards grind you down.
+60. Do not let the grass grow beneath one's feet.
+61. Do not look a gift horse in the mouth.
+62. Do not make a mountain out of a mole hill.
+63. Do not meet troubles half-way.
+64. Do not put all your eggs in one basket.
+65. Do not put new wine into old bottles.
+66. Do not put the cart before the horse.
+67. Do not put too many irons in the fire.
+68. Do not rock the boat.
+69. Do not shut/lock the stable door after the horse has bolted.
+70. Do not spend it all in one place.
+71. Do not spoil the ship for a ha'porth of tar.
+72. Do not sympathize with those who can not empathize.
+73. Do not teach your Grandmother to suck eggs.
+74. Do not throw pearls to swine.
+75. Do not throw the baby out with the bathwater.
+76. Do not try to walk before you can crawl.
+77. Do not upset the apple-cart.
+78. Do not wash your dirty linen in public.
+79. Do unto others as you would have them do unto you.
+80. Don't take any wooden nickels.
+81. Doubt is the beginning, not the end, of wisdom.
+82. Early marriage, earlier pregnant.
+83. Eat breakfast like a king, lunch like a prince and dinner like a pauper.
+84. Eat, drink and be merry, for tomorrow we die.
+85. Empty vessels make the most noise.
+86. Enough is as good as a feast.
+87. Even a worm will turn.
+88. Even from a foe a man may learn wisdom.
+89. Every cloud has a silver lining.
+90. Failing to plan is planning to fail.
+91. Faint heart never won fair lady.
+92. Fair exchange is no robbery.
+93. Faith will move mountains.
+94. Fake it till you make it.
+95. Fall seven times, stand up eight.
+96. False friends are worse than open enemies.
+97. Familiarity breeds contempt.
+98. Feed a cold, starve a fever.
+99. Fight fire with fire.
+100. Finders keepers, losers weepers.
+101. Fine feathers make fine birds.
+102. Fine words butter no parsnips.
+103. First come, first served.
+104. First impressions are the most lasting.
+105. First things first.
+106. Fish always rots from the head downwards.
+107. Fish and guests smell after three days.
+108. Flattery will get you nowhere.
+109. Fools rush in where angels fear to tread.
+110. For want of a nail the shoe was lost; for want of a shoe the horse was lost; and for want of a horse the man was lost.
+111. Forewarned is forearmed.
+112. Fortune favours the bold.
+113. Free is for me.
+114. From the sublime to the ridiculous is only a step.
+115. Genius is an infinite capacity for taking pains.
+116. Give a dog a bad name and hang him.
+117. Give a man a fish and you feed him for a day; teach a man to fish and you feed him for a lifetime.
+118. Give a man rope enough and he will hang himself.
+119. Give credit where credit is due.
+120. Give him an inch and he will take a mile.
+121. Give the devil his due.
+122. God helps those who help themselves.
+123. Good fences make good neighbours.
+124. Good talk saves the food.
+125. Good things come to those who wait.
+126. Great minds think alike.
+127. Half a loaf is better than no bread.
+128. Handsome is as handsome does.
+129. Hard cases make bad law.
+130. Hard work never did anyone any harm.
+131. Haste makes waste.
+132. He that goes a-borrowing, goes a-sorrowing.
+133. He who can, does; he who cannot, teaches.
+134. He who hesitates is lost.
+135. He who laughs last laughs longest.
+136. He who lives by the sword, dies by the sword.
+137. He who loves the world as his body may be entrusted with the empire.
+138. He who makes a beast out of himself gets rid of the pain of being a man.
+139. He who pays the piper calls the tune.
+140. He who knows does not speak; he who speaks does not know.
+141. He who sups with the Devil should have a long spoon.
+142. Health is wealth.
+143. Hell hath no fury like a woman scorned.
+144. Hindsight is always twenty-twenty.
+145. History repeats itself.
+146. Home is where the heart is.
+147. Honesty is the best policy.
+148. Hope for the best, and prepare for the worst.
+149. Hope springs eternal.
+150. Horses for courses.
+151. How long is a piece of string?
+152. Hunger never knows the taste, sleep never knows the comfort.
+153. Idle hands are the devil's playthings.
+154. If anything can go wrong, it will.
+155. If a job is worth doing, it is worth doing well.
+156. If at first you do not succeed, try, try again.
+157. If God had meant us to fly, he would have given us wings.
+158. If ifs and ands were pots and pans, there would be no work for tinkers.
+159. If ifs and buts were candies and nuts, we'd all have a merry Christmas.
+160. If it ain't broke, don't fix it.
+161. If it were not for hope the heart would break.
+162. If it were a snake, it would have bit you.
+163. If the shoe fits, wear it.
+164. If the mountain will not come to Mohammed, then Mohammed must go to the mountain.
+165. If wealth is lost, nothing is lost; if health is lost, something is lost; if character is lost, everything is lost.
+166. If wishes were horses, beggars would ride.
+167. If you're growing in age, then you're nearing to the graveyard.
+168. If you can't be good, be careful.
+169. If you can't live longer, live deeper.
+170. If you can't run with the horses, get off the track.
+171. If you can't stand the heat, get out of the kitchen.
+172. If you give a mouse a cookie, he'll always ask for a glass of milk.
+173. If you think that you know everything, then you're a Jackass.
+174. If you lie down with dogs, you will get up with fleas.
+175. If you pay peanuts, you get monkeys.
+176. If you play with fire, you will get burned.
+177. If you steal from one author, it is plagiarism; if you steal from many, it is research.
+178. If you want a thing done well, do it yourself.
+179. If you have never seen the bottom of the tree, you cannot know how tall it stands.
+180. If you must dance with the Devil, you might as well know his favorite song.
+181. If you've got it, flaunt it.
+182. Ignorance is bliss.
+183. Imitation is the sincerest form of flattery.
+184. In for a penny, in for a pound.
+185. In like a lion, out like a lamb.
+186. In the kingdom of the blind, the one eyed man is king.
+187. In the midst of life, we are in death.
+188. Into every life a little rain must fall.
+189. It's the little things.
+190. It ain't over till the fat lady sings.
+191. It is not enough to learn how to ride, you must also learn how to fall.
+192. It is on.
+193. It is the early bird that gets the worm.
+194. It is the squeaky wheel that gets the grease.
+195. It is what it is.
+196. It needs a hundred lies to cover a single lie.
+197. It never rains but it pours.
+198. It takes a thief to catch a thief.
+199. It takes a whole village to raise a child.
+200. It takes all sorts to make a world.
+201. It takes one to know one.
+202. It takes two to tango.
+203. I'm going to have to give you the pink slip.
+204. It will come back and haunt you.
+205. It will be the same a hundred years hence.
+206. Islands depend on reeds, just as reeds depend on islands.
+207. Jack of all trades, master of none.
+208. Judge not, that ye be not judged.
+209. Keep your chin up.
+210. Keep your friends close and your enemies closer.
+211. Keep your powder dry.
+212. Kill the chicken to scare the monkey.
+213. Kill the goose that lays the golden egg.
+214. Kill two birds with one stone.
+215. Kindness in words creates confidence.
+216. Knock on wood.
+217. Know which side one's bread is buttered on.
+218. Knowledge is power.
+219. A language is a dialect with an army and navy.
+220. The last drop makes the cup run over.
+221. Laugh before breakfast, cry before supper.
+222. Laugh and the world laughs with you, weep and you weep alone.
+223. Laughter is the best medicine.
+224. Late lunch makes day go faster.
+225. Learn a language, and you will avoid a war.
+226. Least said, soonest mended.
+227. Less is more.
+228. Let bygones be bygones.
+229. Let not the sun go down on your wrath.
+230. Let sleeping Aussies lie.
+231. Let sleeping dogs lie.
+232. Let the buyer beware.
+233. Let the cat out of the bag.

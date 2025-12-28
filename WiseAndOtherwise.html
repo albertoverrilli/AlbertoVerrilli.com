@@ -1,0 +1,942 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Wise and Otherwise</title>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/peerjs@1.5.2/dist/peerjs.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <style>
+        :root {
+            --bg-color: #0b0e13;
+            --text-color: #d2d4de;
+            --accent-color: #5cdb95;
+            --secondary-color: #2d394d;
+            --danger-color: #d6686f;
+            --card-bg: #161821;
+            --font-main: 'JetBrains Mono', monospace;
+        }
+
+        * {
+            box-sizing: border-box;
+            touch-action: manipulation;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: var(--font-main);
+            overflow: hidden;
+            /* Prevent scrolling on main app */
+            height: 100vh;
+            width: 100vw;
+        }
+
+        #app {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            width: 100%;
+            position: relative;
+        }
+
+        /* Views */
+        .view {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            width: 100%;
+            padding: 20px;
+            text-align: center;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .view.active {
+            display: flex;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Common Elements */
+        h1,
+        h2,
+        h3 {
+            margin: 0.5em 0;
+        }
+
+        h1 {
+            font-size: 2rem;
+            color: var(--accent-color);
+        }
+
+        p {
+            line-height: 1.6;
+            max-width: 600px;
+        }
+
+        button {
+            background-color: var(--secondary-color);
+            /* Fallback */
+            background: linear-gradient(145deg, #3a4b60, #2d394d);
+            border: none;
+            border-radius: 8px;
+            color: white;
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            font-family: var(--font-main);
+            cursor: pointer;
+            margin: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            transition: transform 0.1s, box-shadow 0.1s;
+            min-width: 200px;
+        }
+
+        button:active {
+            transform: translateY(2px);
+            box-shadow: 0 2px 3px rgba(0, 0, 0, 0.3);
+        }
+
+        button.primary {
+            background: var(--accent-color);
+            color: #05385b;
+            font-weight: bold;
+        }
+
+        input,
+        textarea {
+            background: var(--card-bg);
+            border: 2px solid var(--secondary-color);
+            border-radius: 8px;
+            color: white;
+            padding: 12px;
+            font-size: 1.2rem;
+            font-family: var(--font-main);
+            margin: 10px 0;
+            width: 100%;
+            max-width: 400px;
+        }
+
+        input:focus,
+        textarea:focus {
+            outline: none;
+            border-color: var(--accent-color);
+        }
+
+        /* Host Specifics */
+        #game-board {
+            width: 100%;
+            height: 150px;
+            background: #191826;
+            border-bottom: 2px solid var(--secondary-color);
+            display: flex;
+            align-items: center;
+            overflow-x: auto;
+            padding: 0 20px;
+            scrollbar-width: none;
+        }
+
+        .track-space {
+            min-width: 60px;
+            height: 80px;
+            border: 1px solid #333;
+            display: flex;
+            align-items: Center;
+            justify-content: center;
+            margin-right: 5px;
+            position: relative;
+            background: #0f1f2c;
+            border-radius: 4px;
+            flex-direction: column;
+        }
+
+        .track-space.special {
+            border-color: var(--accent-color);
+            background: #1f4437;
+        }
+
+        .track-space .num {
+            font-size: 0.8rem;
+            opacity: 0.5;
+            position: absolute;
+            top: 2px;
+            left: 5px;
+        }
+
+        .pawn {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            border: 2px solid white;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+            transition: left 0.5s ease;
+        }
+
+        #card-display {
+            background: var(--card-bg);
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+            margin: 20px;
+            max-width: 800px;
+            width: 90%;
+            border: 1px solid var(--secondary-color);
+        }
+
+        .proverb-text {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+        }
+
+        .proverb-origin {
+            color: var(--accent-color);
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+        }
+
+        #voting-options {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+            width: 100%;
+            max-width: 1000px;
+        }
+
+        .vote-card {
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: 8px;
+            width: 45%;
+            min-width: 300px;
+            cursor: pointer;
+            border: 1px solid var(--secondary-color);
+            transition: all 0.2s;
+        }
+
+        /* Player Specifics */
+        .mobile-container {
+            width: 100%;
+            max-width: 500px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        #qrcode {
+            background: white;
+            padding: 10px;
+            border-radius: 8px;
+            margin: 20px;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 12px;
+            background: #333;
+            font-size: 0.8rem;
+            margin-top: 10px;
+        }
+
+        .player-list-item {
+            background: var(--secondary-color);
+            padding: 10px 20px;
+            margin: 5px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .pawn-icon {
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        /* Utilities */
+        .hidden {
+            display: none !important;
+        }
+
+        .flex {
+            display: flex;
+        }
+
+        .col {
+            flex-direction: column;
+        }
+
+        .row {
+            flex-direction: row;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="app">
+
+        <!-- HOME / ROLE SELECTION -->
+        <div id="view-home" class="view active">
+            <h1>Wise & Otherwise</h1>
+            <p>A party game of bluffing and obscure proverbs.</p>
+            <div style="margin-top: 40px;">
+                <button onclick="app.hostGame()" class="primary">Host New Game</button>
+                <br>
+                <button onclick="app.joinGameView()">Join Game</button>
+            </div>
+        </div>
+
+        <!-- HOST: LOBBY -->
+        <div id="view-host-lobby" class="view">
+            <h2>Lobby</h2>
+            <div id="qrcode"></div>
+            <h1 id="host-room-code"
+                style="font-size: 3rem; letter-spacing: 5px; border: 2px dashed var(--secondary-color); padding: 10px 30px;">
+                ----</h1>
+            <p>Scan code or enter ID to join</p>
+
+            <div id="host-player-list" style="display: flex; flex-wrap: wrap; justify-content: center; width: 100%;">
+                <!-- Players go here -->
+            </div>
+
+            <button onclick="host.startGame()" class="primary" id="btn-start-game" disabled>Start Game (Need
+                2+)</button>
+        </div>
+
+        <!-- HOST: GAMEBOARD -->
+        <div id="view-host-game" class="view" style="justify-content: flex-start; padding: 0;">
+            <div id="game-board">
+                <!-- Track generated by JS -->
+            </div>
+
+            <div id="host-phase-area"
+                style="flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; width: 100%; padding: 20px;">
+
+                <!-- Dynamic Content based on phase -->
+                <h2 id="host-phase-title">Round 1</h2>
+
+                <div id="card-display">
+                    <div class="proverb-origin" id="card-origin">ORIGIN</div>
+                    <div class="proverb-text" id="card-text">Loading...</div>
+                </div>
+
+                <div id="host-status-msg" style="margin-top:20px; color: #888;">Waiting for inputs...</div>
+                <div id="host-timer-bar"
+                    style="width: 0%; height: 5px; background: var(--accent-color); transition: width 1s linear;"></div>
+
+                <!-- Voting Result Area -->
+                <div id="voting-results-area" class="hidden" style="width:100%; max-width:800px;">
+                    <!-- List scores here -->
+                </div>
+
+            </div>
+        </div>
+
+
+        <!-- PLAYER: JOIN -->
+        <div id="view-player-join" class="view">
+            <h2>Join Game</h2>
+            <input type="text" id="join-code" placeholder="Room Code (4 Letters)" maxlength="4"
+                style="text-transform: uppercase;">
+            <input type="text" id="player-name" placeholder="Your Name" maxlength="12">
+            <button onclick="player.connect()">Join</button>
+            <button onclick="app.home()" style="background: transparent;">Back</button>
+        </div>
+
+        <!-- PLAYER: LOBBY -->
+        <div id="view-player-lobby" class="view">
+            <h2>You are in!</h2>
+            <div class="status-badge" id="player-status-name">Name</div>
+            <p>Waiting for host to start...</p>
+            <div class="pawn" id="my-pawn-preview" style="width: 50px; height: 50px; margin: 20px;"></div>
+        </div>
+
+        <!-- PLAYER: GAME INPUT -->
+        <div id="view-player-input" class="view">
+            <h3 id="p-input-origin" style="color: var(--accent-color)">ORIGIN</h3>
+            <p id="p-input-start">Proverb start...</p>
+
+            <textarea id="p-answer-input" rows="4" placeholder="Finish the proverb convincingly..."></textarea>
+            <button onclick="player.submitAnswer()" class="primary">Submit</button>
+        </div>
+
+        <!-- PLAYER: VOTING -->
+        <div id="view-player-vote" class="view">
+            <h3>Pick the Real Ending</h3>
+            <p>Vote for the one you think is the actual proverb.</p>
+            <div id="p-vote-list" style="display:flex; flex-direction:column; gap:10px; width:100%;"></div>
+        </div>
+
+        <!-- PLAYER: WAITING -->
+        <div id="view-player-waiting" class="view">
+            <h3>Please Wait</h3>
+            <p id="p-wait-msg">Waiting for other players...</p>
+        </div>
+
+    </div>
+
+    <!-- DATA & LOGIC -->
+    <script>
+        // --- GAME DATA ---
+        let PROVERBS = [
+            { o: "Chinese", s: "It is better to light a candle than to", e: "curse the darkness" },
+            { o: "Japanese", s: "Even monkeys fall from", e: "trees" },
+            { o: "Russian", s: "If you chase two rabbits, you will not", e: "catch either one" },
+            { o: "African", s: "It takes a village to", e: "raise a child" },
+            { o: "German", s: "Fear makes the wolf bigger than", e: "he is" },
+            { o: "Italian", s: "Since the house is on fire, let us", e: "warm ourselves" },
+            { o: "Dutch", s: "He who has butter on his head should not", e: "stand in the sun" },
+            { o: "Irish", s: "You've got to do your own growing, no matter how", e: "tall your grandfather was" },
+            { o: "Turkish", s: "A cup of coffee commits one to forty years of", e: "friendship" },
+            { o: "Persian", s: "The drowning man is not troubled by", e: "rain" },
+            { o: "Swedish", s: "Don't throw away the old bucket until you know", e: "whether the new one holds water" },
+            { o: "Yiddish", s: "If you want your dreams to come true, don't", e: "sleep" },
+            { o: "Greek", s: "A society grows great when old men plant trees whose shade they know", e: "they shall never sit in" },
+            { o: "Portuguese", s: "God writes straight with", e: "crooked lines" },
+            { o: "Spanish", s: "The belly rules the", e: "mind" }
+            // ... defaults as fallback
+        ];
+
+        // --- UTILS ---
+        const util = {
+            randomId: (len = 4) => {
+                const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ';
+                let res = '';
+                for (let i = 0; i < len; i++) res += chars.charAt(Math.floor(Math.random() * chars.length));
+                return res;
+            },
+            shuffle: (arr) => {
+                for (let i = arr.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [arr[i], arr[j]] = [arr[j], arr[i]];
+                }
+                return arr;
+            },
+            colors: ['#ff7a90', '#5cdb95', '#ebb723', '#88dbdf', '#a288d9', '#ef6d49'],
+
+            // Heuristic string splitter
+            splitProverb: (text) => {
+                // Remove leading numbers (e.g. "1. ")
+                let clean = text.replace(/^\d+\.\s*/, '').trim();
+
+                // Try to split by punctuation first (semicolon, comma)
+                // detailed heuristics:
+                // 1. Semicolon is a strong separator
+                if (clean.includes(';')) {
+                    const parts = clean.split(';');
+                    return { s: parts[0] + ';', e: parts.slice(1).join(';').trim() };
+                }
+
+                // 2. Comma, but only if it's near the middle/end
+                if (clean.includes(',')) {
+                    const lastComma = clean.lastIndexOf(',');
+                    // If the comma is very early (e.g. "First, do no harm"), it might be bad.
+                    // But usually "Start, End" works well.
+                    // Let's split at the *last* comma for dramatic effect? 
+                    // Or the first? "If you want peace, prepare for war". -> "If you want peace," ... "prepare for war".
+                    return { s: clean.substring(0, lastComma + 1), e: clean.substring(lastComma + 1).trim() };
+                }
+
+                // 3. Last fallback: Word count split (60% / 40%)
+                const words = clean.split(' ');
+                if (words.length <= 3) {
+                    // Very short? Split 1/2
+                    const mid = Math.floor(words.length / 2);
+                    return { s: words.slice(0, mid).join(' '), e: words.slice(mid).join(' ') };
+                }
+
+                const splitIdx = Math.ceil(words.length * 0.6); // Slightly more start than end
+                return {
+                    s: words.slice(0, splitIdx).join(' '),
+                    e: words.slice(splitIdx).join(' ')
+                };
+            }
+        };
+
+        const app = {
+            role: null,
+            peer: null,
+            conn: null,
+            conns: {},
+
+            init: () => {
+                // Prepare UI 
+            },
+
+            showView: (id) => {
+                document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+                document.getElementById('view-' + id).classList.add('active');
+            },
+
+            hostGame: () => {
+                app.role = 'host';
+                host.init();
+            },
+
+            joinGameView: () => {
+                app.showView('player-join');
+            },
+
+            home: () => {
+                if (app.peer) app.peer.destroy();
+                app.showView('home');
+            }
+        };
+
+        const host = {
+            roomId: null,
+            players: [],
+            round: 0,
+            currentProverb: null,
+            phase: 'LOBBY',
+
+            init: () => {
+                app.showView('host-lobby');
+                host.roomId = util.randomId();
+                document.getElementById('host-room-code').innerText = host.roomId;
+
+                // Load Questions from File
+                fetch('Questions.txt')
+                    .then(res => {
+                        if (!res.ok) throw new Error("No file");
+                        return res.text();
+                    })
+                    .then(text => {
+                        const lines = text.split('\n').filter(l => l.trim().length > 0 && /^\d+\./.test(l.trim()));
+                        if (lines.length > 0) {
+                            PROVERBS = lines.map(l => {
+                                const parts = util.splitProverb(l);
+                                return { o: "Proverb", s: parts.s, e: parts.e };
+                            });
+                            console.log(`Loaded ${PROVERBS.length} proverbs from file.`);
+                        }
+                    })
+                    .catch(err => {
+                        console.log("Could not load Questions.txt, using defaults.");
+                    });
+
+                // QR Code
+                const url = window.location.href.split('?')[0] + '?join=' + host.roomId;
+                document.getElementById('qrcode').innerHTML = '';
+                new QRCode(document.getElementById('qrcode'), {
+                    text: host.roomId,
+                    width: 128,
+                    height: 128
+                });
+
+                // Peer Setup
+                app.peer = new Peer('wao-host-' + host.roomId);
+
+                app.peer.on('open', (id) => {
+                    console.log('Host Open:', id);
+                });
+
+                app.peer.on('connection', (conn) => {
+                    conn.on('data', (data) => host.handleData(conn, data));
+                    conn.on('close', () => host.handleDisconnect(conn));
+                });
+
+                host.renderBoard();
+            },
+
+            renderBoard: () => {
+                const board = document.getElementById('game-board');
+                board.innerHTML = '';
+                for (let i = 1; i <= 50; i++) {
+                    const space = document.createElement('div');
+                    space.className = 'track-space';
+                    if (i === 10) space.classList.add('special'); // Space 10 bonus
+                    space.innerHTML = `<span class="num">${i}</span><div class="pawns-container" id="space-${i}"></div>`;
+                    board.appendChild(space);
+                }
+            },
+
+            updatePlayerList: () => {
+                const list = document.getElementById('host-player-list');
+                list.innerHTML = '';
+                host.players.forEach(p => {
+                    const div = document.createElement('div');
+                    div.className = 'player-list-item';
+                    div.innerHTML = `<span class="pawn-icon" style="background:${p.color}"></span> ${p.name} (${p.score}pts)`;
+                    list.appendChild(div);
+                });
+
+                document.getElementById('btn-start-game').disabled = host.players.length < 2;
+
+                // Re-render pawns on board
+                document.querySelectorAll('.pawns-container').forEach(el => el.innerHTML = '');
+                host.players.forEach(p => {
+                    const space = document.getElementById(`space-${p.position > 50 ? 50 : p.position}`); // cap at 50
+                    if (space) {
+                        const pawn = document.createElement('div');
+                        pawn.className = 'pawn';
+                        pawn.style.background = p.color;
+                        space.appendChild(pawn);
+                    }
+                });
+            },
+
+            handleData: (conn, data) => {
+                console.log('Host received:', data);
+                switch (data.type) {
+                    case 'JOIN':
+                        host.addPlayer(conn, data.name);
+                        break;
+                    case 'ANSWER':
+                        host.receiveAnswer(conn.peer, data.text);
+                        break;
+                    case 'VOTE':
+                        host.receiveVote(conn.peer, data.index);
+                        break;
+                }
+            },
+
+            addPlayer: (conn, name) => {
+                // specific logic to reconnect if name exists? simpler to just add
+                const color = util.colors[host.players.length % util.colors.length];
+                const newPlayer = {
+                    id: conn.peer,
+                    conn: conn,
+                    name: name.substring(0, 12),
+                    color: color,
+                    score: 0,
+                    position: 1, // Start on space 1
+                    answer: null,
+                    vote: null
+                };
+                host.players.push(newPlayer);
+                app.conns[conn.peer] = conn;
+
+                host.updatePlayerList();
+
+                // Send Confirm
+                conn.send({ type: 'JOINED', color: color, name: newPlayer.name });
+            },
+
+            startGame: () => {
+                host.round = 0;
+                app.showView('host-game');
+                host.nextRound();
+            },
+
+            nextRound: () => {
+                host.round++;
+
+                // Pick proverb
+                const pIndex = Math.floor(Math.random() * PROVERBS.length);
+                host.currentProverb = PROVERBS[pIndex];
+
+                // Reset player round data
+                host.players.forEach(p => { p.answer = null; p.vote = null; });
+
+                // Determine Reader (rotates)
+                const readerIndex = (host.round - 1) % host.players.length;
+                const reader = host.players[readerIndex];
+
+                // UI
+                document.getElementById('host-phase-title').innerText = `Round ${host.round}`;
+                document.getElementById('card-origin').innerText = host.currentProverb.o;
+                document.getElementById('card-text').innerText = host.currentProverb.s + "...";
+                document.getElementById('host-status-msg').innerText = `${reader.name} is the Reader. Waiting for others to write endings...`;
+
+                host.renderBoard(); // refresh positions
+
+                // Broadcast WRITING phase
+                host.phase = 'WRITING';
+                host.players.forEach(p => {
+                    if (p.id === reader.id) {
+                        p.conn.send({ type: 'WAIT', msg: 'You are the Reader. Wait for players to write their lies.' });
+                    } else {
+                        p.conn.send({
+                            type: 'INPUT',
+                            origin: host.currentProverb.o,
+                            start: host.currentProverb.s
+                        });
+                    }
+                });
+            },
+
+            receiveAnswer: (peerId, text) => {
+                const p = host.players.find(pl => pl.id === peerId);
+                if (p) {
+                    p.answer = text;
+                    host.checkAllAnswersIn();
+                }
+            },
+
+            checkAllAnswersIn: () => {
+                const readerIndex = (host.round - 1) % host.players.length;
+                const readerId = host.players[readerIndex].id;
+
+                const writers = host.players.filter(p => p.id !== readerId);
+                const allIn = writers.every(p => p.answer);
+
+                if (allIn) {
+                    host.startVotingPhase();
+                } else {
+                    // Update Host UI count
+                    const count = writers.filter(p => p.answer).length;
+                    document.getElementById('host-status-msg').innerText = `Answers: ${count}/${writers.length}`;
+                }
+            },
+
+            startVotingPhase: () => {
+                host.phase = 'VOTING';
+
+                // 1. Gather all answers + Real Answer
+                let options = [{ text: host.currentProverb.e, type: 'REAL', owner: 'HOUSE' }];
+
+                const readerIndex = (host.round - 1) % host.players.length;
+                const readerId = host.players[readerIndex].id;
+                const writers = host.players.filter(p => p.id !== readerId);
+
+                writers.forEach(p => {
+                    options.push({ text: p.answer, type: 'FAKE', owner: p.id });
+                });
+
+                // 2. Shuffle
+                options = util.shuffle(options);
+                host.currentOptions = options; // Save for scoring
+
+                // 3. Display on Host (optional, maybe hide to prevent bias? rules say reader reads them)
+                // We will display them on screen for convenience
+                document.getElementById('host-status-msg').innerText = "Read the answers aloud, then Vote!";
+
+                let html = '<div id="voting-options">';
+                options.forEach((opt, idx) => {
+                    html += `<div class="vote-card"><strong>${idx + 1}.</strong> ${opt.text}</div>`;
+                });
+                html += '</div>';
+
+                // We replace card display temporarily or append?
+                // Let's replace the loading text content
+                document.getElementById('card-text').innerHTML = `${host.currentProverb.s}...<br><br>` + html;
+
+                // 4. Send options to players (just indices to prevent cheating? or text?)
+                // Sending text is safer for verification
+                const voteListData = options.map((o, i) => ({ index: i, text: o.text }));
+
+                host.players.forEach(p => {
+                    if (p.id === readerId) {
+                        p.conn.send({ type: 'WAIT', msg: "Read the answers aloud. Players are voting." });
+                        // Technically Reader doesn't vote in some versions? 
+                        // "Players vote...". Rules say "Players vote". Usually reader does NOT vote.
+                        // Assuming reader does not vote.
+                    } else {
+                        p.conn.send({ type: 'VOTE', list: voteListData });
+                    }
+                });
+            },
+
+            receiveVote: (peerId, optionIndex) => {
+                const p = host.players.find(pl => pl.id === peerId);
+                if (p) {
+                    p.vote = optionIndex;
+                    host.checkAllVotesIn();
+                }
+            },
+
+            checkAllVotesIn: () => {
+                const readerIndex = (host.round - 1) % host.players.length;
+                const readerId = host.players[readerIndex].id;
+                const voters = host.players.filter(p => p.id !== readerId);
+
+                const allIn = voters.every(p => p.vote !== null);
+
+                if (allIn) {
+                    host.calculateScores();
+                } else {
+                    const count = voters.filter(p => p.vote !== null).length;
+                    document.getElementById('host-status-msg').innerText = `Votes: ${count}/${voters.length}`;
+                }
+            },
+
+            calculateScores: () => {
+                host.phase = 'SCORING';
+
+                const readerIndex = (host.round - 1) % host.players.length;
+                const reader = host.players[readerIndex];
+                const voters = host.players.filter(p => p.id !== reader.id);
+
+                let roundLog = [];
+                let realAnswerIndex = host.currentOptions.findIndex(o => o.type === 'REAL');
+                let realAnswerVotes = 0;
+
+                // Tally votes
+                voters.forEach(voter => {
+                    const votedIndex = voter.vote;
+                    const targetOption = host.currentOptions[votedIndex];
+
+                    if (targetOption.type === 'REAL') {
+                        // Correct! +2 points
+                        voter.score += 2;
+                        voter.position += 2;
+                        realAnswerVotes++;
+                        roundLog.push(`${voter.name} found the truth! (+2)`);
+                    } else {
+                        // Fooled!
+                        const fooledBy = host.players.find(p => p.id === targetOption.owner);
+                        if (fooledBy) {
+                            // Maker gets +2 points
+                            // NOTE: Rule "but you don’t score points from your own vote if you voted for yourself"
+                            // If I authored it, I shouldn't be able to vote for it (UI should prevent? or logic?)
+                            // Logic:
+                            if (fooledBy.id !== voter.id) {
+                                fooledBy.score += 2;
+                                fooledBy.position += 2;
+                                roundLog.push(`${fooledBy.name} fooled ${voter.name}! (+2)`);
+                            } else {
+                                roundLog.push(`${voter.name} voted for their own lie (0 pts)`);
+                            }
+                        }
+                    }
+                });
+
+                // Reader Bonus: +3 if nobody voted for real
+                if (realAnswerVotes === 0) {
+                    reader.score += 3;
+                    reader.position += 3;
+                    roundLog.push(`No one guessed the truth. Reader ${reader.name} gets +3!`);
+                }
+
+                // Space 10 Bonus check (Logic: If you LAND on 10? or pass?)
+                // "if your pawn lands on space 10". 
+                // We moved them. Check current pos.
+                host.players.forEach(p => {
+                    if (p.position === 10) {
+                        p.score += 3;
+                        p.position += 3; // Bonus movement? Points = Movement in this game. 
+                        // "score and then move your pawn forward = points earned".
+                        // So "Bonus: +3 points" means move 3 more spaces? Usually yes.
+                        roundLog.push(`${p.name} landed on Space 10! Bonus +3 steps!`);
+                    }
+                });
+
+                // Show Results
+                let html = `<h3>Round Results</h3><ul style="text-align:left;">`;
+                roundLog.forEach(l => html += `<li>${l}</li>`);
+                html += `</ul><br><strong>Correct Answer:</strong> ${host.currentProverb.e}`;
+                html += `<br><button onclick="host.nextRound()" class="primary">Next Round</button>`;
+
+                document.getElementById('card-text').innerHTML = html;
+                document.getElementById('host-status-msg').innerText = "Review scores then click Next.";
+
+                host.updatePlayerList(); // updates board positions
+
+                // Notify players
+                host.players.forEach(p => {
+                    p.conn.send({ type: 'WAIT', msg: `Round Over! Check the board.` });
+                });
+            }
+
+        };
+
+        const player = {
+            connect: () => {
+                const code = document.getElementById('join-code').value.toUpperCase();
+                const name = document.getElementById('player-name').value;
+                if (!code || !name) return alert('Enter code and name');
+
+                app.role = 'player';
+                app.peer = new Peer();
+
+                app.peer.on('open', (id) => {
+                    // Connect to host
+                    const conn = app.peer.connect('wao-host-' + code);
+                    app.conn = conn;
+
+                    conn.on('open', () => {
+                        conn.send({ type: 'JOIN', name: name });
+                    });
+
+                    conn.on('data', (data) => player.handleHostData(data));
+                    conn.on('close', () => alert('Disconnected from host'));
+                });
+            },
+
+            handleHostData: (data) => {
+                console.log('Player received:', data);
+                switch (data.type) {
+                    case 'JOINED':
+                        app.showView('player-lobby');
+                        document.getElementById('player-status-name').innerText = data.name;
+                        document.getElementById('my-pawn-preview').style.background = data.color;
+                        break;
+                    case 'INPUT':
+                        app.showView('player-input');
+                        document.getElementById('p-input-origin').innerText = data.origin;
+                        document.getElementById('p-input-start').innerText = data.start + '...';
+                        document.getElementById('p-answer-input').value = ''; // clear previous
+                        break;
+                    case 'WAIT':
+                        app.showView('player-waiting');
+                        document.getElementById('p-wait-msg').innerText = data.msg;
+                        break;
+                    case 'VOTE':
+                        player.renderVoteScreen(data.list);
+                        break;
+                }
+            },
+
+            submitAnswer: () => {
+                const txt = document.getElementById('p-answer-input').value.trim();
+                if (!txt) return;
+
+                app.conn.send({ type: 'ANSWER', text: txt });
+                app.showView('player-waiting');
+                document.getElementById('p-wait-msg').innerText = "Answer sent! Waiting for others...";
+            },
+
+            renderVoteScreen: (list) => {
+                app.showView('player-vote');
+                const container = document.getElementById('p-vote-list');
+                container.innerHTML = '';
+                list.forEach((item) => {
+                    const btn = document.createElement('button');
+                    btn.innerText = item.text; // Just text
+                    btn.style.width = '100%';
+                    btn.style.whiteSpace = 'normal'; // Allow wrapping
+                    btn.onclick = () => {
+                        if (confirm("Vote for this one?")) {
+                            app.conn.send({ type: 'VOTE', index: item.index });
+                            app.showView('player-waiting');
+                            document.getElementById('p-wait-msg').innerText = "Vote cast! Watch the board.";
+                        }
+                    };
+                    container.appendChild(btn);
+                });
+            }
+        };
+
+        // Auto-fill from URL if present
+        const params = new URLSearchParams(window.location.search);
+        if (params.has('join')) {
+            document.getElementById('join-code').value = params.get('join');
+            app.joinGameView();
+        }
+
+    </script>
+</body>
+
+</html>
