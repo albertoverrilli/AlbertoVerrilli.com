@@ -371,7 +371,6 @@
             <p>Waiting for host to start...</p>
             <div class="pawn" id="my-pawn-preview" style="width: 50px; height: 50px; margin: 20px;"></div>
         </div>
-
         <!-- PLAYER: GAME INPUT -->
         <div id="view-player-input" class="view">
             <h3 id="p-input-origin" style="color: var(--accent-color)">ORIGIN</h3>
@@ -379,6 +378,19 @@
 
             <textarea id="p-answer-input" rows="4" placeholder="Finish the proverb convincingly..."></textarea>
             <button onclick="player.submitAnswer()" class="primary">Submit</button>
+        </div>
+
+        <!-- PLAYER: READER VIEW -->
+        <div id="view-player-reader" class="view">
+            <h3 id="p-reader-origin" style="color: var(--accent-color)">ORIGIN</h3>
+            <div style="background:var(--secondary-color); padding: 20px; border-radius: 8px; margin: 20px 0;">
+                <p id="p-reader-text" style="font-size: 1.2rem; font-weight: bold;">Full Proverb</p>
+            </div>
+            <p>You are the Reader!</p>
+            <p>Read the first part, wait for answers, then read all answers aloud.</p>
+
+            <button onclick="player.forceVote()"
+                style="background: var(--danger-color); font-size: 0.9rem; padding: 10px;">Force Start Voting</button>
         </div>
 
         <!-- PLAYER: VOTING -->
@@ -609,11 +621,16 @@
                     case 'VOTE':
                         host.receiveVote(conn.peer, data.index);
                         break;
+                    case 'FORCE_VOTE':
+                        if (host.phase === 'WRITING') host.startVotingPhase();
+                        break;
                 }
             },
 
             addPlayer: (conn, name) => {
-                // specific logic to reconnect if name exists? simpler to just add
+                // Prevent duplicates
+                if (host.players.find(p => p.id === conn.peer)) return;
+
                 const color = util.colors[host.players.length % util.colors.length];
                 const newPlayer = {
                     id: conn.peer,
@@ -666,7 +683,11 @@
                 host.phase = 'WRITING';
                 host.players.forEach(p => {
                     if (p.id === reader.id) {
-                        p.conn.send({ type: 'WAIT', msg: 'You are the Reader. Wait for players to write their lies.' });
+                        p.conn.send({
+                            type: 'READER',
+                            origin: host.currentProverb.o,
+                            fullText: host.currentProverb.s + ' ' + host.currentProverb.e
+                        });
                     } else {
                         p.conn.send({
                             type: 'INPUT',
@@ -712,7 +733,10 @@
                 const writers = host.players.filter(p => p.id !== readerId);
 
                 writers.forEach(p => {
-                    options.push({ text: p.answer, type: 'FAKE', owner: p.id });
+                    // Only include actual answers (in case forced)
+                    if (p.answer) {
+                        options.push({ text: p.answer, type: 'FAKE', owner: p.id });
+                    }
                 });
 
                 // 2. Shuffle
@@ -926,6 +950,11 @@
                         document.getElementById('p-input-start').innerText = data.start + '...';
                         document.getElementById('p-answer-input').value = ''; // clear previous
                         break;
+                    case 'READER':
+                        app.showView('player-reader');
+                        document.getElementById('p-reader-origin').innerText = data.origin;
+                        document.getElementById('p-reader-text').innerText = data.fullText;
+                        break;
                     case 'WAIT':
                         app.showView('player-waiting');
                         document.getElementById('p-wait-msg').innerText = data.msg;
@@ -943,6 +972,12 @@
                 app.conn.send({ type: 'ANSWER', text: txt });
                 app.showView('player-waiting');
                 document.getElementById('p-wait-msg').innerText = "Answer sent! Waiting for others...";
+            },
+
+            forceVote: () => {
+                if (confirm("Are you sure? This will skip any players who haven't answered yet.")) {
+                    app.conn.send({ type: 'FORCE_VOTE' });
+                }
             },
 
             renderVoteScreen: (list) => {
