@@ -1,6 +1,20 @@
+:root {
+    --text-color: #ffffff;
+    --box-bg-color: rgba(0, 0, 0, 0.8);
+    --border-color: #ffffff;
+    --accent-color: #ffffff;
+    --hover-text-color: #000000;
+    --button-bg: #000000;
+    --shadow-color: #ffffff;
+}
+
 body {
     background-color: #000000;
-    color: #ffffff;
+    /* background-image set by js/random_bg.js */
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    color: var(--text-color);
     font-family: 'Verdana', sans-serif;
     margin: 0;
     padding: 0;
@@ -9,6 +23,7 @@ body {
     align-items: center;
     min-height: 100vh;
     overflow-x: hidden;
+    transition: color 0.5s ease-in-out;
 }
 
 /* Three.js Background Container */
@@ -38,11 +53,12 @@ body {
 
 /* Navigation Sidebar */
 .nav-sidebar {
-    background-color: rgba(0, 0, 0, 0.8);
-    border: 2px solid #ffffff;
+    background-color: var(--box-bg-color);
+    border: 2px solid var(--border-color);
+    transition: background-color 0.5s, border-color 0.5s;
     width: 200px;
     padding: 20px;
-    box-shadow: 10px 10px 0px #ffffff;
+    box-shadow: 10px 10px 0px var(--shadow-color);
     /* Classic shading */
     flex-shrink: 0;
     text-align: center;
@@ -50,15 +66,15 @@ body {
 
 .nav-link {
     display: block;
-    color: #ffffff;
+    color: var(--text-color);
     text-decoration: none;
     font-weight: bold;
     margin-bottom: 15px;
     font-size: 1.1em;
     text-transform: uppercase;
-    border: 1px solid #ffffff;
+    border: 1px solid var(--border-color);
     padding: 10px;
-    background-color: #000;
+    background-color: var(--button-bg);
     transition: all 0.2s;
 }
 
@@ -67,20 +83,20 @@ body {
 }
 
 .nav-link:hover {
-    background-color: #ffffff;
-    color: #000000;
+    background-color: var(--accent-color);
+    color: var(--hover-text-color);
     transform: translate(-2px, -2px);
-    box-shadow: 4px 4px 0px #888;
+    box-shadow: 4px 4px 0px var(--shadow-color);
 }
 
 /* Main Content Box */
 .main-content {
-    background-color: rgba(0, 0, 0, 0.8);
-    border: 2px solid #ffffff;
+    background-color: var(--box-bg-color);
+    border: 2px solid var(--border-color);
     flex-grow: 1;
     min-height: 80vh;
     padding: 40px;
-    box-shadow: 10px 10px 0px #ffffff;
+    box-shadow: 10px 10px 0px var(--shadow-color);
     /* Classic shading */
     position: relative;
 }
@@ -93,17 +109,17 @@ body {
     width: 300px;
     height: 300px;
     object-fit: cover;
-    border: 2px solid #ffffff;
+    border: 2px solid var(--border-color);
     padding: 5px;
     margin-left: 30px;
     margin-bottom: 20px;
     float: right;
-    box-shadow: 5px 5px 0px #444;
+    box-shadow: 5px 5px 0px var(--shadow-color);
 }
 
 h1 {
     text-transform: uppercase;
-    border-bottom: 2px solid #ffffff;
+    border-bottom: 2px solid var(--border-color);
     padding-bottom: 10px;
     margin-bottom: 30px;
     width: 100%;
@@ -128,18 +144,19 @@ p {
 
 .project-button {
     display: block;
-    border: 1px solid #ffffff;
+    border: 1px solid var(--border-color);
     padding: 20px;
     text-decoration: none;
-    color: #ffffff;
+    color: var(--text-color);
     text-align: center;
     transition: all 0.2s;
     position: relative;
+    background-color: var(--button-bg);
 }
 
 .project-button:hover {
-    background-color: #ffffff;
-    color: #000000;
-    box-shadow: 5px 5px 0px #888;
+    background-color: var(--accent-color);
+    color: var(--hover-text-color);
+    box-shadow: 5px 5px 0px var(--shadow-color);
     transform: translate(-2px, -2px);
 }
