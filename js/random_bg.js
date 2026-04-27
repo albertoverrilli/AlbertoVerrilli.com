@@ -1,35 +1,35 @@
 document.addEventListener('DOMContentLoaded', () => {
     // List of images to select from (Bryce 3D collection)
     const images = [
-        'Angelic Benediction.png',
-        'Anomaly-[SPHERE].png',
-        'Anomaly_008a.png',
-        'Creation.png',
-        'Crystalline Plain.png',
-        'Digital Transcendence.png',
-        'Expea.png',
-        'Freight.jpg',
-        'GENisys.png',
-        'Garden of Eden.png',
-        'Hedrons.png',
-        'Mario Party.png',
-        'Oasis.jpg',
-        'SpiralizerTest.png',
-        'Station Nila II.png',
-        'Stone Sanctuary.png',
-        'Suspension.jpg',
-        'Vapor.png',
-        'Venus Arc.png',
-        'Wayside.jpg',
-        'WorldTree01.png',
-        'lapse.png',
-        'mote.png',
-        'sphere.png'
+        'Angelic Benediction.webp',
+        'Anomaly-[SPHERE].webp',
+        'Anomaly_008a.webp',
+        'Creation.webp',
+        'Crystalline Plain.webp',
+        'Digital Transcendence.webp',
+        'Expea.webp',
+        'Freight.webp',
+        'GENisys.webp',
+        'Garden of Eden.webp',
+        'Hedrons.webp',
+        'Mario Party.webp',
+        'Oasis.webp',
+        'SpiralizerTest.webp',
+        'Station Nila II.webp',
+        'Stone Sanctuary.webp',
+        'Suspension.webp',
+        'Vapor.webp',
+        'Venus Arc.webp',
+        'Wayside.webp',
+        'WorldTree01.webp',
+        'lapse.webp',
+        'mote.webp',
+        'sphere.webp'
     ];
 
     // Select random image from bryce folder
     const selectedImage = images[Math.floor(Math.random() * images.length)];
-    const imagePath = `img/bryce/${selectedImage}`;
+    const imagePath = `img/bryce/webp/${selectedImage}`;
 
     // Set background immediately for visual feedback
     document.body.style.backgroundImage = `url('${imagePath}')`;
