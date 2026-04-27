@@ -1,4 +1,5 @@
 import os
+import re
 import httpx
 from fastapi import FastAPI, HTTPException
 from fastapi.responses import JSONResponse
@@ -10,12 +11,23 @@ ALLOWED_ORIGINS = os.getenv("ALLOWED_ORIGINS", "*").split(",")
 app.add_middleware(
     CORSMiddleware,
     allow_origins=ALLOWED_ORIGINS,
-    allow_methods=["GET", "POST"],
+    allow_methods=["GET"],
     allow_headers=["*"],
 )
 
-COBALT_API = "https://api.cobalt.tools"
-COBALT_KEY = os.getenv("COBALT_API_KEY", "")
+RAPIDAPI_KEY  = os.getenv("RAPIDAPI_KEY", "")
+RAPIDAPI_HOST = "youtube-mp36.p.rapidapi.com"
+
+
+def extract_video_id(url: str) -> str | None:
+    patterns = [
+        r"(?:v=|youtu\.be/|embed/|shorts/)([A-Za-z0-9_-]{11})",
+    ]
+    for p in patterns:
+        m = re.search(p, url)
+        if m:
+            return m.group(1)
+    return None
 
 
 @app.get("/health")
@@ -28,38 +40,37 @@ async def convert(url: str):
     if not url or ("youtube.com" not in url and "youtu.be" not in url):
         raise HTTPException(400, "Invalid YouTube URL")
 
+    if not RAPIDAPI_KEY:
+        raise HTTPException(500, "RAPIDAPI_KEY environment variable not set on the server")
+
+    video_id = extract_video_id(url)
+    if not video_id:
+        raise HTTPException(400, "Could not extract video ID from URL")
+
     headers = {
-        "Accept": "application/json",
-        "Content-Type": "application/json",
-    }
-    if COBALT_KEY:
-        headers["Authorization"] = f"Api-Key {COBALT_KEY}"
-
-    payload = {
-        "url": url,
-        "downloadMode": "audio",
-        "audioFormat": "mp3",
-        "audioBitrate": "192",
+        "X-RapidAPI-Key":  RAPIDAPI_KEY,
+        "X-RapidAPI-Host": RAPIDAPI_HOST,
     }
 
-    async with httpx.AsyncClient(timeout=30) as client:
-        resp = await client.post(COBALT_API, json=payload, headers=headers)
+    async with httpx.AsyncClient(timeout=60) as client:
+        resp = await client.get(
+            f"https://{RAPIDAPI_HOST}/dl",
+            params={"id": video_id},
+            headers=headers,
+        )
 
     if resp.status_code != 200:
-        raise HTTPException(502, f"Cobalt API error: {resp.status_code} — {resp.text}")
+        raise HTTPException(502, f"RapidAPI error {resp.status_code}: {resp.text}")
 
     data = resp.json()
     status = data.get("status")
 
-    if status == "redirect" or status == "stream" or status == "tunnel":
-        return JSONResponse({"download_url": data.get("url"), "filename": data.get("filename", "audio.mp3")})
-    elif status == "picker":
-        # cobalt returns multiple options; take the first audio one
-        for item in data.get("picker", []):
-            if item.get("type") == "audio":
-                return JSONResponse({"download_url": item["url"]})
-        return JSONResponse({"download_url": data["picker"][0]["url"]})
-    elif status == "error":
-        raise HTTPException(400, data.get("error", {}).get("code", "Unknown cobalt error"))
+    if status == "ok":
+        return JSONResponse({
+            "download_url": data["link"],
+            "filename": f"{data.get('title', 'audio')}.mp3",
+        })
+    elif status == "processing":
+        raise HTTPException(503, "Still processing — please try again in a few seconds")
     else:
-        raise HTTPException(502, f"Unexpected cobalt response: {data}")
+        raise HTTPException(502, f"API returned: {data}")
