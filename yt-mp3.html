@@ -210,116 +210,49 @@
   </div>
 
   <script>
-    // ── CONFIG ──────────────────────────────────────────────────────────────
-    // After deploying the backend to Render.com, paste your service URL here.
-    // Example: "https://yt-mp3-api.onrender.com"
     const BACKEND_URL = "https://albertoverrilli-com.onrender.com";
-    // ────────────────────────────────────────────────────────────────────────
 
-    let currentJobId = null;
-    let eventSource  = null;
+    let downloadUrl = null;
 
-    function startConvert() {
+    async function startConvert() {
       const url = document.getElementById("url-input").value.trim();
       if (!url) { alert("Paste a YouTube URL first."); return; }
       if (!url.includes("youtube.com") && !url.includes("youtu.be")) {
         alert("That doesn't look like a YouTube URL."); return;
       }
-      if (BACKEND_URL.includes("YOUR-SERVICE-NAME")) {
-        alert("Update BACKEND_URL in yt-mp3.html to point to your Render service."); return;
-      }
 
-      currentJobId = null;
-      document.getElementById("status-area").style.display  = "block";
-      document.getElementById("done-area").style.display    = "none";
-      document.getElementById("error-msg").style.display    = "none";
-      document.getElementById("convert-btn").disabled       = true;
-      document.getElementById("meta-speed").textContent     = "";
-      document.getElementById("meta-eta").textContent       = "";
+      downloadUrl = null;
+      document.getElementById("status-area").style.display = "block";
+      document.getElementById("done-area").style.display   = "none";
+      document.getElementById("error-msg").style.display   = "none";
+      document.getElementById("convert-btn").disabled      = true;
+      document.getElementById("meta-speed").textContent    = "";
+      document.getElementById("meta-eta").textContent      = "";
       setProgress(0, true);
-      setPhase("Connecting to server…");
+      setPhase("Fetching download link…");
 
-      if (eventSource) eventSource.close();
-
-      const sseUrl = `${BACKEND_URL}/api/convert?url=${encodeURIComponent(url)}`;
-      eventSource = new EventSource(sseUrl);
-
-      eventSource.onmessage = e => handleEvent(JSON.parse(e.data));
-
-      eventSource.onerror = () => {
-        eventSource.close();
-        if (currentJobId) {
-          checkStatus(currentJobId);
-        } else {
-          showError("Connection lost. Please try again.");
-          resetBtn();
-        }
-      };
-    }
-
-    function handleEvent(data) {
-      switch (data.phase) {
-        case "started":
-          currentJobId = data.job_id;
-          sessionStorage.setItem("yt_job_id", data.job_id);
-          setPhase("Queued…");
-          setProgress(0, true);
-          break;
-        case "downloading":
-          setPhase(`Downloading audio — ${data.percent}%`);
-          setProgress(data.percent, false);
-          document.getElementById("meta-speed").textContent = data.speed;
-          document.getElementById("meta-eta").textContent   = data.eta ? `ETA ${data.eta}` : "";
-          break;
-        case "converting":
-          setPhase("Converting to MP3…");
-          setProgress(100, true);
-          document.getElementById("meta-speed").textContent = "";
-          document.getElementById("meta-eta").textContent   = "";
-          break;
-        case "done":
-          setProgress(100, false);
-          break;
-        case "ready":
-          setPhase("Done.");
-          setProgress(100, false);
-          document.getElementById("done-title").textContent = data.title;
-          document.getElementById("done-area").style.display = "block";
-          document.getElementById("convert-btn").disabled = false;
-          if (eventSource) eventSource.close();
-          break;
-        case "error":
-          showError(data.message);
-          resetBtn();
-          if (eventSource) eventSource.close();
-          break;
-        case "heartbeat":
-          break;
-      }
-    }
-
-    async function checkStatus(jobId) {
       try {
-        const res  = await fetch(`${BACKEND_URL}/api/status/${jobId}`);
+        const res  = await fetch(`${BACKEND_URL}/api/convert?url=${encodeURIComponent(url)}`);
         const data = await res.json();
-        if (data.status === "ready") {
-          setPhase("Done.");
-          setProgress(100, false);
-          document.getElementById("done-title").textContent = data.title;
-          document.getElementById("done-area").style.display = "block";
-          document.getElementById("convert-btn").disabled = false;
-        } else {
-          showError("Connection lost during processing. Please try again.");
-          resetBtn();
+
+        if (!res.ok) {
+          throw new Error(data.detail || "Server error");
         }
-      } catch {
-        showError("Connection lost. Please try again.");
-        resetBtn();
+
+        downloadUrl = data.download_url;
+        setPhase("Done.");
+        setProgress(100, false);
+        document.getElementById("done-title").textContent  = data.filename || "audio.mp3";
+        document.getElementById("done-area").style.display = "block";
+      } catch (err) {
+        showError(err.message);
+      } finally {
+        document.getElementById("convert-btn").disabled = false;
       }
     }
 
     function downloadFile() {
-      if (currentJobId) window.location.href = `${BACKEND_URL}/api/download/${currentJobId}`;
+      if (downloadUrl) window.open(downloadUrl, "_blank");
     }
 
     function setPhase(text) {
@@ -344,22 +277,6 @@
       setPhase("Failed.");
       setProgress(0, false);
     }
-
-    function resetBtn() {
-      document.getElementById("convert-btn").disabled = false;
-    }
-
-    // Restore if user refreshed mid-conversion
-    window.addEventListener("load", () => {
-      const saved = sessionStorage.getItem("yt_job_id");
-      if (saved && !BACKEND_URL.includes("YOUR-SERVICE-NAME")) {
-        currentJobId = saved;
-        document.getElementById("status-area").style.display = "block";
-        setPhase("Checking job status…");
-        setProgress(0, true);
-        checkStatus(saved).then(() => sessionStorage.removeItem("yt_job_id"));
-      }
-    });
   </script>
 </body>
 
