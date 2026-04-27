@@ -108,6 +108,8 @@ def convert(url: str):
             "noplaylist": True,
             "progress_hooks": [on_progress],
             "postprocessor_hooks": [on_postprocessor],
+            # Use iOS client to bypass YouTube bot detection on servers
+            "extractor_args": {"youtube": {"player_client": ["ios"]}},
         }
 
         try:
