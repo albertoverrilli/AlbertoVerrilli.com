@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>YouTube → MP3 - Alberto Verrilli</title>
+  <link rel="stylesheet" href="css/neocities.css">
+  <script src="js/random_bg.js" defer></script>
+  <style>
+    .tool-section {
+      margin-bottom: 30px;
+    }
+
+    .tool-section h2 {
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      font-weight: normal;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 8px;
+      margin-bottom: 16px;
+      font-size: 0.95em;
+    }
+
+    .input-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    #url-input {
+      flex: 1;
+      min-width: 0;
+      background-color: var(--button-bg);
+      border: 1px solid var(--border-color);
+      color: var(--text-color);
+      padding: 10px;
+      font-family: 'Verdana', sans-serif;
+      font-size: 0.85em;
+      outline: none;
+      transition: box-shadow 0.2s;
+    }
+
+    #url-input:focus {
+      box-shadow: 2px 2px 0px var(--shadow-color);
+    }
+
+    #url-input::placeholder {
+      color: var(--text-color);
+      opacity: 0.4;
+    }
+
+    .tool-btn {
+      display: inline-block;
+      border: 1px solid var(--border-color);
+      padding: 10px 20px;
+      text-decoration: none;
+      color: var(--text-color);
+      text-align: center;
+      transition: all 0.2s;
+      background-color: var(--button-bg);
+      font-family: 'Verdana', sans-serif;
+      font-size: 0.85em;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .tool-btn:hover:not(:disabled) {
+      background-color: var(--accent-color);
+      color: var(--hover-text-color);
+      box-shadow: 4px 4px 0px var(--shadow-color);
+      transform: translate(-2px, -2px);
+    }
+
+    .tool-btn:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+
+    .tool-btn.primary {
+      width: 100%;
+      padding: 12px;
+      font-size: 0.9em;
+      margin-top: 4px;
+    }
+
+    #status-area {
+      display: none;
+      margin-top: 24px;
+    }
+
+    .status-label {
+      font-size: 0.82em;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 10px;
+      opacity: 0.8;
+    }
+
+    .progress-track {
+      border: 1px solid var(--border-color);
+      height: 8px;
+      margin-bottom: 8px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      width: 0%;
+      background-color: var(--text-color);
+      transition: width 0.4s ease;
+    }
+
+    .progress-fill.indeterminate {
+      width: 35%;
+      animation: slide 1.3s ease-in-out infinite;
+    }
+
+    @keyframes slide {
+      0%   { margin-left: -35%; }
+      100% { margin-left: 100%; }
+    }
+
+    .meta-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.75em;
+      opacity: 0.55;
+      margin-bottom: 4px;
+    }
+
+    .error-msg {
+      margin-top: 12px;
+      padding: 10px;
+      border: 1px solid var(--border-color);
+      font-size: 0.82em;
+      background-color: var(--button-bg);
+      opacity: 0.85;
+    }
+
+    #done-area {
+      margin-top: 16px;
+    }
+
+    .done-title {
+      font-size: 0.85em;
+      margin-bottom: 12px;
+      padding: 10px;
+      border: 1px solid var(--border-color);
+      background-color: var(--button-bg);
+      word-break: break-word;
+    }
+
+    .notice {
+      font-size: 0.75em;
+      opacity: 0.4;
+      margin-top: 20px;
+      line-height: 1.7;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="layout-container">
+    <!-- Sidebar Navigation -->
+    <nav class="nav-sidebar">
+      <a href="index.html" class="nav-link">Home</a>
+      <a href="projects.html" class="nav-link">Projects</a>
+      <a href="Diagrams.html" class="nav-link">Diagrams</a>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="main-content">
+      <h1>YouTube → MP3</h1>
+
+      <div class="tool-section">
+        <h2>Convert</h2>
+        <div class="input-row">
+          <input id="url-input" type="text"
+            placeholder="https://www.youtube.com/watch?v=..."
+            autocomplete="off" spellcheck="false" />
+          <button class="tool-btn" id="convert-btn" onclick="startConvert()">Convert</button>
+        </div>
+
+        <div id="status-area">
+          <div id="phase-label" class="status-label">Starting…</div>
+          <div class="progress-track">
+            <div class="progress-fill indeterminate" id="progress-fill"></div>
+          </div>
+          <div class="meta-row">
+            <span id="meta-speed"></span>
+            <span id="meta-eta"></span>
+          </div>
+          <div id="error-msg" class="error-msg" style="display:none"></div>
+          <div id="done-area" style="display:none">
+            <div class="done-title" id="done-title"></div>
+            <button class="tool-btn primary" onclick="downloadFile()">Download MP3</button>
+          </div>
+        </div>
+
+        <p class="notice">
+          Supports videos up to 5+ hours long. Files are stored temporarily and deleted after 2 hours.<br>
+          Only convert content you have the right to download.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ── CONFIG ──────────────────────────────────────────────────────────────
+    // After deploying the backend to Render.com, paste your service URL here.
+    // Example: "https://yt-mp3-api.onrender.com"
+    const BACKEND_URL = "https://YOUR-SERVICE-NAME.onrender.com";
+    // ────────────────────────────────────────────────────────────────────────
+
+    let currentJobId = null;
+    let eventSource  = null;
+
+    function startConvert() {
+      const url = document.getElementById("url-input").value.trim();
+      if (!url) { alert("Paste a YouTube URL first."); return; }
+      if (!url.includes("youtube.com") && !url.includes("youtu.be")) {
+        alert("That doesn't look like a YouTube URL."); return;
+      }
+      if (BACKEND_URL.includes("YOUR-SERVICE-NAME")) {
+        alert("Update BACKEND_URL in yt-mp3.html to point to your Render service."); return;
+      }
+
+      currentJobId = null;
+      document.getElementById("status-area").style.display  = "block";
+      document.getElementById("done-area").style.display    = "none";
+      document.getElementById("error-msg").style.display    = "none";
+      document.getElementById("convert-btn").disabled       = true;
+      document.getElementById("meta-speed").textContent     = "";
+      document.getElementById("meta-eta").textContent       = "";
+      setProgress(0, true);
+      setPhase("Connecting to server…");
+
+      if (eventSource) eventSource.close();
+
+      const sseUrl = `${BACKEND_URL}/api/convert?url=${encodeURIComponent(url)}`;
+      eventSource = new EventSource(sseUrl);
+
+      eventSource.onmessage = e => handleEvent(JSON.parse(e.data));
+
+      eventSource.onerror = () => {
+        eventSource.close();
+        if (currentJobId) {
+          checkStatus(currentJobId);
+        } else {
+          showError("Connection lost. Please try again.");
+          resetBtn();
+        }
+      };
+    }
+
+    function handleEvent(data) {
+      switch (data.phase) {
+        case "started":
+          currentJobId = data.job_id;
+          sessionStorage.setItem("yt_job_id", data.job_id);
+          setPhase("Queued…");
+          setProgress(0, true);
+          break;
+        case "downloading":
+          setPhase(`Downloading audio — ${data.percent}%`);
+          setProgress(data.percent, false);
+          document.getElementById("meta-speed").textContent = data.speed;
+          document.getElementById("meta-eta").textContent   = data.eta ? `ETA ${data.eta}` : "";
+          break;
+        case "converting":
+          setPhase("Converting to MP3…");
+          setProgress(100, true);
+          document.getElementById("meta-speed").textContent = "";
+          document.getElementById("meta-eta").textContent   = "";
+          break;
+        case "done":
+          setProgress(100, false);
+          break;
+        case "ready":
+          setPhase("Done.");
+          setProgress(100, false);
+          document.getElementById("done-title").textContent = data.title;
+          document.getElementById("done-area").style.display = "block";
+          document.getElementById("convert-btn").disabled = false;
+          if (eventSource) eventSource.close();
+          break;
+        case "error":
+          showError(data.message);
+          resetBtn();
+          if (eventSource) eventSource.close();
+          break;
+        case "heartbeat":
+          break;
+      }
+    }
+
+    async function checkStatus(jobId) {
+      try {
+        const res  = await fetch(`${BACKEND_URL}/api/status/${jobId}`);
+        const data = await res.json();
+        if (data.status === "ready") {
+          setPhase("Done.");
+          setProgress(100, false);
+          document.getElementById("done-title").textContent = data.title;
+          document.getElementById("done-area").style.display = "block";
+          document.getElementById("convert-btn").disabled = false;
+        } else {
+          showError("Connection lost during processing. Please try again.");
+          resetBtn();
+        }
+      } catch {
+        showError("Connection lost. Please try again.");
+        resetBtn();
+      }
+    }
+
+    function downloadFile() {
+      if (currentJobId) window.location.href = `${BACKEND_URL}/api/download/${currentJobId}`;
+    }
+
+    function setPhase(text) {
+      document.getElementById("phase-label").textContent = text.toUpperCase();
+    }
+
+    function setProgress(pct, indeterminate) {
+      const fill = document.getElementById("progress-fill");
+      if (indeterminate) {
+        fill.classList.add("indeterminate");
+        fill.style.width = "";
+      } else {
+        fill.classList.remove("indeterminate");
+        fill.style.width = `${pct}%`;
+      }
+    }
+
+    function showError(msg) {
+      const el = document.getElementById("error-msg");
+      el.textContent = msg;
+      el.style.display = "block";
+      setPhase("Failed.");
+      setProgress(0, false);
+    }
+
+    function resetBtn() {
+      document.getElementById("convert-btn").disabled = false;
+    }
+
+    // Restore if user refreshed mid-conversion
+    window.addEventListener("load", () => {
+      const saved = sessionStorage.getItem("yt_job_id");
+      if (saved && !BACKEND_URL.includes("YOUR-SERVICE-NAME")) {
+        currentJobId = saved;
+        document.getElementById("status-area").style.display = "block";
+        setPhase("Checking job status…");
+        setProgress(0, true);
+        checkStatus(saved).then(() => sessionStorage.removeItem("yt_job_id"));
+      }
+    });
+  </script>
+</body>
+
+</html>
