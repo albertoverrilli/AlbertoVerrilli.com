@@ -1,0 +1,1215 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Philosophy of Logic - A Timeline</title>
+  <style>
+    :root {
+      --bg-top: #101a2c;
+      --bg-bottom: #080d16;
+      --raw: rgba(126, 195, 255, 0.55);     /* formal innovation */
+      --smooth: rgba(242, 209, 139, 0.7);   /* philosophical current */
+      --band: rgba(255, 219, 160, 0.08);
+      --band-strong: rgba(255, 219, 160, 0.16);
+      --grid: rgba(255, 255, 255, 0.08);
+      --text: #e8edf5;
+      --accent: #f2d18b;
+    }
+    html, body {
+      margin: 0;
+      background: linear-gradient(180deg, var(--bg-top), var(--bg-bottom));
+      color: var(--text);
+      font-family: "Space Grotesk", "DM Sans", "Segoe UI", sans-serif;
+      overflow: hidden;
+    }
+    header {
+      position: absolute;
+      top: 16px;
+      left: 18px;
+      right: 18px;
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      mix-blend-mode: screen;
+      z-index: 10;
+    }
+    h1 { margin: 0; font-size: 20px; letter-spacing: 0.05em; }
+    p { margin: 4px 0 0; color: rgba(232, 237, 245, 0.7); font-size: 12px; }
+    header a.home {
+      color: rgba(232, 237, 245, 0.55);
+      text-decoration: none;
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    header a.home:hover { color: var(--accent); }
+    #legend {
+      display: flex;
+      gap: 12px;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    #legend span { display: inline-flex; align-items: center; gap: 6px; }
+    #legend i {
+      width: 22px; height: 3px; border-radius: 4px; display: inline-block;
+      box-shadow: 0 0 8px rgba(255,255,255,0.25);
+    }
+    canvas { display: block; }
+    #canvasWrap {
+      position: absolute;
+      inset: 0;
+      overflow-x: auto;
+      overflow-y: hidden;
+      scrollbar-color: rgba(255,255,255,0.3) rgba(12,18,30,0.4);
+      z-index: 0;
+    }
+    #canvasWrap::-webkit-scrollbar { height: 10px; }
+    #canvasWrap::-webkit-scrollbar-track { background: rgba(12,18,30,0.4); }
+    #canvasWrap::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.28); border-radius: 10px; }
+    #info {
+      position: absolute;
+      left: 18px;
+      bottom: 40px;
+      width: 480px;
+      max-width: 46vw;
+      background: rgba(12, 18, 30, 0.72);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 10px;
+      padding: 10px 12px;
+      font-size: 12px;
+      backdrop-filter: blur(6px);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+      z-index: 11;
+    }
+    #info strong { color: var(--accent); }
+    #info em { color: rgba(232, 237, 245, 0.75); font-style: italic; }
+    #info .label { text-transform: uppercase; letter-spacing: 0.08em; font-size: 11px; color: rgba(232,237,245,0.7); }
+    #info .content { margin-top: 6px; line-height: 1.45; }
+    #info .tags { margin-top: 8px; display: flex; flex-wrap: wrap; gap: 5px; }
+    #info .tag {
+      font-size: 10px;
+      letter-spacing: 0.04em;
+      border: 1px solid rgba(255,255,255,0.18);
+      border-radius: 20px;
+      padding: 2px 8px;
+      color: rgba(232,237,245,0.8);
+    }
+    #sectionBar {
+      position: absolute;
+      left: 0; right: 0; bottom: 0;
+      height: 26px;
+      display: flex;
+      align-items: stretch;
+      font-size: 11px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: #0a0f19;
+      border-top: 1px solid rgba(255,255,255,0.12);
+      z-index: 5;
+    }
+    #sectionBar .segment {
+      display: flex;
+      align-items: center;
+      padding-left: 10px;
+      box-sizing: border-box;
+      font-weight: 600;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+    #charPanel {
+      position: absolute;
+      right: 12px;
+      top: 60px;
+      width: 210px;
+      max-height: 62vh;
+      overflow-y: auto;
+      background: rgba(12, 18, 30, 0.75);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 10px;
+      padding: 8px 10px;
+      font-size: 12px;
+      color: var(--text);
+      backdrop-filter: blur(6px);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+      z-index: 12;
+      pointer-events: auto;
+    }
+    #searchRow {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 8px;
+      align-items: center;
+    }
+    #searchInput {
+      flex: 1;
+      min-width: 0;
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 6px;
+      padding: 6px 8px;
+      background: rgba(255,255,255,0.06);
+      color: var(--text);
+      font-size: 12px;
+      box-sizing: border-box;
+    }
+    #searchBtn {
+      background: rgba(255,255,255,0.14);
+      color: var(--text);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 6px;
+      padding: 6px 8px;
+      cursor: pointer;
+      font-size: 12px;
+    }
+    #searchBtn:hover { background: rgba(255,255,255,0.2); }
+    #charTabs {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 6px;
+      margin-bottom: 8px;
+    }
+    #charTabs button {
+      background: rgba(255,255,255,0.08);
+      color: var(--text);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 8px;
+      padding: 6px 4px;
+      cursor: pointer;
+      width: 100%;
+      height: 32px;
+      box-sizing: border-box;
+      font-size: 11px;
+      flex: none;
+    }
+    #charTabs button:focus { outline: none; }
+    #charTabs button.active {
+      background: rgba(255,255,255,0.18);
+      border-color: rgba(255,255,255,0.24);
+    }
+    #charPanel .charRow {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin: 3px 0;
+      cursor: default;
+      pointer-events: none;
+    }
+    #charPanel .charRow input {
+      pointer-events: auto;
+      cursor: pointer;
+      flex: none;
+    }
+    #charPanel .charRow span { pointer-events: none; }
+    #charPanel .swatch {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      display: inline-block;
+      flex: none;
+    }
+    #charPanel .clearRow {
+      margin-top: 8px;
+      padding-top: 8px;
+      border-top: 1px solid rgba(255,255,255,0.1);
+    }
+    #charPanel .clearRow button {
+      width: 100%;
+      background: rgba(255,255,255,0.08);
+      color: rgba(232,237,245,0.8);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 6px;
+      padding: 5px;
+      cursor: pointer;
+      font-size: 11px;
+    }
+    #charPanel .clearRow button:hover { background: rgba(255,255,255,0.16); }
+    .draggable { cursor: grab; user-select: none; }
+    .dragging { cursor: grabbing; user-select: none; }
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/p5@1.9.2/lib/p5.min.js"></script>
+</head>
+<body>
+  <header class="draggable" id="headerBar">
+    <div>
+      <h1>The Philosophy of Logic - A Timeline</h1>
+      <p>By Alberto Verrilli &nbsp;&middot;&nbsp; <a class="home" href="projects.html">&larr; Projects</a></p>
+    </div>
+    <div id="legend">
+      <span><i style="background: var(--raw)"></i>Formal innovation</span>
+      <span><i style="background: var(--smooth)"></i>Philosophical current</span>
+    </div>
+  </header>
+  <div id="info" class="draggable">
+    <div class="label" id="infoLabel">Click a thinker</div>
+    <div id="hoverLabel" class="content"></div>
+    <div id="selectedLabel" class="content"></div>
+    <div id="tagLabel" class="tags"></div>
+  </div>
+  <div id="charPanel" class="draggable">
+    <div id="searchRow">
+      <input id="searchInput" type="text" placeholder="Search name / idea" />
+      <button id="searchBtn">Go</button>
+    </div>
+    <div id="charTabs">
+      <button data-tab="figure" class="active">Figures</button>
+      <button data-tab="concept">Concepts</button>
+      <button data-tab="tradition">Schools</button>
+    </div>
+    <div id="charList"></div>
+    <div class="clearRow"><button id="clearBtn">Clear highlights</button></div>
+  </div>
+  <div id="canvasWrap">
+    <div id="sectionBar"></div>
+  </div>
+
+  <script>
+    // Configuration knobs for the timeline.
+    const config = {
+      xPadding: 40,
+      minSpacing: 36,          // minimum px between two entries
+      sampleStep: 4,           // px between wave samples
+      innovationSigma: 25,     // years: the tight kernel, one burst of work
+      currentSigma: 130,       // years: the broad kernel, a standing tradition
+      densityCompression: 0.6, // tames the 1879-1936 spike without hiding it
+      verticalScale: 0.62,     // fraction of canvas height used for waves
+      noiseAmplitude: 18,      // y wobble via Perlin noise
+      noiseScale: 0.004,       // smoothness of noise
+      maxCanvasWidth: 18000,   // avoid exceeding browser canvas limits
+      backgroundGrid: true,
+      hoverThrottleMs: 30,     // limit hover redraw frequency
+      conceptPalette: [
+        '#ff9b9b', '#9bd2ff', '#c8ff9b', '#ffdf9b', '#d6a5ff', '#9bffd8',
+        '#ff9bdc', '#9be9ff', '#ffd29b', '#b3ff9b', '#ffb39b', '#9bd7ff',
+        '#e0c2ff', '#a8ffe4', '#ffc2e0', '#d9ffa8', '#ffe0a8', '#a8c8ff',
+        '#ffa8c2', '#c2ffd9', '#ffd9a8'
+      ],
+      traditionPalette: [
+        '#ffb347', '#47d1ff', '#6effa6', '#ffa6d8', '#c6a2ff', '#7de0ff',
+        '#ffd447', '#5effc3', '#ff7f7f', '#7fb3ff', '#ffe47f', '#b8ff7f',
+        '#ff9ec9', '#9ee8ff', '#e8b8ff', '#b8ffd0', '#ffcf9e'
+      ],
+      figureColor: '#f2d18b',
+      searchColor: '#ffd166'
+    };
+
+    // Eras partition the whole span. px is the horizontal room each one gets,
+    // tick is the spacing of the year grid drawn inside it.
+    const eras = [
+      { key: 'ancient',   label: 'Ancient',        from: -500, to: 500,  px: 1500, tick: 100, colorArr: [242, 209, 139] },
+      { key: 'medieval',  label: 'Medieval',       from: 500,  to: 1400, px: 1350, tick: 100, colorArr: [255, 163, 122] },
+      { key: 'earlymod',  label: 'Early Modern',   from: 1400, to: 1800, px: 1100, tick: 50,  colorArr: [180, 146, 255] },
+      { key: 'algebraic', label: 'Algebraic',      from: 1800, to: 1879, px: 800,  tick: 20,  colorArr: [126, 195, 255] },
+      { key: 'crisis',    label: 'Foundations',    from: 1879, to: 1931, px: 1750, tick: 10,  colorArr: [118, 244, 200] },
+      { key: 'meta',      label: 'Metatheory',     from: 1931, to: 1965, px: 1400, tick: 5,   colorArr: [255, 233, 129] },
+      { key: 'now',       label: 'Contemporary',   from: 1965, to: 2025, px: 1450, tick: 10,  colorArr: [255, 154, 205] }
+    ];
+
+    // y: year (negative = BCE), n: name, w: work, s: significance 1-3,
+    // t: traditions, c: concepts, d: what it did to the philosophy of logic.
+    const data = [
+      { y: -480, n: 'Parmenides', w: 'On Nature', s: 2, t: ['Ancient Greek'], c: ['Consequence'],
+        d: 'The first sustained deductive argument in Western philosophy. From the bare premise that it is, Parmenides derives that what-is must be ungenerated, indivisible and unchanging, and rules the path of it-is-not unthinkable. Argument, not authority or myth, becomes the way a claim is settled.' },
+      { y: -450, n: 'Zeno of Elea', w: 'The Paradoxes', s: 2, t: ['Ancient Greek'], c: ['Paradox', 'Consequence'],
+        d: 'Achilles, the arrow, the dichotomy: each is a reductio, deriving absurdity from the assumption that motion and plurality are real. Aristotle credits Zeno with inventing dialectic, and the paradoxes remain the standard test of any account of the continuum.' },
+      { y: -380, n: 'Plato', w: 'Sophist, Theaetetus', s: 2, t: ['Ancient Greek'], c: ['Truth', 'Semantics'],
+        d: 'Plato poses the problem that logic must solve before it can begin: how can a statement say what is not, and still be a statement? The Sophist answers with not-being as difference, and with the sentence as a weaving together of name and verb. It is the first theory of the proposition.' },
+      { y: -350, n: 'Eubulides', w: 'The Liar, the Sorites', s: 2, t: ['Ancient Greek', 'Stoic'], c: ['Paradox', 'Vagueness', 'Truth'],
+        d: 'The Megarian invents the two paradoxes that never went away: the sentence that says of itself that it is false, and the heap that survives the removal of any single grain. Twenty-four centuries later both are still open problems.' },
+      { y: -340, n: 'Aristotle', w: 'Prior Analytics', s: 3, t: ['Ancient Greek', 'Aristotelian'], c: ['Syllogism', 'Consequence', 'Logical form'],
+        d: 'Logic becomes a subject. Using schematic letters to strip an argument of its content, Aristotle classifies the syllogistic figures, proves which moods are valid by reducing them to the perfect ones, and defines validity as the conclusion following of necessity from what has been laid down. The Organon governs the field for two thousand years.' },
+      { y: -335, n: 'Aristotle: modality', w: 'De Interpretatione', s: 2, t: ['Aristotelian'], c: ['Modality', 'Truth'],
+        d: 'The square of opposition, the definition of contradictory pairs, and the sea battle: if it is already true that there will be a battle tomorrow, the battle seems necessary. The first argument that bivalence itself might have to be given up.' },
+      { y: -315, n: 'Theophrastus', w: 'On Affirmation and Denial', s: 1, t: ['Aristotelian'], c: ['Syllogism', 'Modality', 'Conditionals'],
+        d: 'Aristotle\'s successor adds wholly hypothetical syllogisms and repairs the modal syllogistic with the peiorem rule: the conclusion always follows the weaker premise.' },
+      { y: -305, n: 'Diodorus & Philo', w: 'The Master Argument', s: 2, t: ['Stoic'], c: ['Conditionals', 'Modality'],
+        d: 'The first recorded debate about the conditional. Philo makes if-then false only when the antecedent is true and the consequent false, which is the material conditional; Diodorus demands that this never happen at any time. Diodorus also defines the possible as what is or will be, and argues that the past forecloses everything else.' },
+      { y: -300, n: 'Later Mohists', w: 'Mo Jing (Mohist Canons)', s: 1, t: ['Chinese'], c: ['Consequence', 'Semantics'],
+        d: 'In China, a technical vocabulary for names, objects and the standards by which a claim is judged, together with a form of parallel inference and an explicit refutation of the self-defeating claim that all speech is perverse.' },
+      { y: -260, n: 'Chrysippus', w: 'Stoic dialectic', s: 3, t: ['Stoic'], c: ['Propositional logic', 'Conditionals', 'Consequence'],
+        d: 'Stoic logic is propositional where Aristotle\'s is a logic of terms. Chrysippus takes whole assertibles as basic, analyses negation, conjunction, disjunction and the conditional, and sets out five indemonstrable argument forms, among them modus ponens and modus tollens, from which every other valid argument is derived by four rules of reduction.' },
+      { y: 150, n: 'Nyāya-sūtra', w: 'Nyāya-sūtra of Gautama', s: 2, t: ['Indian'], c: ['Consequence', 'Induction'],
+        d: 'The founding text of the Indian tradition treats inference as a means of knowledge alongside perception and testimony, sets out the five-membered demonstration, and catalogues in detail the ways an argument or a debate can go wrong.' },
+      { y: 160, n: 'Nāgārjuna', w: 'Mūlamadhyamakakārikā', s: 2, t: ['Indian'], c: ['Paradox', 'Nonclassical'],
+        d: 'The catuṣkoṭi confronts a thesis with four options - it is so, it is not so, both, neither - and rejects all four. Whether this abandons bivalence, refuses assertion altogether, or operates at two levels of truth is still argued over by logicians.' },
+      { y: 200, n: 'Sextus Empiricus', w: 'Outlines of Pyrrhonism', s: 2, t: ['Ancient Greek'], c: ['Consequence', 'Induction'],
+        d: 'The sceptical attack on proof itself: every demonstration either assumes what it set out to show, regresses without end, or halts at an arbitrary assumption. The Agrippan modes remain the standard challenge to any theory of justification.' },
+      { y: 205, n: 'Alexander of Aphrodisias', w: 'Commentary on the Prior Analytics', s: 1, t: ['Aristotelian'], c: ['Syllogism'],
+        d: 'The greatest of the ancient commentators fixes the reading of the syllogistic that late antiquity, the Arabic world and the Latin West all inherit.' },
+      { y: 270, n: 'Porphyry', w: 'Isagoge', s: 1, t: ['Aristotelian'], c: ['Semantics'],
+        d: 'A short introduction to the Categories that hands the Middle Ages the tree of Porphyry and, in one question about genera and species that it pointedly declines to answer, the problem of universals.' },
+      { y: 515, n: 'Boethius', w: 'On Hypothetical Syllogisms', s: 2, t: ['Aristotelian', 'Scholastic'], c: ['Syllogism', 'Conditionals'],
+        d: 'Executed before he could translate the whole of Aristotle, Boethius still leaves the Latin West its entire logical vocabulary - proposition, predicate, accident, universal - along with a theory of topical argument and of hypothetical syllogisms.' },
+      { y: 530, n: 'Dignāga', w: 'Pramāṇasamuccaya', s: 2, t: ['Indian'], c: ['Consequence', 'Semantics'],
+        d: 'The wheel of reasons sets out nine ways a reason can be distributed over similar and dissimilar cases, and marks off exactly the two that are good: a systematic test for a valid inference. His apoha theory makes the meaning of a word a matter of what it excludes.' },
+      { y: 650, n: 'Dharmakīrti', w: 'Pramāṇavārttika', s: 2, t: ['Indian'], c: ['Consequence', 'Modality'],
+        d: 'An inference is sound only where the reason is bound to what it proves by identity or by causation. Dharmakīrti is asking the question that later attaches to entailment: what makes a connection between two facts necessary rather than merely constant?' },
+      { y: 930, n: 'al-Fārābī', w: 'Commentaries on the Organon', s: 2, t: ['Islamic'], c: ['Semantics', 'Logical form'],
+        d: 'The second teacher separates logic from grammar: grammar gives the rules of one particular language, logic the rules governing the meanings that any language expresses. He also ranks the syllogistic arts from demonstration down through dialectic to rhetoric and poetics.' },
+      { y: 1020, n: 'Avicenna (Ibn Sīnā)', w: 'al-Shifāʾ: al-Qiyās', s: 3, t: ['Islamic'], c: ['Modality', 'Conditionals', 'Syllogism'],
+        d: 'The first great break with Aristotle. Avicenna builds a temporally modalized syllogistic, an extensive logic of conditional and disjunctive propositions, and insists that finding the middle term is an act of insight no formal rule supplies. Six centuries of Arabic logic are in large part a commentary on him.' },
+      { y: 1120, n: 'Peter Abelard', w: 'Dialectica', s: 3, t: ['Scholastic'], c: ['Consequence', 'Semantics', 'Logical form'],
+        d: 'Abelard asks what a sentence says over and above what its words name, and answers with the dictum, what is said - a bearer of truth that is no object at all. His theory of consequence demands that the sense of the antecedent contain the consequent, an early relevance requirement on entailment.' },
+      { y: 1190, n: 'Averroes (Ibn Rushd)', w: 'The Long Commentaries', s: 1, t: ['Islamic', 'Aristotelian'], c: ['Syllogism'],
+        d: 'Against Avicenna\'s innovations, Averroes returns to the letter of Aristotle - and it is his commentaries, in Latin translation, that carry the Organon into the new universities.' },
+      { y: 1235, n: 'Peter of Spain', w: 'Summulae Logicales', s: 2, t: ['Scholastic'], c: ['Semantics', 'Quantification'],
+        d: 'The standard textbook for three hundred years, and the vehicle of supposition theory: the same term stands for different things depending on the sentence around it. It is an account of quantification and scope built inside natural language rather than in a symbolism.' },
+      { y: 1250, n: 'William of Sherwood', w: 'Syncategoremata', s: 1, t: ['Scholastic'], c: ['Logical form', 'Semantics'],
+        d: 'A treatise on the words that carry no content of their own - every, only, not, if, begins - and therefore do all the logical work. The medieval form of the question: which expressions are the logical constants?' },
+      { y: 1265, n: 'al-Kātibī', w: 'al-Shamsiyya', s: 1, t: ['Islamic'], c: ['Syllogism', 'Modality'],
+        d: 'The compendium that carried post-Avicennan logic through the madrasa curriculum for centuries, and drew a vast commentary tradition of its own.' },
+      { y: 1325, n: 'Thomas Bradwardine', w: 'Insolubilia', s: 2, t: ['Scholastic'], c: ['Paradox', 'Truth'],
+        d: 'A solution to the Liar built on a closure principle: a sentence signifies everything that follows from what it says, so the Liar also says of itself that it is true, and is therefore simply false, with no contradiction. Six centuries before Tarski, the paradox is treated as a problem about the logic of signification.' },
+      { y: 1323, n: 'William of Ockham', w: 'Summa Logicae', s: 3, t: ['Scholastic'], c: ['Semantics', 'Logical form', 'Consequence'],
+        d: 'Logic is about mental language: terms in the mind that signify things directly, with no universals standing in between. Ockham gives truth conditions for each kind of categorical proposition and handles modal and tensed sentences through the supposition of their terms - nominalism carried out as a technical programme.' },
+      { y: 1335, n: 'John Buridan', w: 'Treatise on Consequences', s: 3, t: ['Scholastic'], c: ['Consequence', 'Paradox', 'Truth'],
+        d: 'The high point of the medieval theory of consequence. Validity is defined over sentence tokens, which must exist to be true, and the Liar is defused by the rule that every sentence virtually asserts its own truth. The Sophismata is still read as a book of live problems rather than a historical curiosity.' },
+      { y: 1400, n: 'Paul of Venice', w: 'Logica Magna', s: 1, t: ['Scholastic'], c: ['Consequence', 'Semantics'],
+        d: 'An encyclopaedia of everything late scholastic logic had achieved - and, with humanism arriving, very close to its last.' },
+      { y: 1479, n: 'Rudolph Agricola', w: 'De inventione dialectica', s: 1, t: ['Humanist'], c: ['Induction', 'Logical form'],
+        d: 'Humanist dialectic reorients logic from proof to invention and persuasion. Formal logic is dismissed as barbarous scholastic quibbling, and for two hundred years remarkably little of it survives.' },
+      { y: 1555, n: 'Petrus Ramus', w: 'Dialectique', s: 1, t: ['Humanist'], c: ['Induction'],
+        d: 'Logic reduced to method: define, divide, arrange in dichotomous tables. Enormously influential in schools, and a measure of how far the discipline had contracted.' },
+      { y: 1620, n: 'Francis Bacon', w: 'Novum Organum', s: 2, t: ['Early Modern'], c: ['Induction'],
+        d: 'A new organon against the old. The syllogism can only rearrange what is already granted, so it cannot discover nature; Bacon proposes tables of presence, absence and degree, and with them the claim that induction has a logic of its own.' },
+      { y: 1662, n: 'Arnauld & Nicole', w: 'The Port-Royal Logic', s: 2, t: ['Early Modern'], c: ['Semantics', 'Induction'],
+        d: 'Logic as the art of thinking, absorbed into a theory of the mind\'s operations: conceiving, judging, reasoning, ordering. It introduces the distinction between the comprehension and the extension of an idea, ancestor of intension and extension.' },
+      { y: 1666, n: 'G. W. Leibniz', w: 'De Arte Combinatoria', s: 3, t: ['Early Modern'], c: ['Logicism', 'Logical form', 'Semantics'],
+        d: 'Leibniz imagines a characteristica universalis in which every concept is analysed into primitives, and a calculus ratiocinator to operate on it, so that two disputants could settle any question by saying: let us calculate. Left unpublished for two centuries, it is the programme every later formal logic pursues.' },
+      { y: 1690, n: 'John Locke', w: 'Essay Concerning Human Understanding', s: 1, t: ['Early Modern'], c: ['Semantics'],
+        d: 'Locke closes the Essay by classing logic as semiotics, the doctrine of signs, and dismisses the syllogism as useless for discovery: the empiricist case that reasoning is nothing but the handling of ideas.' },
+      { y: 1781, n: 'Immanuel Kant', w: 'Critique of Pure Reason', s: 3, t: ['Early Modern'], c: ['Logical form', 'Consequence'],
+        d: 'Kant declares that logic since Aristotle has not been able to advance a single step, and appears closed and complete. He also divides it: general logic abstracts from all content, transcendental logic asks how thought can apply to objects at all. His analytic-synthetic distinction sets the question logicism will try to answer.' },
+      { y: 1812, n: 'G. W. F. Hegel', w: 'Science of Logic', s: 2, t: ['Early Modern'], c: ['Nonclassical', 'Consequence'],
+        d: 'Formal logic, for Hegel, is empty. He proposes instead a logic in which categories generate their own contradictions and pass over into others. Read charitably by later paraconsistent logicians, it remains the largest standing rival account of what logic is.' },
+      { y: 1837, n: 'Bernard Bolzano', w: 'Wissenschaftslehre', s: 3, t: ['Algebraic', 'Foundational'], c: ['Consequence', 'Truth', 'Logical form'],
+        d: 'Consequence defined by variation: B follows from A when every uniform substitution for the non-logical ideas that makes A true makes B true. That is essentially Tarski\'s definition, arrived at a century early, and it comes with propositions in themselves, an account of analyticity, and an anti-psychologism Frege would recognise.' },
+      { y: 1843, n: 'John Stuart Mill', w: 'A System of Logic', s: 2, t: ['Algebraic'], c: ['Induction'],
+        d: 'Mill makes induction the whole of real inference - the syllogism, he argues, can yield nothing not already contained in its premises - and formulates the methods of agreement and difference. Logic here is close to the study of how we actually reason, the view Frege and Husserl set out to destroy.' },
+      { y: 1847, n: 'George Boole', w: 'The Mathematical Analysis of Logic', s: 3, t: ['Algebraic'], c: ['Propositional logic', 'Logicism'],
+        d: 'Boole writes logic as algebra: classes as symbols, selection as multiplication, with x squared equals x as the law that makes the algebra logical rather than numerical. The Laws of Thought (1854) presents this as nothing less than the mathematics of the mind.' },
+      { y: 1847, n: 'Augustus De Morgan', w: 'Formal Logic', s: 2, t: ['Algebraic'], c: ['Propositional logic', 'Logical form'],
+        d: 'The duality laws for negation, and the complaint that no syllogistic can validate: all horses are animals, therefore all heads of horses are heads of animals. That single example forces logic to take on relations.' },
+      { y: 1870, n: 'Charles S. Peirce', w: 'Notation for the Logic of Relatives', s: 3, t: ['Algebraic'], c: ['Quantification', 'Semantics', 'Induction'],
+        d: 'Peirce turns the logic of relations into a full quantificational calculus, introducing sigma and pi for the quantifiers in 1885 together with a truth-functional analysis of the connectives, and later the existential graphs. He also names abduction, inference to an explanation, as a third mode beside deduction and induction.' },
+      { y: 1881, n: 'John Venn', w: 'Symbolic Logic', s: 1, t: ['Algebraic'], c: ['Semantics'],
+        d: 'The diagrams - and a defence of the Boolean programme against the charge that its symbols have been emptied of meaning.' },
+      { y: 1890, n: 'Ernst Schröder', w: 'Vorlesungen über die Algebra der Logik', s: 1, t: ['Algebraic'], c: ['Quantification', 'Model theory'],
+        d: 'The systematic summation of the algebraic tradition, and the book through which Löwenheim and Skolem arrive at the questions that begin model theory.' },
+      { y: 1879, n: 'Gottlob Frege', w: 'Begriffsschrift', s: 3, t: ['Logicist', 'Foundational'], c: ['Quantification', 'Logical form', 'Proof theory'],
+        d: 'The most important book in the history of logic. Frege replaces subject and predicate with function and argument, introduces bound variables and nested quantifiers, and lays down explicit axioms and rules - so that for the first time whether something is a proof can be checked without appeal to intuition about what follows.' },
+      { y: 1884, n: 'Frege: logicism', w: 'Grundlagen der Arithmetik', s: 3, t: ['Logicist'], c: ['Logicism', 'Semantics'],
+        d: 'Numbers are objects, defined by the extensions of concepts, and arithmetic is analytic: derivable from logic alone. The attack on psychologism and the context principle - never ask for the meaning of a word in isolation, but only in the context of a sentence - set analytic philosophy going.' },
+      { y: 1892, n: 'Frege: sense & reference', w: 'Über Sinn und Bedeutung', s: 3, t: ['Logicist'], c: ['Semantics', 'Truth'],
+        d: 'If a = b can be informative where a = a is not, identity cannot be a relation between objects alone. Frege splits meaning into sense and reference, makes sentences into names of the True and the False, and gives semantics the shape it still has.' },
+      { y: 1889, n: 'Giuseppe Peano', w: 'Arithmetices principia', s: 2, t: ['Foundational'], c: ['Logicism', 'Proof theory'],
+        d: 'Axioms for the natural numbers, and a notation so much more usable than Frege\'s two-dimensional script that it is the one we still write in.' },
+      { y: 1895, n: 'Georg Cantor', w: 'Beiträge zur Begründung der Mengenlehre', s: 3, t: ['Foundational'], c: ['Set theory', 'Paradox'],
+        d: 'Transfinite numbers, the diagonal argument, and a hierarchy of infinities. Cantor gives the foundations debate its subject matter; his own paradox of the set of all cardinals gives it its first crisis.' },
+      { y: 1899, n: 'David Hilbert', w: 'Grundlagen der Geometrie', s: 3, t: ['Formalist', 'Foundational'], c: ['Formalism', 'Model theory', 'Proof theory'],
+        d: 'Axioms are implicit definitions: it must be possible, Hilbert says, to say tables, chairs and beer mugs in place of points, lines and planes. Consistency, independence and completeness of an axiom system become the questions to ask, and formalism has its charter.' },
+      { y: 1902, n: 'Russell\'s paradox', w: 'Letter to Frege', s: 3, t: ['Foundational', 'Logicist'], c: ['Paradox', 'Set theory'],
+        d: 'The set of all sets that are not members of themselves. Frege\'s Basic Law V collapses; he adds an appendix saying that nothing less welcome can befall a scientific writer. Every subsequent foundation of mathematics is designed to block this one argument.' },
+      { y: 1905, n: 'Bertrand Russell', w: 'On Denoting', s: 3, t: ['Analytic'], c: ['Quantification', 'Logical form', 'Semantics'],
+        d: 'The present King of France is bald is not about a nonexistent king; it is an existential quantification in disguise. Logical form comes apart from grammatical form, analysis becomes the method of a whole tradition, and paraphrase into logical notation becomes a philosophical technique.' },
+      { y: 1908, n: 'L. E. J. Brouwer', w: 'The Unreliability of the Logical Principles', s: 3, t: ['Intuitionist'], c: ['Intuitionism', 'Nonclassical', 'Truth'],
+        d: 'Mathematics is mental construction, so to prove that a claim is not refutable is not to prove it, and excluded middle has no general warrant. Brouwer denies that logic is prior to mathematics at all: logic merely records patterns in constructions already made. Heyting formalises the resulting logic in 1930.' },
+      { y: 1910, n: 'Whitehead & Russell', w: 'Principia Mathematica', s: 3, t: ['Logicist'], c: ['Logicism', 'Set theory', 'Proof theory'],
+        d: 'Three volumes deriving mathematics from logic inside a ramified theory of types, propped up by axioms of infinity and reducibility whose logical credentials Russell himself doubted. The proof that 1 + 1 = 2 arrives well into the second volume.' },
+      { y: 1912, n: 'C. I. Lewis', w: 'Implication and the Algebra of Logic', s: 2, t: ['Analytic', 'Nonclassical'], c: ['Modality', 'Conditionals', 'Nonclassical'],
+        d: 'Against the paradoxes of material implication - a falsehood implies everything - Lewis defines strict implication as the impossibility of true antecedent with false consequent, and constructs the systems S1 to S5 that modal logic still uses.' },
+      { y: 1915, n: 'Löwenheim & Skolem', w: 'Über Möglichkeiten im Relativkalkül', s: 2, t: ['Foundational'], c: ['Model theory', 'Set theory'],
+        d: 'Any satisfiable first-order theory has a countable model - including an axiomatisation of set theory, which proves that uncountable sets exist. Skolem\'s paradox shows that no first-order theory can pin down its own subject matter.' },
+      { y: 1921, n: 'Ludwig Wittgenstein', w: 'Tractatus Logico-Philosophicus', s: 3, t: ['Analytic'], c: ['Truth', 'Propositional logic', 'Logical form'],
+        d: 'Every proposition is a truth-function of elementary propositions, and the truth-table is not a device for checking but a display of what a proposition is. The truths of logic are tautologies that say nothing - which is why logic is at once necessary and empty.' },
+      { y: 1921, n: 'Emil Post', w: 'General Theory of Elementary Propositions', s: 2, t: ['Foundational'], c: ['Propositional logic', 'Proof theory', 'Computability'],
+        d: 'Post proves the propositional calculus of Principia consistent, complete and decidable by truth-tables, and introduces many-valued matrices - the first systematic step outside two truth values.' },
+      { y: 1922, n: 'The Hilbert Programme', w: 'Neubegründung der Mathematik', s: 3, t: ['Formalist', 'Foundational'], c: ['Formalism', 'Proof theory'],
+        d: 'Formalise all of mathematics, then prove that formal system consistent using only finitary reasoning that no one could doubt. Metamathematics - proofs treated as mathematical objects and studied - begins here, whatever one thinks of the philosophy behind it.' },
+      { y: 1929, n: 'Kurt Gödel', w: 'Completeness of the first-order calculus', s: 3, t: ['Foundational'], c: ['Model theory', 'Proof theory', 'Consequence'],
+        d: 'Whatever is true in every model of a first-order theory is provable in it. Proof and truth coincide exactly for first-order logic - which is what makes the next result so pointed.' },
+      { y: 1931, n: 'Gödel: incompleteness', w: 'Über formal unentscheidbare Sätze', s: 3, t: ['Foundational'], c: ['Proof theory', 'Truth', 'Paradox'],
+        d: 'Any consistent formal system strong enough for arithmetic contains a true sentence it cannot prove, and cannot prove its own consistency. The Liar is made rigorous by arithmetising syntax, truth is pulled apart from provability, and the Hilbert programme ends in its original form.' },
+      { y: 1933, n: 'Alfred Tarski', w: 'The Concept of Truth in Formalized Languages', s: 3, t: ['Foundational', 'Analytic'], c: ['Truth', 'Semantics', 'Model theory'],
+        d: 'Truth cannot be defined for a language within that same language, on pain of the Liar - but it can be defined for an object language inside a richer metalanguage, recursively, by way of satisfaction. Semantics becomes mathematically respectable, and Convention T becomes the test any theory of truth must pass.' },
+      { y: 1934, n: 'Rudolf Carnap', w: 'Logical Syntax of Language', s: 3, t: ['Analytic'], c: ['Formalism', 'Logical form', 'Nonclassical'],
+        d: 'The principle of tolerance: there is no one correct logic, only different language forms, and everyone is at liberty to build their own, provided they state their rules clearly. Choosing a logic becomes a practical decision rather than a discovery about the world.' },
+      { y: 1935, n: 'Gerhard Gentzen', w: 'Untersuchungen über das logische Schließen', s: 3, t: ['Foundational'], c: ['Proof theory', 'Intuitionism', 'Semantics'],
+        d: 'Natural deduction and the sequent calculus, and with them the Hauptsatz: every proof can be normalised into one that detours through no unnecessary concept. Gentzen\'s suggestion that the introduction rules for a connective define its meaning is the seed of proof-theoretic semantics.' },
+      { y: 1936, n: 'Church & Turing', w: 'Undecidability of first-order logic', s: 3, t: ['Foundational'], c: ['Computability', 'Proof theory'],
+        d: 'No algorithm decides whether an arbitrary first-order sentence is valid. Two independent analyses of what an effective procedure is - the lambda calculus and the machine - turn out to coincide, and the Entscheidungsproblem is answered in the negative.' },
+      { y: 1936, n: 'Tarski: logical consequence', w: 'On the Concept of Logical Consequence', s: 3, t: ['Foundational'], c: ['Consequence', 'Model theory', 'Logical form'],
+        d: 'X follows from K when every model of K is a model of X. Tarski notes that the whole definition depends on where the line between logical and non-logical constants is drawn, and confesses he knows no principled place to draw it. The problem is still open.' },
+      { y: 1936, n: 'W. V. Quine', w: 'Truth by Convention', s: 3, t: ['Analytic'], c: ['Consequence', 'Logical form'],
+        d: 'If the truths of logic are true by convention, logic is needed to get them out of the conventions - the regress Quine later turns, in Two Dogmas of Empiricism (1951), against the analytic-synthetic distinction itself. No statement, not even a logical law, is immune from revision.' },
+      { y: 1947, n: 'Carnap: intensions', w: 'Meaning and Necessity', s: 2, t: ['Analytic'], c: ['Modality', 'Semantics'],
+        d: 'State descriptions give the modal notions an extensional treatment, and the pair intension-extension replaces sense and reference. The machinery that becomes possible-worlds semantics is here in embryo.' },
+      { y: 1953, n: 'Quine: ontological commitment', w: 'From a Logical Point of View', s: 2, t: ['Analytic'], c: ['Quantification', 'Semantics', 'Modality'],
+        d: 'To be is to be the value of a bound variable. First-order logic becomes the canonical notation in which to say what there is - and Quine argues that quantifying into modal contexts commits one to an essentialism he wants no part of.' },
+      { y: 1957, n: 'A. N. Prior', w: 'Time and Modality', s: 2, t: ['Analytic'], c: ['Modality', 'Nonclassical'],
+        d: 'Tense treated as an operator: it will be that p, it was that p. Prior founds temporal logic, revives the Master Argument as a live problem about fatalism, and shows how building a logic can make a metaphysical position precise enough to test.' },
+      { y: 1959, n: 'Saul Kripke', w: 'A Completeness Theorem in Modal Logic', s: 3, t: ['Contemporary'], c: ['Modality', 'Model theory', 'Semantics'],
+        d: 'Models made of possible worlds with an accessibility relation between them, so that different modal systems answer to different conditions on that relation. Modal logic gains a semantics, and possible worlds enter philosophy at large.' },
+      { y: 1962, n: 'Jaakko Hintikka', w: 'Knowledge and Belief', s: 1, t: ['Contemporary'], c: ['Modality', 'Semantics'],
+        d: 'Knowing and believing get the same treatment as necessity, launching epistemic logic - and with it a permanent argument about whether an agent can be modelled as knowing all the consequences of what it knows.' },
+      { y: 1963, n: 'Paul Cohen', w: 'Independence of the continuum hypothesis', s: 2, t: ['Foundational'], c: ['Set theory', 'Model theory'],
+        d: 'Forcing shows the continuum hypothesis to be neither provable nor refutable in ZFC. Whether this means the question has no answer, or that the right axioms have not yet been found, is a live dispute about the nature of mathematical truth.' },
+      { y: 1965, n: 'Lotfi Zadeh', w: 'Fuzzy Sets', s: 1, t: ['Nonclassical'], c: ['Nonclassical', 'Vagueness'],
+        d: 'Membership by degree, and with it truth by degree: one of the standard responses to the sorites, and one of the most contested.' },
+      { y: 1970, n: 'Richard Montague', w: 'English as a Formal Language', s: 2, t: ['Contemporary'], c: ['Semantics', 'Quantification', 'Modality'],
+        d: 'There is, Montague insists, no important theoretical difference between natural languages and the artificial languages of logicians. Intensional type theory is turned on English, and formal semantics becomes a discipline.' },
+      { y: 1973, n: 'Michael Dummett', w: 'The Philosophical Basis of Intuitionistic Logic', s: 3, t: ['Contemporary', 'Intuitionist'], c: ['Intuitionism', 'Truth', 'Semantics'],
+        d: 'If meaning is what a competent speaker manifests in use, we cannot credit ourselves with grasping truth conditions that outrun any possible recognition - so classical logic loses its justification. The choice of a logic is made to turn on the theory of meaning, and logic becomes revisable on philosophical grounds.' },
+      { y: 1975, n: 'Kripke: truth', w: 'Outline of a Theory of Truth', s: 3, t: ['Contemporary'], c: ['Truth', 'Paradox', 'Nonclassical'],
+        d: 'A language can contain its own truth predicate if truth is allowed to be partial: build up in stages until a fixed point is reached, at which the Liar simply never receives a value. Tarski\'s hierarchy is shown not to be the only way out.' },
+      { y: 1975, n: 'Anderson & Belnap', w: 'Entailment', s: 2, t: ['Nonclassical'], c: ['Nonclassical', 'Conditionals', 'Consequence'],
+        d: 'Relevance logic: a genuine entailment must share content between premises and conclusion, so a contradiction does not entail everything and a necessary truth does not follow from anything whatever. The classical account of consequence is charged not with oddity but with error.' },
+      { y: 1981, n: 'Barwise & Cooper', w: 'Generalized Quantifiers and Natural Language', s: 1, t: ['Contemporary'], c: ['Quantification', 'Semantics'],
+        d: 'Determiners as relations between sets - most, few, all but three - extending quantification far beyond the two quantifiers of first-order logic, and supplying a mathematical criterion for logicality: invariance under permutations of the domain.' },
+      { y: 1987, n: 'Graham Priest', w: 'In Contradiction', s: 2, t: ['Nonclassical'], c: ['Nonclassical', 'Paradox', 'Truth'],
+        d: 'Dialetheism: some contradictions are true, and the Liar is one of them. Paired with a paraconsistent logic in which a contradiction does not entail everything, it is the most direct challenge yet to a law held since Aristotle.' },
+      { y: 1987, n: 'Jean-Yves Girard', w: 'Linear Logic', s: 2, t: ['Contemporary'], c: ['Proof theory', 'Nonclassical'],
+        d: 'Drop weakening and contraction and premises become resources, each used exactly once. Proof theory turns out to be as much about the structural rules as about the connectives, and logic acquires a computational reading.' },
+      { y: 1990, n: 'John Etchemendy', w: 'The Concept of Logical Consequence', s: 2, t: ['Contemporary'], c: ['Consequence', 'Model theory'],
+        d: 'A sustained argument that Tarski\'s model-theoretic definition gets the extension of consequence right only by good fortune, because it confuses a claim about all interpretations with a claim about necessity. The received account of validity is put back in question.' },
+      { y: 1994, n: 'Timothy Williamson', w: 'Vagueness', s: 2, t: ['Contemporary'], c: ['Vagueness', 'Truth'],
+        d: 'Epistemicism: vague terms do have sharp boundaries, and we are simply unable to know where they fall. Classical logic and bivalence survive the sorites, at the price of a fact that cannot in principle be known.' },
+      { y: 2006, n: 'Beall & Restall', w: 'Logical Pluralism', s: 2, t: ['Contemporary'], c: ['Consequence', 'Nonclassical'],
+        d: 'One notion of validity - truth preserved in every case - admits several equally legitimate readings of case, so classical, relevant and intuitionistic consequence can all be correct at once. The long dispute over the one true logic may be a dispute over a shared schema.' },
+      { y: 2008, n: 'Hartry Field', w: 'Saving Truth from Paradox', s: 1, t: ['Contemporary'], c: ['Truth', 'Paradox', 'Nonclassical'],
+        d: 'A theory that keeps truth fully transparent by giving up excluded middle, together with a careful account of just how much any solution to the paradoxes has to cost.' },
+      { y: 2013, n: 'Univalent Foundations', w: 'Homotopy Type Theory', s: 2, t: ['Contemporary'], c: ['Proof theory', 'Set theory', 'Computability'],
+        d: 'Types read as spaces and proofs of identity as paths, giving a foundation for mathematics that is constructive, machine-checkable, and not built on sets at all - a live alternative to a century of set-theoretic orthodoxy.' }
+    ];
+
+    let entries = [];
+    let samples = { xs: [], raw: [], smooth: [] };
+    let wavePaths = { raw: [], smooth: [] };
+    let layout = { xStart: 0, xEnd: 0, baseY: 0, usableHeight: 0 };
+    let ready = false;
+    let hoverIdx = null;
+    let selectedIdx = null;
+    let lastHoverRedraw = 0;
+    let activeTab = 'figure';
+    let selectedTags = new Set();     // keys of the form "type:name"
+    let tagColors = {};
+    let tagMembers = {};              // key -> array of entry indices
+    let tagDefs = [];                 // { key, type, name }
+    let searchKey = null;
+    let suppressClick = false;
+
+    function setup() {
+      pixelDensity(1);
+      prepareData();
+      const totalWidth = computeWidth();
+      createCanvas(totalWidth, windowHeight).parent('canvasWrap');
+      computePaths();
+      ready = true;
+      // p5 setup runs after DOMContentLoaded, so the panel is filled here,
+      // once the tag index actually exists.
+      renderControls(activeTab);
+      updateInfo();
+      noLoop();
+      redraw();
+    }
+
+    function windowResized() {
+      if (!ready) return;
+      const totalWidth = computeWidth();
+      resizeCanvas(totalWidth, windowHeight);
+      computePaths();
+      redraw();
+    }
+
+    function prepareData() {
+      entries = data
+        .map((e, i) => Object.assign({}, e, { id: i }))
+        .sort((a, b) => a.y - b.y);
+      entries.forEach((e, i) => { e.id = i; e.era = eraForYear(e.y); });
+      buildTagIndex();
+    }
+
+    function eraForYear(year) {
+      for (const era of eras) {
+        if (year >= era.from && year < era.to) return era;
+      }
+      return year < eras[0].from ? eras[0] : eras[eras.length - 1];
+    }
+
+    function computeWidth() {
+      const totalEraPx = eras.reduce((a, e) => a + e.px, 0);
+      const target = config.xPadding * 2 + totalEraPx;
+      return min(config.maxCanvasWidth, max(windowWidth, Math.ceil(target)));
+    }
+
+    // Each era gets a fixed slice of the canvas; years are linear inside it.
+    // This keeps 1900-1940 legible without squeezing antiquity off the page.
+    function layoutEras() {
+      const totalEraPx = eras.reduce((a, e) => a + e.px, 0);
+      const available = width - config.xPadding * 2;
+      const scale = available / totalEraPx;
+      let cursor = config.xPadding;
+      eras.forEach(era => {
+        era.x0 = cursor;
+        era.x1 = cursor + era.px * scale;
+        cursor = era.x1;
+      });
+      layout.xStart = config.xPadding;
+      layout.xEnd = cursor;
+    }
+
+    function yearToX(year) {
+      const era = eraForYear(year);
+      const t = (year - era.from) / (era.to - era.from);
+      return era.x0 + constrain(t, 0, 1) * (era.x1 - era.x0);
+    }
+
+    // Place entries by year, then push overlapping ones right just enough to read.
+    function placeEntries() {
+      let prevX = -Infinity;
+      entries.forEach(e => {
+        let x = yearToX(e.y);
+        if (x < prevX + config.minSpacing) x = prevX + config.minSpacing;
+        e.x = min(x, layout.xEnd);
+        prevX = e.x;
+      });
+    }
+
+    function xToYear(x) {
+      const era = eraForX(x);
+      const t = (x - era.x0) / (era.x1 - era.x0);
+      return era.from + constrain(t, 0, 1) * (era.to - era.from);
+    }
+
+    // Density is measured in years, not in pixels, so that widening an era on
+    // screen does not make its logic look thinner than it was.
+    function densityAt(year, sigmaYears) {
+      let total = 0;
+      for (const e of entries) {
+        const d = year - e.y;
+        if (Math.abs(d) > sigmaYears * 3) continue;
+        total += e.s * Math.exp(-(d * d) / (2 * sigmaYears * sigmaYears));
+      }
+      return Math.pow(total, config.densityCompression);
+    }
+
+    // Two kernels over the same events: a narrow one for bursts of formal work,
+    // a wide one for the tradition running underneath them.
+    function buildWave() {
+      const xs = [];
+      const raw = [];
+      const smooth = [];
+      for (let x = layout.xStart; x <= layout.xEnd; x += config.sampleStep) {
+        const yr = xToYear(x);
+        xs.push(x);
+        raw.push(densityAt(yr, config.innovationSigma));
+        smooth.push(densityAt(yr, config.currentSigma));
+      }
+      samples = { xs, raw, smooth };
+    }
+
+    function computePaths() {
+      layoutEras();
+      placeEntries();
+      buildWave();
+
+      const usableHeight = height * config.verticalScale;
+      const baseY = height * (1 - config.verticalScale) / 2 + usableHeight / 2;
+      layout.baseY = baseY;
+      layout.usableHeight = usableHeight;
+
+      const maxRaw = Math.max(...samples.raw, 0.0001);
+      const maxSmooth = Math.max(...samples.smooth, 0.0001);
+      wavePaths = { raw: [], smooth: [] };
+
+      for (let i = 0; i < samples.xs.length; i++) {
+        const x = samples.xs[i];
+        const hue = eraColorForX(x);
+        const n = noise(i * config.noiseScale * 8, 0.5);
+        const rawNorm = samples.raw[i] / maxRaw;
+        const smoothNorm = samples.smooth[i] / maxSmooth;
+        const rawY = baseY - (rawNorm - 0.35) * usableHeight + (n - 0.5) * config.noiseAmplitude;
+        const smoothY = baseY - (smoothNorm - 0.35) * usableHeight * 0.9 + (n - 0.5) * config.noiseAmplitude * 0.5;
+        wavePaths.raw.push({ x, y: rawY, hue });
+        wavePaths.smooth.push({ x, y: smoothY, hue });
+      }
+
+      // Nodes ride the raw wave, lifted a little by significance.
+      entries.forEach(e => {
+        e.wy = waveYAt(e.x) - (e.s - 1) * 6;
+      });
+
+      buildSectionBar();
+    }
+
+    function waveYAt(x) {
+      if (!wavePaths.raw.length) return layout.baseY;
+      const i = constrain(Math.round((x - layout.xStart) / config.sampleStep), 0, wavePaths.raw.length - 1);
+      return wavePaths.raw[i].y;
+    }
+
+    function eraForX(x) {
+      for (const era of eras) {
+        if (x >= era.x0 && x < era.x1) return era;
+      }
+      return eras[eras.length - 1];
+    }
+
+    function eraColorForX(x) {
+      return eraForX(x).colorArr;
+    }
+
+    function getCSS(varName) {
+      return getComputedStyle(document.documentElement).getPropertyValue(varName).trim();
+    }
+
+    function renderBackground() {
+      background(color(getCSS('--bg-bottom')));
+      if (!config.backgroundGrid) return;
+      strokeWeight(1);
+      const lines = 20;
+      for (let i = 0; i <= lines; i++) {
+        const y = map(i, 0, lines, 0, height);
+        const a = 0.04 + 0.22 * abs(0.5 - i / lines);
+        stroke(255, 255, 255, 255 * a);
+        line(0, y, width, y);
+      }
+    }
+
+    function drawEraBands() {
+      textAlign(LEFT, TOP);
+      eras.forEach((era, i) => {
+        noStroke();
+        fill(era.colorArr[0], era.colorArr[1], era.colorArr[2], i % 2 === 0 ? 12 : 20);
+        rect(era.x0, 0, era.x1 - era.x0, height);
+
+        stroke(255, 255, 255, 40);
+        strokeWeight(1);
+        line(era.x0, 0, era.x0, height);
+
+        // Repeat the era heading so it stays on screen inside a wide era.
+        noStroke();
+        for (let lx = era.x0 + 10, first = true; lx < era.x1 - 80; lx += 800, first = false) {
+          fill(era.colorArr[0], era.colorArr[1], era.colorArr[2], first ? 190 : 70);
+          textSize(13);
+          textStyle(BOLD);
+          text(era.label.toUpperCase(), lx, 62);
+          textStyle(NORMAL);
+          fill(255, 255, 255, first ? 90 : 45);
+          textSize(10);
+          text(`${formatYear(era.from)} - ${formatYear(era.to)}`, lx, 80);
+        }
+      });
+      drawYearTicks();
+    }
+
+    function drawYearTicks() {
+      textAlign(CENTER, TOP);
+      textSize(9);
+      eras.forEach(era => {
+        const first = Math.ceil(era.from / era.tick) * era.tick;
+        for (let yr = first; yr < era.to; yr += era.tick) {
+          const x = yearToX(yr);
+          if (x <= era.x0 + 2) continue;
+          stroke(255, 255, 255, 18);
+          strokeWeight(1);
+          line(x, 100, x, height - 30);
+          noStroke();
+          fill(255, 255, 255, 55);
+          text(formatYear(yr), x, height - 46);
+        }
+      });
+    }
+
+    function formatYear(year) {
+      if (year < 0) return `${Math.abs(year)} BCE`;
+      return `${year}`;
+    }
+
+    function drawWaves() {
+      noFill();
+      blendMode(ADD);
+      strokeWeight(1.4);
+      drawPath(wavePaths.raw, getCSS('--raw'));
+      strokeWeight(2.4);
+      drawPath(wavePaths.smooth, getCSS('--smooth'));
+      blendMode(BLEND);
+    }
+
+    function drawPath(points, colorStr) {
+      const c = color(colorStr);
+      beginShape();
+      for (const p of points) {
+        stroke(
+          red(c) + p.hue[0] * 0.35,
+          green(c) + p.hue[1] * 0.35,
+          blue(c) + p.hue[2] * 0.35,
+          alpha(c)
+        );
+        curveVertex(p.x, p.y);
+      }
+      endShape();
+    }
+
+    function drawNodes() {
+      textAlign(CENTER, CENTER);
+      entries.forEach((e, i) => {
+        const col = e.era.colorArr;
+        const r = 5 + e.s * 2.5;
+
+        // leader line down to the era band, so the year is readable
+        stroke(col[0], col[1], col[2], 45);
+        strokeWeight(1);
+        line(e.x, e.wy, e.x, height - 30);
+
+        noStroke();
+        fill(col[0], col[1], col[2], 70);
+        circle(e.x, e.wy, r * 2.2);
+        fill(col[0], col[1], col[2], 235);
+        circle(e.x, e.wy, r);
+
+        drawNodeLabel(e, i);
+      });
+    }
+
+    function drawNodeLabel(e, i) {
+      const dir = i % 2 === 0 ? -1 : 1;
+      const offset = 18 + Math.floor((i % 8) / 2) * 15;
+      const ly = e.wy + dir * offset;
+      const col = e.era.colorArr;
+
+      stroke(col[0], col[1], col[2], 55);
+      strokeWeight(1);
+      line(e.x, e.wy + dir * 8, e.x, ly - dir * 6);
+
+      noStroke();
+      textSize(e.s >= 3 ? 11 : 10);
+      textStyle(e.s >= 3 ? BOLD : NORMAL);
+      fill(255, 255, 255, e.s >= 3 ? 225 : 165);
+      text(e.n, e.x, ly);
+      textStyle(NORMAL);
+    }
+
+    function drawTagMarks() {
+      if (!selectedTags.size) return;
+      let row = 0;
+      selectedTags.forEach(key => {
+        const members = tagMembers[key] || [];
+        const col = color(tagColors[key] || config.searchColor);
+        const y = 108 + row * 9;
+        members.forEach(idx => {
+          const e = entries[idx];
+          noStroke();
+          fill(col);
+          rect(e.x - 4, y, 8, 5, 2);
+          stroke(red(col), green(col), blue(col), 150);
+          strokeWeight(2);
+          noFill();
+          circle(e.x, e.wy, 16 + row * 5);
+        });
+        row++;
+      });
+    }
+
+    function drawHighlight(idx, colStr) {
+      if (idx == null || !entries[idx]) return;
+      const e = entries[idx];
+      stroke(colStr);
+      strokeWeight(1.2);
+      line(e.x, 0, e.x, height - 26);
+      noStroke();
+      fill(colStr);
+      circle(e.x, e.wy, 11);
+
+      // year flag at the top of the line
+      const label = formatYear(e.y);
+      textSize(10);
+      textAlign(CENTER, CENTER);
+      const w = textWidth(label) + 12;
+      fill(colStr);
+      rect(e.x - w / 2, 6, w, 16, 4);
+      fill(10, 15, 25);
+      text(label, e.x, 15);
+    }
+
+    function draw() {
+      if (!ready) return;
+      renderBackground();
+      drawEraBands();
+      drawWaves();
+      drawNodes();
+      drawTagMarks();
+      if (hoverIdx != null && hoverIdx !== selectedIdx) drawHighlight(hoverIdx, 'rgba(255,255,255,0.55)');
+      drawHighlight(selectedIdx, 'rgba(242,209,139,0.9)');
+    }
+
+    function buildSectionBar() {
+      const bar = document.getElementById('sectionBar');
+      bar.innerHTML = '';
+      bar.style.width = `${width}px`;
+      const total = layout.xEnd - layout.xStart;
+      eras.forEach(era => {
+        const widthPct = Math.max(1, Math.round(((era.x1 - era.x0) / total) * 100));
+        const seg = document.createElement('div');
+        seg.className = 'segment';
+        seg.style.flexBasis = `${widthPct}%`;
+        seg.style.flexGrow = `${widthPct}`;
+        seg.style.background = `rgba(${era.colorArr.join(',')},0.45)`;
+        seg.textContent = `${era.label} · ${formatYear(era.from)} - ${formatYear(era.to)}`;
+        bar.appendChild(seg);
+      });
+    }
+
+    function nearestEntryIdx(x, y) {
+      let best = null;
+      let bestDist = Infinity;
+      entries.forEach((e, i) => {
+        const dx = Math.abs(x - e.x);
+        if (dx > 26) return;
+        const dy = Math.abs(y - e.wy);
+        const dist = dx + dy * 0.35;
+        if (dist < bestDist) { bestDist = dist; best = i; }
+      });
+      return bestDist < 60 ? best : null;
+    }
+
+    function ensureVisible(idx) {
+      const wrap = document.getElementById('canvasWrap');
+      if (!wrap || !entries[idx]) return;
+      const targetX = entries[idx].x;
+      const padding = 120;
+      if (targetX < wrap.scrollLeft + padding) {
+        wrap.scrollLeft = Math.max(0, targetX - padding);
+      } else if (targetX > wrap.scrollLeft + wrap.clientWidth - padding) {
+        wrap.scrollLeft = targetX - wrap.clientWidth + padding;
+      }
+    }
+
+    function mouseMoved() {
+      if (!ready) return;
+      const now = millis();
+      if (now - lastHoverRedraw < config.hoverThrottleMs) return;
+      const idx = nearestEntryIdx(mouseX, mouseY);
+      if (idx !== hoverIdx) {
+        hoverIdx = idx;
+        lastHoverRedraw = now;
+        updateInfo();
+        redraw();
+      }
+    }
+
+    function mouseClicked(event) {
+      if (!ready) return;
+      if (suppressClick) { suppressClick = false; return; }
+      if (!event || !event.target || event.target.tagName !== 'CANVAS') return;
+      const idx = nearestEntryIdx(mouseX, mouseY);
+      if (idx == null) return;
+      selectedIdx = idx;
+      ensureVisible(idx);
+      updateInfo(true);
+      redraw();
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (e.target && (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA')) return;
+      if (e.key === 'Escape') {
+        selectedIdx = null;
+        updateInfo();
+        redraw();
+        return;
+      }
+      if (selectedIdx == null) return;
+      if (e.key === 'ArrowRight') {
+        selectedIdx = Math.min(entries.length - 1, selectedIdx + 1);
+      } else if (e.key === 'ArrowLeft') {
+        selectedIdx = Math.max(0, selectedIdx - 1);
+      } else {
+        return;
+      }
+      ensureVisible(selectedIdx);
+      updateInfo(true);
+      redraw();
+    });
+
+    // Smooth horizontal scroll with mouse wheel/trackpad.
+    document.addEventListener('wheel', (e) => {
+      const wrap = document.getElementById('canvasWrap');
+      if (!wrap) return;
+      if (e.target && e.target.closest && e.target.closest('#charPanel')) return;
+      if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
+        wrap.scrollLeft += e.deltaY * 0.7;
+        e.preventDefault();
+      }
+    }, { passive: false });
+
+    function escapeHTML(str) {
+      return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    }
+
+    function escapeRegExp(str) {
+      return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    }
+
+    function entryHeader(idx) {
+      const e = entries[idx];
+      return `${e.n} · ${formatYear(e.y)}`;
+    }
+
+    function entryBody(idx) {
+      const e = entries[idx];
+      return `<em>${escapeHTML(e.w)}</em><br>${escapeHTML(e.d)}`;
+    }
+
+    function updateInfo(isClick = false) {
+      const hoverLabel = document.getElementById('hoverLabel');
+      const selectedLabel = document.getElementById('selectedLabel');
+      const infoLabel = document.getElementById('infoLabel');
+      const tagLabel = document.getElementById('tagLabel');
+      const idx = selectedIdx != null ? selectedIdx : hoverIdx;
+
+      hoverLabel.textContent = '';
+      if (idx == null) {
+        infoLabel.textContent = 'The philosophy of logic';
+        selectedLabel.innerHTML = 'Hover a point to read it, click to pin it. Arrow keys step along the timeline, Escape clears. Scroll to move through the centuries.';
+        tagLabel.innerHTML = '';
+        return;
+      }
+
+      const e = entries[idx];
+      infoLabel.textContent = entryHeader(idx) + (selectedIdx == null ? '' : ' · pinned');
+      selectedLabel.innerHTML = entryBody(idx);
+      tagLabel.innerHTML = [e.era.label]
+        .concat(e.t, e.c)
+        .map(t => `<span class="tag">${escapeHTML(t)}</span>`)
+        .join('');
+
+      if (isClick) {
+        const info = document.getElementById('info');
+        info.style.borderColor = 'rgba(242,209,139,0.6)';
+        setTimeout(() => { info.style.borderColor = 'rgba(255,255,255,0.08)'; }, 220);
+      }
+    }
+
+    // Tag index: figures, concepts and schools all become highlightable sets.
+    function buildTagIndex() {
+      tagDefs = [];
+      tagMembers = {};
+      tagColors = {};
+
+      const concepts = [];
+      const traditions = [];
+      entries.forEach(e => {
+        e.c.forEach(c => { if (!concepts.includes(c)) concepts.push(c); });
+        e.t.forEach(t => { if (!traditions.includes(t)) traditions.push(t); });
+      });
+      concepts.sort();
+      traditions.sort();
+
+      entries.forEach((e, i) => {
+        if (e.s < 2) return;
+        const key = `figure:${e.n}`;
+        tagDefs.push({ key, type: 'figure', name: e.n });
+        tagMembers[key] = [i];
+        tagColors[key] = config.figureColor;
+      });
+      concepts.forEach((name, i) => {
+        const key = `concept:${name}`;
+        tagDefs.push({ key, type: 'concept', name });
+        tagMembers[key] = entries.map((e, j) => (e.c.includes(name) ? j : -1)).filter(j => j >= 0);
+        tagColors[key] = config.conceptPalette[i % config.conceptPalette.length];
+      });
+      traditions.forEach((name, i) => {
+        const key = `tradition:${name}`;
+        tagDefs.push({ key, type: 'tradition', name });
+        tagMembers[key] = entries.map((e, j) => (e.t.includes(name) ? j : -1)).filter(j => j >= 0);
+        tagColors[key] = config.traditionPalette[i % config.traditionPalette.length];
+      });
+    }
+
+    function renderControls(tab = activeTab) {
+      const list = document.getElementById('charList');
+      if (!list) return;
+      list.innerHTML = '';
+      tagDefs
+        .filter(t => t.type === tab)
+        .forEach(t => list.appendChild(controlRow(t.key, t.name)));
+
+      if (searchKey && tab === 'concept') {
+        list.appendChild(controlRow(searchKey, searchKey.slice('search:'.length)));
+      }
+    }
+
+    function controlRow(key, name) {
+      const wrapper = document.createElement('div');
+      wrapper.className = 'charRow';
+      const cb = document.createElement('input');
+      cb.type = 'checkbox';
+      cb.value = key;
+      cb.checked = selectedTags.has(key);
+      cb.addEventListener('change', (ev) => {
+        if (ev.target.checked) {
+          selectedTags.add(key);
+          const members = tagMembers[key] || [];
+          if (members.length) {
+            selectedIdx = members[0];
+            ensureVisible(selectedIdx);
+            updateInfo(true);
+          }
+        } else {
+          selectedTags.delete(key);
+        }
+        redraw();
+      });
+      const swatch = document.createElement('span');
+      swatch.className = 'swatch';
+      swatch.style.background = tagColors[key] || '#fff';
+      const txt = document.createElement('span');
+      const count = (tagMembers[key] || []).length;
+      txt.textContent = count > 1 ? `${name} (${count})` : name;
+      wrapper.appendChild(cb);
+      wrapper.appendChild(swatch);
+      wrapper.appendChild(txt);
+      return wrapper;
+    }
+
+    function applySearchTerm(term) {
+      if (searchKey) {
+        selectedTags.delete(searchKey);
+        delete tagMembers[searchKey];
+        delete tagColors[searchKey];
+        searchKey = null;
+      }
+      const regex = new RegExp(escapeRegExp(term), 'i');
+      const hits = [];
+      entries.forEach((e, i) => {
+        if (regex.test(e.n) || regex.test(e.w) || regex.test(e.d) ||
+            e.c.some(c => regex.test(c)) || e.t.some(t => regex.test(t))) {
+          hits.push(i);
+        }
+      });
+      if (!hits.length) {
+        alert('No matches found.');
+        return;
+      }
+      searchKey = `search:${term}`;
+      tagMembers[searchKey] = hits;
+      tagColors[searchKey] = config.searchColor;
+      selectedTags.add(searchKey);
+      selectedIdx = hits[0];
+      ensureVisible(selectedIdx);
+      activeTab = 'concept';
+      document.querySelectorAll('#charTabs button').forEach(b => {
+        b.classList.toggle('active', b.getAttribute('data-tab') === 'concept');
+      });
+      renderControls('concept');
+      updateInfo(true);
+      redraw();
+    }
+
+    // Draggable panels
+    (function enableDragging() {
+      const draggableEls = [
+        document.getElementById('headerBar'),
+        document.getElementById('info'),
+        document.getElementById('charPanel')
+      ].filter(Boolean);
+      let dragTarget = null;
+      let offsetX = 0;
+      let offsetY = 0;
+      let dragMoved = false;
+      let dragStarted = false;
+      let dragOrigWidth = '';
+      let dragOrigHeight = '';
+
+      draggableEls.forEach(el => {
+        el.addEventListener('mousedown', (e) => {
+          if (e.target.tagName === 'INPUT' || e.target.tagName === 'BUTTON' || e.target.tagName === 'A') return;
+          dragTarget = el;
+          dragStarted = false;
+          dragMoved = false;
+          const rect = el.getBoundingClientRect();
+          offsetX = e.clientX - rect.left;
+          offsetY = e.clientY - rect.top;
+          dragOrigWidth = el.style.width;
+          dragOrigHeight = el.style.height;
+          document.body.style.userSelect = 'none';
+        });
+      });
+
+      window.addEventListener('mousemove', (e) => {
+        if (!dragTarget) return;
+        const rect = dragTarget.getBoundingClientRect();
+        const dx = e.clientX - (rect.left + offsetX);
+        const dy = e.clientY - (rect.top + offsetY);
+        if (!dragStarted && (Math.abs(dx) + Math.abs(dy) > 2)) {
+          dragStarted = true;
+          dragTarget.classList.add('dragging');
+          const computed = getComputedStyle(dragTarget);
+          dragTarget.style.width = computed.width;
+          dragTarget.style.height = computed.height;
+          dragTarget.style.left = rect.left + 'px';
+          dragTarget.style.top = rect.top + 'px';
+          dragTarget.style.right = 'auto';
+          dragTarget.style.bottom = 'auto';
+        }
+        if (dragStarted) {
+          dragTarget.style.left = `${e.clientX - offsetX}px`;
+          dragTarget.style.top = `${e.clientY - offsetY}px`;
+          dragMoved = true;
+        }
+      });
+
+      window.addEventListener('mouseup', () => {
+        if (dragTarget) dragTarget.classList.remove('dragging');
+        document.body.style.userSelect = '';
+        if (dragMoved) suppressClick = true;
+        if (dragTarget && !dragStarted) {
+          dragTarget.style.width = dragOrigWidth;
+          dragTarget.style.height = dragOrigHeight;
+        }
+        dragTarget = null;
+        dragStarted = false;
+      });
+    })();
+
+    // Tab and search wiring
+    (function initPanel() {
+      const tabs = document.querySelectorAll('#charTabs button');
+      const panel = document.getElementById('charPanel');
+      if (panel) {
+        panel.addEventListener('wheel', (e) => { e.stopPropagation(); }, { passive: true });
+      }
+      tabs.forEach(btn => {
+        btn.addEventListener('click', () => {
+          tabs.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          activeTab = btn.getAttribute('data-tab') || 'figure';
+          renderControls(activeTab);
+        });
+      });
+      const searchInput = document.getElementById('searchInput');
+      const searchBtn = document.getElementById('searchBtn');
+      const runSearch = () => {
+        const term = searchInput ? searchInput.value.trim() : '';
+        if (term) applySearchTerm(term);
+      };
+      if (searchBtn) searchBtn.addEventListener('click', runSearch);
+      if (searchInput) {
+        searchInput.addEventListener('keypress', (e) => {
+          if (e.key === 'Enter') runSearch();
+        });
+      }
+      const clearBtn = document.getElementById('clearBtn');
+      if (clearBtn) {
+        clearBtn.addEventListener('click', () => {
+          selectedTags.clear();
+          renderControls(activeTab);
+          redraw();
+        });
+      }
+    })();
+
+    document.addEventListener('DOMContentLoaded', () => updateInfo());
+  </script>
+</body>
+</html>
