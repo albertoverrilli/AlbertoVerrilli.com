@@ -1,0 +1,4 @@
+
+# Never publish passwords or copyrighted books (removed 2026-10-02)
+.htpasswd
+*.pdf
