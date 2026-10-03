@@ -4,5 +4,11 @@
     { "source": "/anno", "destination": "https://history-game-iota.vercel.app/anno/" },
     { "source": "/anno/", "destination": "https://history-game-iota.vercel.app/anno/" },
     { "source": "/anno/:path+", "destination": "https://history-game-iota.vercel.app/anno/:path+" }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)\.(webp|png|jpg|jpeg|gif|svg|mp4|webm|woff|woff2|ttf)",
+      "headers": [{ "key": "Cache-Control", "value": "public, max-age=604800" }]
+    }
   ]
 }

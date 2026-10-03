@@ -1,0 +1,16 @@
+# Search engines are welcome on the pages. These are large or not meant for indexing.
+User-agent: *
+Disallow: /InSearchOfLostTime.txt
+Disallow: /Protected/
+Disallow: /anno/api/
+
+# AI training crawlers download whole sites, which is most of the bandwidth on a small site.
+User-agent: GPTBot
+User-agent: CCBot
+User-agent: ClaudeBot
+User-agent: anthropic-ai
+User-agent: Google-Extended
+User-agent: Bytespider
+User-agent: PerplexityBot
+User-agent: Amazonbot
+Disallow: /

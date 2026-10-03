@@ -1,0 +1,27 @@
+# Files Vercel should not publish. They stay in the repo; they just aren't served.
+# Added 2026-10-02 to cut bandwidth: none of these is used by any page.
+
+# Large files nothing links to
+World.glb
+News Globe Website.zip
+# Only used by Map.html, which points at a local C:\ path and so can't load it online
+custom.geo.json
+# Full-size originals; the site uses the small copies in img/bryce/webp/
+Bryce3DImages/
+img/bryce/*.png
+img/bryce/*.jpg
+img/bg-stone.png
+img/bg-gen4.mp4
+img/bg-gen4-seamless.mp4
+img/Alberto Photo.jpg
+img/gallery-img-02.jpg
+
+# Code and notes rather than web pages (the MP3 backend runs on Render)
+*.py
+__pycache__/
+yt-mp3-backend/
+Protected/app.js
+Protected/package.json
+Protected/package-lock.json
+.claude/
+MANIM_INSTRUCTIONS.md
