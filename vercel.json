@@ -1,9 +1,12 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "rewrites": [
-    { "source": "/anno", "destination": "https://history-game-iota.vercel.app/anno/" },
-    { "source": "/anno/", "destination": "https://history-game-iota.vercel.app/anno/" },
-    { "source": "/anno/:path+", "destination": "https://history-game-iota.vercel.app/anno/:path+" }
+  "redirects": [
+    { "source": "/anno", "destination": "https://thegameofguessinghistoricalevents.com/" },
+    { "source": "/anno/", "destination": "https://thegameofguessinghistoricalevents.com/" },
+    {
+      "source": "/anno/:path+",
+      "destination": "https://thegameofguessinghistoricalevents.com/:path+"
+    }
   ],
   "headers": [
     {
