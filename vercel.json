@@ -1,11 +1,11 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "redirects": [
-    { "source": "/anno", "destination": "https://thegameofguessinghistoricalevents.com/" },
-    { "source": "/anno/", "destination": "https://thegameofguessinghistoricalevents.com/" },
+    { "source": "/anno", "destination": "https://www.thegameofguessinghistoricalevents.com/" },
+    { "source": "/anno/", "destination": "https://www.thegameofguessinghistoricalevents.com/" },
     {
       "source": "/anno/:path+",
-      "destination": "https://thegameofguessinghistoricalevents.com/:path+"
+      "destination": "https://www.thegameofguessinghistoricalevents.com/:path+"
     }
   ],
   "headers": [
