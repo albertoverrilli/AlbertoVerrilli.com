@@ -1,0 +1,1020 @@
+{
+	"nodes": [
+		{
+			"id": "f9c8a91f8d7eb7a3",
+			"type": "group",
+			"x": -50,
+			"y": -425,
+			"width": 1680,
+			"height": 850,
+			"label": "Chapter 1 Part 1"
+		},
+		{
+			"id": "aa421056a21a88e3",
+			"type": "group",
+			"x": 4570,
+			"y": 95,
+			"width": 3360,
+			"height": 670,
+			"label": "Chapter 3"
+		},
+		{
+			"id": "7fd7c9cd9977d361",
+			"type": "group",
+			"x": 2470,
+			"y": -425,
+			"width": 1260,
+			"height": 850,
+			"label": "Chapter 2 Part 1"
+		},
+		{
+			"id": "0c735c4ffef67d00",
+			"type": "group",
+			"x": 2470,
+			"y": 495,
+			"width": 1680,
+			"height": 665,
+			"label": "Chapter 2 Part 2"
+		},
+		{
+			"id": "ee77a78553f5e8a7",
+			"type": "group",
+			"x": -50,
+			"y": 495,
+			"width": 1680,
+			"height": 665,
+			"label": "Chapter 1 Part 2"
+		},
+		{
+			"id": "3ef5012836ca946f",
+			"type": "text",
+			"text": "Change the definition of intelligence",
+			"styleAttributes": {},
+			"x": 2100,
+			"y": 380,
+			"width": 320,
+			"height": 100
+		},
+		{
+			"id": "cca3f39d2e9856e2",
+			"type": "text",
+			"text": "Early Definition of Intelligence in AI\n- Capacity to optimize a given objective specified by its designers \n- Assumes an isomorphism between formal language and human meaning",
+			"styleAttributes": {},
+			"x": -420,
+			"y": 300,
+			"width": 320,
+			"height": 260
+		},
+		{
+			"id": "3dcf784376b9ba31",
+			"type": "text",
+			"text": "Formal representations of complex goals are not practical",
+			"styleAttributes": {},
+			"x": 1680,
+			"y": 810,
+			"width": 320,
+			"height": 100
+		},
+		{
+			"id": "8e3c9c15ae7b1439",
+			"type": "text",
+			"text": "The standard model AI's conception of intelligence leads to inscrutable safety problems",
+			"styleAttributes": {},
+			"x": 1680,
+			"y": -65,
+			"width": 320,
+			"height": 130
+		},
+		{
+			"id": "bc8a12b9f528f339",
+			"type": "text",
+			"text": "Goals that are more abstract in nature require formal specification",
+			"styleAttributes": {},
+			"x": 0,
+			"y": 795,
+			"width": 320,
+			"height": 130
+		},
+		{
+			"id": "dc58144d592038f5",
+			"type": "text",
+			"text": "Develop Expert Systems",
+			"styleAttributes": {},
+			"x": 420,
+			"y": 825,
+			"width": 320,
+			"height": 70
+		},
+		{
+			"id": "6467fd24b1413bad",
+			"type": "text",
+			"text": "Knowledge Acquisition Bottleneck\n- Systems were hard to maintain\n- Brittle\n- Didn't work well outside of their own *Context*",
+			"styleAttributes": {},
+			"x": 840,
+			"y": 745,
+			"width": 320,
+			"height": 230
+		},
+		{
+			"id": "0ea67c62f027dab9",
+			"type": "text",
+			"text": "AI Winter 1987-1993",
+			"styleAttributes": {},
+			"x": 1260,
+			"y": 825,
+			"width": 320,
+			"height": 70
+		},
+		{
+			"id": "deca3a75af59ba6a",
+			"type": "text",
+			"text": "Goals that can be articulated discretely, as a numeric value, in a particular context really require tacit description in an objective context.\n- The amount of oil produced can be represented as the quantity of liquid accumulated by its sensors \n- But comes with the implication that you would rather have less oil than destroy the planet.",
+			"styleAttributes": {},
+			"x": 0,
+			"y": -55,
+			"width": 320,
+			"height": 390
+		},
+		{
+			"id": "53bc82ec5507dfb2",
+			"type": "text",
+			"text": "Anything that has a discrete representation can be optimized",
+			"styleAttributes": {},
+			"x": 0,
+			"y": -200,
+			"width": 320,
+			"height": 100
+		},
+		{
+			"id": "7c4177895d37cb77",
+			"type": "text",
+			"text": "We have to instill the system with notions that carry tacit understanding such as: Values and Beliefs",
+			"styleAttributes": {},
+			"x": 420,
+			"y": -375,
+			"width": 320,
+			"height": 150
+		},
+		{
+			"id": "1c7d86b3d083c8bf",
+			"type": "text",
+			"text": "Orthogonality Thesis: 'Intelligence' can grow independent of values and beliefs",
+			"styleAttributes": {},
+			"x": 420,
+			"y": -65,
+			"width": 320,
+			"height": 130
+		},
+		{
+			"id": "969ac3e41aafcfa9",
+			"type": "text",
+			"text": "Any System in an objective context with a goal would naturally desire harmful things",
+			"styleAttributes": {},
+			"x": 420,
+			"y": 235,
+			"width": 320,
+			"height": 130
+		},
+		{
+			"id": "fa16698babbecac7",
+			"type": "text",
+			"text": "Docility: We need a system that will listen to us.",
+			"styleAttributes": {},
+			"x": 840,
+			"y": 250,
+			"width": 320,
+			"height": 100
+		},
+		{
+			"id": "bf071a390e0a7e1e",
+			"type": "text",
+			"text": "The Value Specification problem: We need to formally represent tacit concepts",
+			"styleAttributes": {},
+			"x": 840,
+			"y": -365,
+			"width": 320,
+			"height": 130
+		},
+		{
+			"id": "25a01ded683c6956",
+			"type": "text",
+			"text": "Standard Model of AI and of AI safety",
+			"styleAttributes": {},
+			"x": 1260,
+			"y": -50,
+			"width": 320,
+			"height": 100
+		},
+		{
+			"id": "45c37b55dea49e32",
+			"type": "text",
+			"text": "Argued by Stuart Russell",
+			"styleAttributes": {},
+			"x": 2520,
+			"y": -335,
+			"width": 320,
+			"height": 70
+		},
+		{
+			"id": "7019a368388834e5",
+			"type": "text",
+			"text": "Aggregate human preferences to represent this objective as a utility function",
+			"styleAttributes": {},
+			"x": 2940,
+			"y": -65,
+			"width": 320,
+			"height": 130
+		},
+		{
+			"id": "1d54d742a707cc32",
+			"type": "text",
+			"text": "Change the goal from being a certain objective to an uncertain one.",
+			"styleAttributes": {},
+			"x": 2520,
+			"y": -65,
+			"width": 320,
+			"height": 130
+		},
+		{
+			"id": "7a6c45db5fbb20e6",
+			"type": "text",
+			"text": "Utility function, while containing more information about the goal, still runs into the Value Specification Problem",
+			"styleAttributes": {},
+			"x": 3360,
+			"y": -75,
+			"width": 320,
+			"height": 150
+		},
+		{
+			"id": "4368381ba3ffbf83",
+			"type": "text",
+			"text": "Model off Human Behavior",
+			"styleAttributes": {},
+			"x": 2520,
+			"y": 265,
+			"width": 320,
+			"height": 70
+		},
+		{
+			"id": "f0f14cf3748c3ffa",
+			"type": "text",
+			"text": "Solves Docility in principle as the model will listen to us",
+			"styleAttributes": {},
+			"x": 2940,
+			"y": 250,
+			"width": 320,
+			"height": 100
+		},
+		{
+			"id": "289fb1db1c86638f",
+			"type": "text",
+			"text": "Reintroduces the issue of Docility as there are still gaps in the model's understanding of our behavior",
+			"styleAttributes": {},
+			"x": 3360,
+			"y": 225,
+			"width": 320,
+			"height": 150
+		},
+		{
+			"id": "966e7101ee14f59d",
+			"type": "text",
+			"text": "Create a representation of the difference between two pieces of data",
+			"styleAttributes": {},
+			"x": 2940,
+			"y": 795,
+			"width": 320,
+			"height": 130
+		},
+		{
+			"id": "9dfadbeb85c7d50d",
+			"type": "text",
+			"text": "Loss Function",
+			"styleAttributes": {},
+			"x": 3360,
+			"y": 825,
+			"width": 320,
+			"height": 70
+		},
+		{
+			"id": "015ea8bb81113227",
+			"type": "text",
+			"text": "Neural Networks / Other probabilistic models",
+			"styleAttributes": {},
+			"x": 3360,
+			"y": 1010,
+			"width": 320,
+			"height": 100
+		},
+		{
+			"id": "58720857911c52c4",
+			"type": "text",
+			"text": "Create a system that can learn this difference",
+			"styleAttributes": {},
+			"x": 2940,
+			"y": 1010,
+			"width": 320,
+			"height": 100
+		},
+		{
+			"id": "1f078a5f5d489abf",
+			"type": "text",
+			"text": "The model represents what the Data can represent, and how we label that data",
+			"styleAttributes": {},
+			"x": 3360,
+			"y": 595,
+			"width": 320,
+			"height": 130
+		},
+		{
+			"id": "3b04ecbccc442bbf",
+			"type": "text",
+			"text": "Aggregate mass amounts of data",
+			"styleAttributes": {},
+			"x": 2940,
+			"y": 625,
+			"width": 320,
+			"height": 70
+		},
+		{
+			"id": "2749843c0b0ec15f",
+			"type": "text",
+			"text": "The problem of formal representation is pushed back but still holds in the necessity of these formalities",
+			"styleAttributes": {},
+			"x": 3780,
+			"y": 785,
+			"width": 320,
+			"height": 150
+		},
+		{
+			"id": "e8d82d9ac0a583d3",
+			"type": "text",
+			"text": "Change the formal representation to be learned from the Data \n- The relation between the data itself carries more information than we can formally specify",
+			"styleAttributes": {},
+			"x": 2520,
+			"y": 800,
+			"width": 320,
+			"height": 200
+		},
+		{
+			"id": "4527081eb872b391",
+			"type": "text",
+			"text": "Both the Safety and Functionality of AI is Bottlenecked by the formal representations they boil down to, either in our specification or in the data",
+			"styleAttributes": {},
+			"x": 4620,
+			"y": 340,
+			"width": 320,
+			"height": 180
+		},
+		{
+			"id": "69c94486a69a0d89",
+			"type": "text",
+			"text": "Halevy, Norvig, and Pereira later gave this shift its slogan in “The Unreasonable Effectiveness of Data”",
+			"styleAttributes": {},
+			"x": 2520,
+			"y": 545,
+			"width": 320,
+			"height": 150
+		},
+		{
+			"id": "d68cf97f84fd7c62",
+			"type": "text",
+			"text": "Follow-the-data approaches can only work if the data is at bottom meaningful to us",
+			"styleAttributes": {},
+			"x": 5040,
+			"y": 365,
+			"width": 320,
+			"height": 130
+		},
+		{
+			"id": "f71beff62b0d2b58",
+			"type": "text",
+			"text": "Language is possibly the only type of data that has both a formal representation and is intrinsically meaningful to us.",
+			"styleAttributes": {},
+			"x": 5460,
+			"y": 355,
+			"width": 320,
+			"height": 150
+		},
+		{
+			"id": "595fe62419d950ab",
+			"type": "text",
+			"text": "Model Language",
+			"styleAttributes": {},
+			"x": 5880,
+			"y": 395,
+			"width": 320,
+			"height": 70
+		},
+		{
+			"id": "b6ea6222afdb7151",
+			"type": "text",
+			"text": "Aggregated data existed without the necessity to label it; it labels itself",
+			"styleAttributes": {},
+			"x": 6300,
+			"y": 145,
+			"width": 320,
+			"height": 130
+		},
+		{
+			"id": "8ae37922fa6d563f",
+			"type": "text",
+			"text": "The loss function as cross-entropy loss is not as arbitrary because the data is represented as intrinsically meaningful language. (Weak)",
+			"styleAttributes": {},
+			"x": 6300,
+			"y": 340,
+			"width": 320,
+			"height": 180
+		},
+		{
+			"id": "4c2173f2c67e5145",
+			"type": "text",
+			"text": "Transformer architecture is sufficiently flexible to model complex features of the corpus",
+			"styleAttributes": {},
+			"x": 6300,
+			"y": 585,
+			"width": 320,
+			"height": 130
+		},
+		{
+			"id": "894d3c5e69fdb170",
+			"type": "text",
+			"text": "Modeling language is docile as it has an incentive to write like we write, and understanding how \"we\" write is not arbitrarily defined",
+			"styleAttributes": {},
+			"x": 6720,
+			"y": 220,
+			"width": 320,
+			"height": 180
+		},
+		{
+			"id": "5b579570f727d5b7",
+			"type": "text",
+			"text": "Not all of how \"we\" write is desirable to model and not all the tacit knowledge we carry is desirable to represent",
+			"styleAttributes": {},
+			"x": 7140,
+			"y": 355,
+			"width": 320,
+			"height": 150
+		},
+		{
+			"id": "c5d6c57e545ee68d",
+			"type": "text",
+			"text": "New Problem of Alignment",
+			"styleAttributes": {},
+			"x": 7560,
+			"y": 395,
+			"width": 320,
+			"height": 70
+		},
+		{
+			"id": "c220a315cb7f8039",
+			"type": "text",
+			"text": "Modeling Language solves the Value Specification Problem as language carries this tacit knowledge",
+			"styleAttributes": {},
+			"x": 6720,
+			"y": 475,
+			"width": 320,
+			"height": 150
+		}
+	],
+	"edges": [
+		{
+			"id": "41619fa617ff8560",
+			"styleAttributes": {},
+			"toFloating": false,
+			"fromNode": "f9c8a91f8d7eb7a3",
+			"fromSide": "right",
+			"toNode": "8e3c9c15ae7b1439",
+			"toSide": "left"
+		},
+		{
+			"id": "8ef3100593d107a5",
+			"styleAttributes": {},
+			"toFloating": false,
+			"fromNode": "cca3f39d2e9856e2",
+			"fromSide": "right",
+			"toNode": "53bc82ec5507dfb2",
+			"toSide": "left"
+		},
+		{
+			"id": "8d2df71f03fca2ae",
+			"styleAttributes": {},
+			"toFloating": false,
+			"fromNode": "53bc82ec5507dfb2",
+			"fromSide": "right",
+			"toNode": "7c4177895d37cb77",
+			"toSide": "left"
+		},
+		{
+			"id": "19071e8425c87edd",
+			"styleAttributes": {},
+			"toFloating": false,
+			"fromNode": "deca3a75af59ba6a",
+			"fromSide": "right",
+			"toNode": "7c4177895d37cb77",
+			"toSide": "left"
+		},
+		{
+			"id": "5613f9b6c44ea2f8",
+			"styleAttributes": {},
+			"toFloating": false,
+			"fromNode": "53bc82ec5507dfb2",
+			"fromSide": "right",
+			"toNode": "969ac3e41aafcfa9",
+			"toSide": "left"
+		},
+		{
+			"id": "13be4f8795370a50",
+			"styleAttributes": {},
+			"toFloating": false,
+			"fromNode": "deca3a75af59ba6a",
+			"fromSide": "right",
+			"toNode": "969ac3e41aafcfa9",
+			"toSide": "left"
+		},
+		{
+			"id": "de4a96376c587820",
+			"styleAttributes": {},
+			"toFloating": false,
+			"fromNode": "969ac3e41aafcfa9",
+			"fromSide": "right",
+			"toNode": "fa16698babbecac7",
+			"toSide": "left"
+		},
+		{
+			"id": "c8ed6a6fa82bddd5",
+			"styleAttributes": {},
+			"toFloating": false,
+			"fromNode": "7c4177895d37cb77",
+			"fromSide": "right",
+			"toNode": "bf071a390e0a7e1e",
+			"toSide": "left"
+		},
+		{
+			"id": "5efef83d302dcd47",
+			"styleAttributes": {},
+			"toFloating": false,
+			"fromNode": "53bc82ec5507dfb2",
+			"fromSide": "right",
+			"toNode": "1c7d86b3d083c8bf",
+			"toSide": "left"
+		},
+		{
+			"id": "56a96b525f289b9e",
+			"styleAttributes": {},
+			"toFloating": false,
+			"fromNode": "deca3a75af59ba6a",
+			"fromSide": "right",
+			"toNode": "1c7d86b3d083c8bf",
+			"toSide": "left"
+		},
+		{
+			"id": "5869ed316b9c812a",
+			"styleAttributes": {},
+			"toFloating": false,
+			"fromNode": "1c7d86b3d083c8bf",
+			"fromSide": "bottom",
+			"toNode": "969ac3e41aafcfa9",
+			"toSide": "top"
+		},
+		{
+			"id": "a1fbc86154ab033a",
+			"styleAttributes": {},
+			"toFloating": false,
+			"fromNode": "1c7d86b3d083c8bf",
+			"fromSide": "top",
+			"toNode": "7c4177895d37cb77",
+			"toSide": "bottom"
+		},
+		{
+			"id": "705dca93dacd0a3c",
+			"styleAttributes": {},
+			"toFloating": false,
+			"fromNode": "bf071a390e0a7e1e",
+			"fromSide": "right",
+			"toNode": "25a01ded683c6956",
+			"toSide": "left"
+		},
+		{
+			"id": "2f5992518dc551c2",
+			"styleAttributes": {},
+			"toFloating": false,
+			"fromNode": "fa16698babbecac7",
+			"fromSide": "right",
+			"toNode": "25a01ded683c6956",
+			"toSide": "left"
+		},
+		{
+			"id": "568dac7d61338dac",
+			"styleAttributes": {},
+			"toFloating": false,
+			"fromNode": "8e3c9c15ae7b1439",
+			"fromSide": "right",
+			"toNode": "3ef5012836ca946f",
+			"toSide": "left"
+		},
+		{
+			"id": "9a5014fc2d0637b6",
+			"styleAttributes": {},
+			"toFloating": false,
+			"fromNode": "3ef5012836ca946f",
+			"fromSide": "right",
+			"toNode": "1d54d742a707cc32",
+			"toSide": "left"
+		},
+		{
+			"id": "bd9794f1806b9be0",
+			"styleAttributes": {},
+			"toFloating": false,
+			"fromNode": "45c37b55dea49e32",
+			"fromSide": "bottom",
+			"toNode": "1d54d742a707cc32",
+			"toSide": "top"
+		},
+		{
+			"id": "7a0f906bf08b63e8",
+			"styleAttributes": {},
+			"toFloating": false,
+			"fromNode": "1d54d742a707cc32",
+			"fromSide": "bottom",
+			"toNode": "4368381ba3ffbf83",
+			"toSide": "top"
+		},
+		{
+			"id": "83983756dfa9d038",
+			"styleAttributes": {},
+			"toFloating": false,
+			"fromFloating": false,
+			"fromNode": "4368381ba3ffbf83",
+			"fromSide": "right",
+			"toNode": "f0f14cf3748c3ffa",
+			"toSide": "left"
+		},
+		{
+			"id": "926ce5683253e0c3",
+			"styleAttributes": {},
+			"toFloating": false,
+			"fromNode": "4368381ba3ffbf83",
+			"fromSide": "right",
+			"toNode": "7019a368388834e5",
+			"toSide": "left"
+		},
+		{
+			"id": "002454a6b9da5b62",
+			"styleAttributes": {},
+			"toFloating": false,
+			"fromNode": "45c37b55dea49e32",
+			"fromSide": "right",
+			"toNode": "7019a368388834e5",
+			"toSide": "left"
+		},
+		{
+			"id": "952861b94189b14b",
+			"styleAttributes": {},
+			"toFloating": false,
+			"fromNode": "7019a368388834e5",
+			"fromSide": "right",
+			"toNode": "7a6c45db5fbb20e6",
+			"toSide": "left"
+		},
+		{
+			"id": "d1d77cd08985b6a0",
+			"styleAttributes": {},
+			"toFloating": false,
+			"fromNode": "f0f14cf3748c3ffa",
+			"fromSide": "right",
+			"toNode": "289fb1db1c86638f",
+			"toSide": "left"
+		},
+		{
+			"id": "e9cc333e7da3a351",
+			"styleAttributes": {},
+			"toFloating": false,
+			"fromNode": "7a6c45db5fbb20e6",
+			"fromSide": "bottom",
+			"toNode": "289fb1db1c86638f",
+			"toSide": "top"
+		},
+		{
+			"id": "e3155407dbffdef5",
+			"styleAttributes": {},
+			"toFloating": false,
+			"fromNode": "cca3f39d2e9856e2",
+			"fromSide": "right",
+			"toNode": "bc8a12b9f528f339",
+			"toSide": "left"
+		},
+		{
+			"id": "ee200f65a8cff487",
+			"styleAttributes": {},
+			"toFloating": false,
+			"fromFloating": false,
+			"fromNode": "53bc82ec5507dfb2",
+			"fromSide": "bottom",
+			"toNode": "deca3a75af59ba6a",
+			"toSide": "top",
+			"fromEnd": "arrow"
+		},
+		{
+			"id": "e783f6944d224ea6",
+			"styleAttributes": {},
+			"toFloating": false,
+			"fromNode": "bc8a12b9f528f339",
+			"fromSide": "right",
+			"toNode": "dc58144d592038f5",
+			"toSide": "left"
+		},
+		{
+			"id": "200d70f935df7151",
+			"styleAttributes": {},
+			"toFloating": false,
+			"fromNode": "dc58144d592038f5",
+			"fromSide": "right",
+			"toNode": "6467fd24b1413bad",
+			"toSide": "left"
+		},
+		{
+			"id": "bdc36e58d6ec2429",
+			"styleAttributes": {},
+			"toFloating": false,
+			"fromNode": "0ea67c62f027dab9",
+			"fromSide": "right",
+			"toNode": "3dcf784376b9ba31",
+			"toSide": "left"
+		},
+		{
+			"id": "0f3fdee541885a84",
+			"styleAttributes": {},
+			"toFloating": false,
+			"fromNode": "6467fd24b1413bad",
+			"fromSide": "right",
+			"toNode": "0ea67c62f027dab9",
+			"toSide": "left"
+		},
+		{
+			"id": "bec12f2f1cb0b85b",
+			"styleAttributes": {},
+			"toFloating": false,
+			"fromNode": "3dcf784376b9ba31",
+			"fromSide": "right",
+			"toNode": "3ef5012836ca946f",
+			"toSide": "left"
+		},
+		{
+			"id": "5078ce922b41b305",
+			"styleAttributes": {},
+			"toFloating": false,
+			"fromNode": "3ef5012836ca946f",
+			"fromSide": "right",
+			"toNode": "e8d82d9ac0a583d3",
+			"toSide": "left"
+		},
+		{
+			"id": "d3d928df42a1ce89",
+			"styleAttributes": {},
+			"toFloating": false,
+			"fromNode": "e8d82d9ac0a583d3",
+			"fromSide": "right",
+			"toNode": "3b04ecbccc442bbf",
+			"toSide": "left"
+		},
+		{
+			"id": "5f97f86741a27370",
+			"styleAttributes": {},
+			"toFloating": false,
+			"fromNode": "e8d82d9ac0a583d3",
+			"fromSide": "right",
+			"toNode": "966e7101ee14f59d",
+			"toSide": "left"
+		},
+		{
+			"id": "c766a1a762c79417",
+			"styleAttributes": {},
+			"toFloating": false,
+			"fromNode": "e8d82d9ac0a583d3",
+			"fromSide": "right",
+			"toNode": "58720857911c52c4",
+			"toSide": "left"
+		},
+		{
+			"id": "3e473667787497e7",
+			"styleAttributes": {},
+			"toFloating": false,
+			"fromNode": "3b04ecbccc442bbf",
+			"fromSide": "right",
+			"toNode": "1f078a5f5d489abf",
+			"toSide": "left"
+		},
+		{
+			"id": "0a53b7689648f935",
+			"styleAttributes": {},
+			"toFloating": false,
+			"fromNode": "966e7101ee14f59d",
+			"fromSide": "right",
+			"toNode": "9dfadbeb85c7d50d",
+			"toSide": "left"
+		},
+		{
+			"id": "9bc8049116a16b92",
+			"styleAttributes": {},
+			"toFloating": false,
+			"fromNode": "58720857911c52c4",
+			"fromSide": "right",
+			"toNode": "015ea8bb81113227",
+			"toSide": "left"
+		},
+		{
+			"id": "6ff57c266e02719f",
+			"styleAttributes": {},
+			"toFloating": false,
+			"fromNode": "1f078a5f5d489abf",
+			"fromSide": "right",
+			"toNode": "2749843c0b0ec15f",
+			"toSide": "left"
+		},
+		{
+			"id": "fe4e6615ced4db68",
+			"styleAttributes": {},
+			"toFloating": false,
+			"fromNode": "9dfadbeb85c7d50d",
+			"fromSide": "right",
+			"toNode": "2749843c0b0ec15f",
+			"toSide": "left"
+		},
+		{
+			"id": "229cc96f5a922a8f",
+			"styleAttributes": {},
+			"toFloating": false,
+			"fromNode": "015ea8bb81113227",
+			"fromSide": "right",
+			"toNode": "2749843c0b0ec15f",
+			"toSide": "left"
+		},
+		{
+			"id": "a4da3e65316c446a",
+			"styleAttributes": {},
+			"toFloating": false,
+			"fromNode": "7fd7c9cd9977d361",
+			"fromSide": "right",
+			"toNode": "4527081eb872b391",
+			"toSide": "left"
+		},
+		{
+			"id": "30c5c08c8b434d02",
+			"styleAttributes": {},
+			"toFloating": false,
+			"fromNode": "0c735c4ffef67d00",
+			"fromSide": "right",
+			"toNode": "4527081eb872b391",
+			"toSide": "left"
+		},
+		{
+			"id": "4ec87f8fdf01892a",
+			"styleAttributes": {},
+			"toFloating": false,
+			"fromNode": "4527081eb872b391",
+			"fromSide": "right",
+			"toNode": "d68cf97f84fd7c62",
+			"toSide": "left"
+		},
+		{
+			"id": "2535b81d7a4f1e92",
+			"styleAttributes": {},
+			"toFloating": false,
+			"fromFloating": false,
+			"fromNode": "69c94486a69a0d89",
+			"fromSide": "bottom",
+			"toNode": "e8d82d9ac0a583d3",
+			"toSide": "top"
+		},
+		{
+			"id": "6d548ff09fba6544",
+			"styleAttributes": {},
+			"toFloating": false,
+			"fromNode": "d68cf97f84fd7c62",
+			"fromSide": "right",
+			"toNode": "f71beff62b0d2b58",
+			"toSide": "left"
+		},
+		{
+			"id": "0b260193a8b722a9",
+			"styleAttributes": {},
+			"toFloating": false,
+			"fromNode": "f71beff62b0d2b58",
+			"fromSide": "right",
+			"toNode": "595fe62419d950ab",
+			"toSide": "left"
+		},
+		{
+			"id": "564bcab69f754d8f",
+			"styleAttributes": {},
+			"toFloating": false,
+			"fromNode": "595fe62419d950ab",
+			"fromSide": "right",
+			"toNode": "b6ea6222afdb7151",
+			"toSide": "left"
+		},
+		{
+			"id": "7bc62bbce2ecebe4",
+			"styleAttributes": {},
+			"toFloating": false,
+			"fromNode": "595fe62419d950ab",
+			"fromSide": "right",
+			"toNode": "8ae37922fa6d563f",
+			"toSide": "left"
+		},
+		{
+			"id": "d3018a4359be456b",
+			"styleAttributes": {},
+			"toFloating": false,
+			"fromNode": "595fe62419d950ab",
+			"fromSide": "right",
+			"toNode": "4c2173f2c67e5145",
+			"toSide": "left"
+		},
+		{
+			"id": "b8cfcce8e4c531ba",
+			"styleAttributes": {},
+			"toFloating": false,
+			"fromNode": "b6ea6222afdb7151",
+			"fromSide": "right",
+			"toNode": "894d3c5e69fdb170",
+			"toSide": "left"
+		},
+		{
+			"id": "c44f3c2da46eecef",
+			"styleAttributes": {},
+			"toFloating": false,
+			"fromNode": "8ae37922fa6d563f",
+			"fromSide": "right",
+			"toNode": "894d3c5e69fdb170",
+			"toSide": "left"
+		},
+		{
+			"id": "13840304c6387313",
+			"styleAttributes": {},
+			"toFloating": false,
+			"fromNode": "4c2173f2c67e5145",
+			"fromSide": "right",
+			"toNode": "894d3c5e69fdb170",
+			"toSide": "left"
+		},
+		{
+			"id": "88b8368bab5b7aa2",
+			"styleAttributes": {},
+			"toFloating": false,
+			"fromNode": "b6ea6222afdb7151",
+			"fromSide": "right",
+			"toNode": "c220a315cb7f8039",
+			"toSide": "left"
+		},
+		{
+			"id": "174a8751675a6267",
+			"styleAttributes": {},
+			"toFloating": false,
+			"fromNode": "8ae37922fa6d563f",
+			"fromSide": "right",
+			"toNode": "c220a315cb7f8039",
+			"toSide": "left"
+		},
+		{
+			"id": "4f98fd8411211c33",
+			"styleAttributes": {},
+			"toFloating": false,
+			"fromNode": "4c2173f2c67e5145",
+			"fromSide": "right",
+			"toNode": "c220a315cb7f8039",
+			"toSide": "left"
+		},
+		{
+			"id": "ed1d2c2253721275",
+			"styleAttributes": {},
+			"toFloating": false,
+			"fromNode": "894d3c5e69fdb170",
+			"fromSide": "right",
+			"toNode": "5b579570f727d5b7",
+			"toSide": "left"
+		},
+		{
+			"id": "22d47af548daa9c0",
+			"styleAttributes": {},
+			"toFloating": false,
+			"fromNode": "c220a315cb7f8039",
+			"fromSide": "right",
+			"toNode": "5b579570f727d5b7",
+			"toSide": "left"
+		},
+		{
+			"id": "c3f19e8ac34dd3e8",
+			"styleAttributes": {},
+			"toFloating": false,
+			"fromNode": "5b579570f727d5b7",
+			"fromSide": "right",
+			"toNode": "c5d6c57e545ee68d",
+			"toSide": "left"
+		}
+	],
+	"metadata": {
+		"version": "1.0-1.0",
+		"frontmatter": {}
+	}
+}
