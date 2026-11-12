@@ -237,12 +237,50 @@ const labels=[
   ["1.83 m (6 ft)",[-0.55,feet+0.95,0.2],''],    ["Air tank",[0,0.5,tz-0.34],'k-tank'],["Plinth",[1.2,base/2,1.45],''],["Lucian",[0,feet+1.83+0.14,0],'k-name']
 ].map(([t,p,c])=>{const d=document.createElement('div');d.className='lb '+c;d.textContent=t;el.appendChild(d);return{d,v:new THREE.Vector3(...p)};});
 
+
 function applyTheme(){
+  if(airReady)paintAir(true);
   themed.forEach(([m,k])=>m.color.set(tok(k)).convertSRGBToLinear());
   const g=new THREE.Color(tok('--grid')).convertSRGBToLinear();
   if(grid.material.vertexColors){const c=grid.geometry.attributes.color;for(let i=0;i<c.count;i++)c.setXYZ(i,g.r,g.g,g.b);c.needsUpdate=true;}
 }
 applyTheme();
+
+/* Air countdown, painted on the floor in front of the cube: forty minutes, then round again.
+   A decal in the scene rather than a projected label, so it lies in perspective with the drawing
+   and never collides with the dimension labels. The cycle runs one second longer than the count
+   so both 40:00 and 0:00 are held for a full second, rather than flicking from 0:01 to the top. */
+var airReady=false;
+const AIR_SECONDS=40*60, airStart=performance.now();
+const airCv=document.createElement('canvas');airCv.width=1024;airCv.height=512;
+const airCtx=airCv.getContext('2d');
+const airTex=new THREE.CanvasTexture(airCv);
+airTex.anisotropy=r.capabilities.getMaxAnisotropy();
+const airMesh=new THREE.Mesh(new THREE.PlaneGeometry(1.9,0.95),
+  new THREE.MeshBasicMaterial({map:airTex,transparent:true,depthWrite:false}));
+airMesh.rotation.x=-Math.PI/2;airMesh.position.set(0,0.012,2.1);
+scene.add(airMesh);
+let airShown='';
+function paintAir(force){
+  const left=AIR_SECONDS-Math.floor((performance.now()-airStart)/1000%(AIR_SECONDS+1));
+  const txt=Math.floor(left/60)+':'+String(left%60).padStart(2,'0');
+  if(txt===airShown&&!force)return;
+  airShown=txt;
+  const W=airCv.width,H=airCv.height,ink=tok('--tank'),sheet=tok('--sheet');
+  airCtx.clearRect(0,0,W,H);
+  airCtx.globalAlpha=0.9;airCtx.fillStyle=sheet;airCtx.fillRect(0,0,W,H);
+  airCtx.globalAlpha=1;airCtx.strokeStyle=ink;airCtx.lineWidth=6;airCtx.strokeRect(3,3,W-6,H-6);
+  airCtx.fillStyle=ink;airCtx.textAlign='center';
+  airCtx.font='500 58px ui-monospace,SFMono-Regular,Menlo,monospace';
+  airCtx.fillText('TIME TILL LUCIAN',W/2,128);
+  airCtx.fillText('RUNS OUT OF AIR',W/2,196);
+  airCtx.font='600 170px ui-monospace,SFMono-Regular,Menlo,monospace';
+  airCtx.fillText(txt,W/2,372);
+  airTex.needsUpdate=true;
+}
+airReady=true;
+paintAir(true);
+setInterval(paintAir,250);
 matchMedia('(prefers-color-scheme: dark)').addEventListener('change',applyTheme);
 new MutationObserver(applyTheme).observe(document.documentElement,{attributes:true,attributeFilter:['data-theme','class']});
 
@@ -358,7 +396,7 @@ function setLawyers(){
   if(on){tgt=[0.28,0.16];dist=Math.max(dist,10);views.forEach(x=>x.setAttribute('aria-pressed','false'));}
 }
 lawBox.addEventListener('change',setLawyers);
-function refreshLabels(){labels.forEach(l=>l.d.hidden=!lb.checked||(l.law&&!lawBox.checked));}
+function refreshLabels(){labels.forEach(l=>l.d.hidden=!lb.checked||(l.law&&!lawBox.checked));airMesh.visible=lb.checked;}
 
 const op=document.getElementById('t-op'),opv=document.getElementById('t-opv');
 op.addEventListener('input',()=>{jelly.userData.mesh.material.opacity=op.value/100;opv.textContent=op.value+'%';});
