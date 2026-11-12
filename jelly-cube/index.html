@@ -1,0 +1,404 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Jelly Cube Encasement</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: a drawing sheet. Header strip, 3D viewport on the left, title block and spec sheet on the right; stacks on phones. */
+:root{
+  --paper:#F2F5F3; --sheet:#FFFFFF; --ink:#16201C; --ink-2:#4A5751; --ink-3:#6F7C76;
+  --rule:#D5DDD9; --rule-strong:#B3BFB9; --accent:#0F7A62; --accent-soft:#DDF1EA;
+  --warn:#7A4205; --warn-bg:#FBF0DC;
+  --jelly:#1D9E75; --jelly-edge:#0F6E56; --figure:#9AA39F; --figure-edge:#3E4743;
+  --tube:#D85A30; --tank:#185FA5; --dim:#55615B; --grid:#D5DDD9; --plinth:#B9C2BE;
+  --f-display:"Space Grotesk",system-ui,sans-serif;
+  --f-body:"Inter",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#0E1412; --sheet:#151D1A; --ink:#E6EDEA; --ink-2:#A8B5AF; --ink-3:#85928C;
+    --rule:#26312D; --rule-strong:#36433E; --accent:#5DCAA5; --accent-soft:#12352B;
+    --warn:#F2C27A; --warn-bg:#36280F;
+    --jelly:#5DCAA5; --jelly-edge:#9FE1CB; --figure:#6F7975; --figure-edge:#C9D2CE;
+    --tube:#F0997B; --tank:#85B7EB; --dim:#9AA7A1; --grid:#26312D; --plinth:#3A4541;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#0E1412; --sheet:#151D1A; --ink:#E6EDEA; --ink-2:#A8B5AF; --ink-3:#85928C;
+  --rule:#26312D; --rule-strong:#36433E; --accent:#5DCAA5; --accent-soft:#12352B;
+  --warn:#F2C27A; --warn-bg:#36280F;
+  --jelly:#5DCAA5; --jelly-edge:#9FE1CB; --figure:#6F7975; --figure-edge:#C9D2CE;
+  --tube:#F0997B; --tank:#85B7EB; --dim:#9AA7A1; --grid:#26312D; --plinth:#3A4541;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font:400 15px/1.55 var(--f-body);
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:20px 32px}
+.page{max-width:1280px;margin:0 auto;display:flex;flex-direction:column;gap:16px}
+header{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:8px 24px;border-bottom:1px solid var(--rule-strong);padding-bottom:12px}
+h1{font:600 26px/1.15 var(--f-display);letter-spacing:-0.01em;margin:0;text-wrap:balance}
+.sub{font:400 13px/1.4 var(--f-mono);color:var(--ink-2);margin:0}
+.layout{display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:16px;align-items:start}
+@media (max-width:900px){.layout{grid-template-columns:minmax(0,1fr)}}
+.stage{display:flex;flex-direction:column;gap:10px;min-width:0}
+.toolbar{display:flex;flex-wrap:wrap;gap:8px 16px;align-items:center}
+.seg{display:flex;flex-wrap:wrap;border:1px solid var(--rule-strong);border-radius:6px;overflow:hidden;background:var(--sheet)}
+.seg button{font:500 13px var(--f-body);color:var(--ink-2);background:transparent;border:0;border-right:1px solid var(--rule);padding:7px 12px;cursor:pointer}
+.seg button:last-child{border-right:0}
+.seg button:hover{color:var(--ink);background:var(--accent-soft)}
+.seg button[aria-pressed="true"]{color:var(--accent);background:var(--accent-soft)}
+button:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.toggles{display:flex;flex-wrap:wrap;gap:6px 14px}
+.toggles label{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--ink-2);cursor:pointer}
+.toggles input{accent-color:var(--accent)}
+.slider{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--ink-2);flex:1 1 220px;min-width:0}
+.slider input{flex:1;accent-color:var(--accent);min-width:0}
+.slider output{font:500 13px var(--f-mono);color:var(--ink);min-width:3.5ch;text-align:right;font-variant-numeric:tabular-nums}
+#view{position:relative;height:clamp(380px,68vh,760px);background:var(--sheet);border:1px solid var(--rule-strong);border-radius:8px;overflow:hidden;cursor:grab;touch-action:none}
+#view canvas{display:block}
+.corner{position:absolute;left:12px;bottom:10px;font:400 12px var(--f-mono);color:var(--ink-3);pointer-events:none}
+.lb{position:absolute;font:500 11.5px/1.2 var(--f-mono);color:var(--ink);background:var(--sheet);border:1px solid var(--rule-strong);border-radius:3px;padding:3px 6px;white-space:nowrap;transform:translate(-50%,-50%);pointer-events:none}
+.lb.k-law{border-color:var(--warn);color:var(--warn);background:var(--warn-bg);font-weight:600;font-size:12.5px}
+.lb.k-name{border-color:var(--accent);color:var(--accent);background:var(--accent-soft);font:600 13px/1.2 var(--f-display);padding:3px 8px}
+.lb.k-tube{border-color:var(--tube)} .lb.k-tank{border-color:var(--tank)} .lb.k-jelly{border-color:var(--jelly)}
+aside{display:flex;flex-direction:column;gap:16px;min-width:0}
+.block{background:var(--sheet);border:1px solid var(--rule-strong);border-radius:8px;overflow:hidden}
+.block h2{font:600 12px var(--f-body);letter-spacing:0.08em;text-transform:uppercase;color:var(--ink-2);margin:0;padding:10px 14px;border-bottom:1px solid var(--rule)}
+dl{margin:0;display:grid;grid-template-columns:auto 1fr}
+dl div{display:contents}
+dt,dd{padding:7px 14px;border-bottom:1px solid var(--rule);margin:0;font-size:13px}
+dt{color:var(--ink-2)}
+dd{font:500 13px var(--f-mono);text-align:right;font-variant-numeric:tabular-nums}
+dl div:last-child dt,dl div:last-child dd{border-bottom:0}
+.legend{list-style:none;margin:0;padding:10px 14px;display:grid;gap:7px;font-size:13px}
+.legend li{display:flex;align-items:center;gap:10px}
+.sw{width:14px;height:14px;border-radius:3px;flex:none;border:1px solid var(--rule-strong)}
+.credit{margin:0;padding:0 14px 12px;font-size:12px;color:var(--ink-3)}
+.notes{margin:0;padding:12px 14px 14px 30px;display:grid;gap:8px;font-size:13px;color:var(--ink)}
+.notes strong{font-weight:600}
+.block.warn{border-color:var(--warn)}
+.block.warn h2{color:var(--warn);background:var(--warn-bg);border-bottom-color:var(--warn)}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+
+<div class="page">
+  <header>
+    <h1>Jelly cube encasement</h1>
+    <p class="sub">Concept schematic · units in metres · drawing JC-001</p>
+  </header>
+
+  <div class="layout">
+    <section class="stage" aria-label="3D viewer">
+      <div class="toolbar">
+        <div class="seg" id="views" role="group" aria-label="Camera view">
+          <button id="v-front" data-v="0,0.22">Front</button>
+          <button id="v-side" data-v="1.5708,0.18">Side</button>
+          <button id="v-back" data-v="3.1416,0.22">Back</button>
+          <button id="v-top" data-v="0.0001,1.45">Top</button>
+          <button id="v-iso" data-v="2.3,0.35" aria-pressed="true">Rear 3/4</button>
+        </div>
+        <div class="toggles">
+          <label><input type="checkbox" id="t-labels" checked> Labels</label>
+          <label><input type="checkbox" id="t-cut"> Section cut</label>
+          <label><input type="checkbox" id="t-spin"> Auto-rotate</label>
+          <label><input type="checkbox" id="t-law"> Lawyers</label>
+        </div>
+        <div class="slider">
+          <label for="t-op">Jelly opacity</label>
+          <input type="range" id="t-op" min="0" max="80" step="1" value="22">
+          <output id="t-opv" for="t-op">22%</output>
+        </div>
+      </div>
+      <div id="view">
+        <div class="corner"><span id="status">Loading figure…</span> · Drag to rotate · scroll or pinch to zoom</div>
+      </div>
+    </section>
+
+    <aside>
+      <div class="block">
+        <h2>Specification</h2>
+        <dl>
+          <div><dt>Cube</dt><dd>2.5 × 2.5 × 2.5 m</dd></div>
+          <div><dt>Plinth</dt><dd>2.8 × 2.8 × 0.1 m</dd></div>
+          <div><dt>Occupant</dt><dd>Lucian</dd></div>
+          <div><dt>Occupant height</dt><dd>1.83 m (6 ft)</dd></div>
+          <div><dt>Jelly above head</dt><dd>0.34 m</dd></div>
+          <div><dt>Jelly volume</dt><dd id="s-vol">15.55 m³</dd></div>
+          <div><dt>Jelly mass (ρ 1050)</dt><dd id="s-mass">16.3 t</dd></div>
+          <div><dt>Chest depth</dt><dd id="s-depth">0.82 m</dd></div>
+          <div><dt>Pressure at chest</dt><dd id="s-press">8.4 kPa</dd></div>
+          <div><dt>Breathing tube length</dt><dd id="s-tube">—</dd></div>
+          <div><dt>Tank offset from back</dt><dd>0.70 m</dd></div>
+        </dl>
+      </div>
+
+      <div class="block">
+        <h2>Legend</h2>
+        <ul class="legend">
+          <li><span class="sw" style="background:var(--jelly)"></span>Jelly cube</li>
+          <li><span class="sw" style="background:var(--figure)"></span>Lucian (occupant), 1.83 m</li>
+          <li><span class="sw" style="background:var(--tube)"></span>Breathing tube and mouthpiece</li>
+          <li><span class="sw" style="background:var(--tank)"></span>Air tank</li>
+          <li><span class="sw" style="background:var(--plinth)"></span>Base plinth</li>
+          <li><span class="sw" style="background:#2A3550"></span>Lawyers (optional)</li>
+        </ul>
+        <p class="credit">The occupant and lawyers are a Ready Player Me character from the three.js example library, posed standing. Tick Lawyers to show the two lawyers.</p>
+      </div>
+
+      <div class="block warn">
+        <h2>Before building</h2>
+        <ol class="notes">
+          <li><strong>Slump.</strong> A 2.5 m gelatin cube is unlikely to hold its shape unsupported. Plan for a clear acrylic box, agar or silicone, or a cast shell.</li>
+          <li><strong>Breathing.</strong> At about 0.8 m depth a passive snorkel won't work. Use a positive-pressure regulator with constant monitoring.</li>
+          <li><strong>Cold.</strong> Gelatin sets near 10 °C or below, so hypothermia is a real risk.</li>
+          <li><strong>Release.</strong> The occupant must be freed in seconds. Use a split mould or a hollow pocket.</li>
+          <li><strong>Floor load.</strong> Over 16 t on a 7.8 m² footprint.</li>
+        </ol>
+      </div>
+    </aside>
+  </div>
+</div>
+
+<script src="models.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
+<script>
+(function(){
+const el=document.getElementById('view');
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const size=()=>[el.clientWidth,el.clientHeight];
+const scene=new THREE.Scene();
+let [W,H]=size();
+const cam=new THREE.PerspectiveCamera(38,W/H,0.05,100);
+const r=new THREE.WebGLRenderer({antialias:true,alpha:true});
+r.setPixelRatio(Math.min(devicePixelRatio,2));r.setSize(W,H);r.localClippingEnabled=true;r.outputEncoding=THREE.sRGBEncoding;
+el.insertBefore(r.domElement,el.firstChild);
+scene.add(new THREE.AmbientLight(0xffffff,0.65));
+const dl=new THREE.DirectionalLight(0xffffff,0.6);dl.position.set(4,8,6);scene.add(dl);
+
+const themed=[];
+function tok(n){return getComputedStyle(document.documentElement).getPropertyValue(n).trim()||'#888888';}
+function mat(kind,opts,isLine){const m=isLine?new THREE.LineBasicMaterial(opts||{}):new THREE.MeshStandardMaterial(Object.assign({roughness:0.7},opts||{}));themed.push([m,kind]);return m;}
+function part(geo,fill,edge,opts){
+  const g=new THREE.Group();
+  const m=new THREE.Mesh(geo,mat(fill,opts));
+  const e=new THREE.LineSegments(new THREE.EdgesGeometry(geo,20),mat(edge||fill,{},true));
+  g.add(m,e);scene.add(g);g.userData.mesh=m;g.userData.edge=e;return g;}
+
+const grid=new THREE.GridHelper(10,20);scene.add(grid);
+
+const base=0.1,S=2.5,feet=base+(S-1.83)/2,hy=feet+1.71;
+part(new THREE.BoxGeometry(2.8,base,2.8),'--plinth','--figure-edge').position.y=base/2;
+
+const simpleFig=new THREE.Group();simpleFig.visible=false;scene.add(simpleFig);
+const P=(geo,x,y,z,rz)=>{const g=part(geo,'--figure','--figure-edge');simpleFig.add(g);g.position.set(x,y,z);if(rz)g.rotation.z=rz;return g;};
+P(new THREE.SphereGeometry(0.11,18,14),0,hy,0);
+P(new THREE.CylinderGeometry(0.05,0.05,0.1,10),0,feet+1.57,0);
+P(new THREE.BoxGeometry(0.4,0.6,0.22),0,feet+1.25,0);
+P(new THREE.BoxGeometry(0.36,0.15,0.2),0,feet+0.9,0);
+for(const s of[-1,1]){
+  P(new THREE.CylinderGeometry(0.07,0.06,0.85,10),s*0.1,feet+0.425,0);
+  P(new THREE.CylinderGeometry(0.05,0.045,0.7,10),s*0.265,feet+1.18,0,s*0.08);
+  P(new THREE.BoxGeometry(0.1,0.06,0.25),s*0.1,feet+0.03,0.05);
+}
+
+const tz=-1.95;
+const tubeG=part(new THREE.BoxGeometry(0.001,0.001,0.001),'--tube');
+const mp=part(new THREE.CylinderGeometry(0.035,0.035,0.03,16),'--tube');mp.rotation.x=Math.PI/2;
+part(new THREE.CylinderGeometry(0.15,0.15,0.95,24),'--tank').position.set(0,0.495,tz);
+part(new THREE.SphereGeometry(0.15,24,12,0,Math.PI*2,0,Math.PI/2),'--tank').position.set(0,0.97,tz);
+part(new THREE.CylinderGeometry(0.04,0.04,0.12,12),'--tube').position.set(0,1.1,tz);
+
+const cut=new THREE.Plane(new THREE.Vector3(-1,0,0),0);
+const jelly=part(new THREE.BoxGeometry(S,S,S),'--jelly','--jelly-edge',{transparent:true,opacity:0.22,depthWrite:false,side:THREE.DoubleSide,roughness:0.2});
+jelly.position.y=base+S/2;jelly.userData.mesh.renderOrder=2;
+
+function line(pts){const g=new THREE.BufferGeometry().setFromPoints(pts.map(p=>new THREE.Vector3(...p)));scene.add(new THREE.Line(g,mat('--dim',{},true)));}
+function dim(a,b,t){line([a,b]);const k=t.map(v=>v*0.06);
+  line([[a[0]-k[0],a[1]-k[1],a[2]-k[2]],[a[0]+k[0],a[1]+k[1],a[2]+k[2]]]);
+  line([[b[0]-k[0],b[1]-k[1],b[2]-k[2]],[b[0]+k[0],b[1]+k[1],b[2]+k[2]]]);}
+const h=S/2,o=h+0.3;
+dim([-h,base,o],[h,base,o],[0,0,1]);
+dim([o,base,h],[o,base+S,h],[1,0,0]);
+dim([o,base,-h],[o,base,h],[1,0,0]);
+dim([-0.55,feet,0.2],[-0.55,feet+1.83,0.2],[1,0,0]);
+
+const labels=[
+  ["2.5 m (8 ft 2 in)",[0,base,o],'k-jelly'],["2.5 m",[o,base+S/2,h],'k-jelly'],["2.5 m",[o,base,0],'k-jelly'],
+  ["1.83 m (6 ft)",[-0.55,feet+0.95,0.2],''],    ["Air tank",[0,0.5,tz-0.34],'k-tank'],["Plinth",[1.2,base/2,1.45],''],["Lucian",[0,feet+1.83+0.14,0],'k-name']
+].map(([t,p,c])=>{const d=document.createElement('div');d.className='lb '+c;d.textContent=t;el.appendChild(d);return{d,v:new THREE.Vector3(...p)};});
+
+function applyTheme(){
+  themed.forEach(([m,k])=>m.color.set(tok(k)).convertSRGBToLinear());
+  const g=new THREE.Color(tok('--grid')).convertSRGBToLinear();
+  if(grid.material.vertexColors){const c=grid.geometry.attributes.color;for(let i=0;i<c.count;i++)c.setXYZ(i,g.r,g.g,g.b);c.needsUpdate=true;}
+}
+applyTheme();
+matchMedia('(prefers-color-scheme: dark)').addEventListener('change',applyTheme);
+new MutationObserver(applyTheme).observe(document.documentElement,{attributes:true,attributeFilter:['data-theme','class']});
+
+const fmt=(n,d)=>n.toFixed(d);
+const personVol=0.075, vol=S*S*S-personVol, chestY=feet+1.35, depth=base+S-chestY;
+document.getElementById('s-vol').textContent=fmt(vol,2)+' m³';
+document.getElementById('s-mass').textContent=fmt(vol*1050/1000,1)+' t';
+document.getElementById('s-depth').textContent=fmt(depth,2)+' m';
+document.getElementById('s-press').textContent=fmt(1050*9.81*depth/1000,1)+' kPa';
+
+function setTube(m){
+  const pts=[[m.x,m.y,m.z],[m.x+0.12,m.y+0.01,m.z-0.05],[0.15,m.y+0.04,m.z-0.19],[0.09,m.y-0.01,m.z-0.33],
+    [0,m.y-0.06,-0.6],[0,m.y-0.08,-1.25],[0,m.y-0.12,-1.36],[0,m.y-0.41,-1.4],[0,1.4,-1.4],[0,1.2,-1.6],[0,1.12,tz]];
+  const path=new THREE.CatmullRomCurve3(pts.map(p=>new THREE.Vector3(...p)));
+  const geo=new THREE.TubeGeometry(path,160,0.02,10);
+  tubeG.userData.mesh.geometry.dispose();tubeG.userData.mesh.geometry=geo;
+  tubeG.userData.edge.geometry.dispose();tubeG.userData.edge.geometry=new THREE.EdgesGeometry(geo,20);
+  mp.position.set(m.x,m.y,m.z+0.012);
+  document.getElementById('s-tube').textContent=fmt(path.getLength(),2)+' m';
+}
+
+const loader=new THREE.GLTFLoader(), statusEl=document.getElementById('status');
+const SIMPLE_MOUTH=new THREE.Vector3(0,hy-0.04,0.11);
+const norm=s=>s.replace(/[^A-Za-z]/g,'').toLowerCase();
+function bone(root,name){let f=null;const a=norm(name),b=norm('mixamorig'+name);root.traverse(o=>{if(!f&&o.isBone&&(norm(o.name)===a||norm(o.name)===b))f=o;});return f;}
+function b64ToBuf(s){const bin=atob(s),u=new Uint8Array(bin.length);for(let i=0;i<bin.length;i++)u[i]=bin.charCodeAt(i);return u.buffer;}
+let manBuf=null;
+function getBuf(){
+  if(manBuf)return Promise.resolve(manBuf.slice(0));
+  const E=window.JC_MODELS;
+  const p=E&&E.man?Promise.resolve(b64ToBuf(E.man)):fetch('models/man.b64.txt').then(res=>{if(!res.ok)throw new Error('HTTP '+res.status);return res.text();}).then(t=>b64ToBuf(t.trim()));
+  return p.then(b=>{manBuf=b;return b.slice(0);});
+}
+function aim(root,b,child,dir){
+  root.updateMatrixWorld(true);
+  const a=b.getWorldPosition(new THREE.Vector3()),c=child.getWorldPosition(new THREE.Vector3()).sub(a).normalize();
+  const q=new THREE.Quaternion().setFromUnitVectors(c,dir.clone().normalize());
+  const bw=b.getWorldQuaternion(new THREE.Quaternion()),pw=b.parent.getWorldQuaternion(new THREE.Quaternion());
+  b.quaternion.copy(pw.invert().multiply(q.multiply(bw)));root.updateMatrixWorld(true);
+}
+function poseStanding(root){
+  for(const[side,sx]of[['Left',1],['Right',-1]]){
+    const arm=bone(root,side+'Arm'),fore=bone(root,side+'ForeArm'),hand=bone(root,side+'Hand');
+    if(arm&&fore)aim(root,arm,fore,new THREE.Vector3(0.18*sx,-1,0.02));
+    if(fore&&hand)aim(root,fore,hand,new THREE.Vector3(0.1*sx,-1,0.14));
+  }
+}
+function posedBox(root){
+  root.updateMatrixWorld(true);const bb=new THREE.Box3(),v=new THREE.Vector3();
+  root.traverse(o=>{if(!o.isSkinnedMesh||!o.visible)return;const n=o.geometry.attributes.position.count,step=Math.max(1,Math.floor(n/6000));
+    for(let i=0;i<n;i+=step){o.boneTransform(i,v);bb.expandByPoint(v.applyMatrix4(o.matrixWorld));}});
+  return bb;
+}
+/* Loads one copy of the man, posed standing, scaled to height h, feet at floorY, placed at (x,z) and turned by ry. */
+function buildMan(o){
+  return getBuf().then(buf=>new Promise((res,rej)=>loader.parse(buf,'',res,rej))).then(g=>{
+    const root=g.scene,pivot=new THREE.Group();pivot.add(root);scene.add(pivot);
+    root.traverse(m=>{if(!m.isMesh)return;m.frustumCulled=false;const mn=(m.material&&m.material.name)||'';
+      if(/headwear/i.test(mn))m.visible=false;
+      if(o.noBeard&&/beard/i.test(mn))m.visible=false;
+      if(o.suit&&/outfit_(top|bottom)/i.test(mn)){m.material=m.material.clone();m.material.color.set(o.suit).convertSRGBToLinear();}});
+    poseStanding(root);
+    let bb=posedBox(root);root.scale.multiplyScalar(o.h/(bb.max.y-bb.min.y));
+    bb=posedBox(root);const c=bb.getCenter(new THREE.Vector3());
+    root.position.set(-c.x,o.floorY-bb.min.y,-c.z);
+    pivot.position.set(o.x||0,0,o.z||0);pivot.rotation.y=o.ry||0;pivot.updateMatrixWorld(true);
+    return{pivot,root};
+  });
+}
+function mouthOf(root){
+  const hb=bone(root,'Head'),tb=bone(root,'HeadTop_End');if(!hb||!tb)return SIMPLE_MOUTH.clone();
+  const hp=hb.getWorldPosition(new THREE.Vector3()),tp=tb.getWorldPosition(new THREE.Vector3()),hl=tp.y-hp.y;
+  return new THREE.Vector3(hp.x,hp.y+0.22*hl,hp.z+0.5*hl);
+}
+
+setTube(SIMPLE_MOUTH);
+buildMan({h:1.83,floorY:feet}).then(m=>{setTube(mouthOf(m.root));statusEl.textContent='Lucian, 1.83 m';})
+  .catch(err=>{console.error(err);simpleFig.visible=true;statusEl.textContent='Couldn’t load the figure, showing a simple one';});
+
+/* Lawyers: two suited men standing in front of the cube, built the first time the box is ticked. */
+const LAWYERS=[
+  {label:'Criminal negligence',h:1.80,x:-1.05,z:2.15,ry:0.35,suit:'#3A3F47',noBeard:true},
+  {label:'Sexual assault',h:1.77,x:1.05,z:2.15,ry:-0.35,suit:'#2A3550'}
+];
+const lawGroup=[];let lawBuilt=null;
+const caseMat=new THREE.MeshStandardMaterial({color:new THREE.Color('#4A3322').convertSRGBToLinear(),roughness:0.5});
+const metalMat=new THREE.MeshStandardMaterial({color:new THREE.Color('#B9A26A').convertSRGBToLinear(),roughness:0.3,metalness:0.8});
+function briefcase(){
+  const g=new THREE.Group();
+  g.add(new THREE.Mesh(new THREE.BoxGeometry(0.44,0.32,0.1),caseMat));
+  const h=new THREE.Mesh(new THREE.TorusGeometry(0.05,0.012,8,16,Math.PI),caseMat);h.position.y=0.16;g.add(h);
+  for(const sx of[-1,1]){const l=new THREE.Mesh(new THREE.BoxGeometry(0.03,0.02,0.105),metalMat);l.position.set(sx*0.12,0.13,0);g.add(l);}
+  return g;
+}
+function buildLawyers(){
+  if(lawBuilt)return lawBuilt;
+  statusEl.textContent='Loading lawyers…';
+  lawBuilt=Promise.all(LAWYERS.map(L=>buildMan({h:L.h,floorY:0,x:L.x,z:L.z,ry:L.ry,suit:L.suit,noBeard:L.noBeard}).then(m=>{
+    const hand=bone(m.root,'RightHand');
+    if(hand){const p=m.pivot.worldToLocal(hand.getWorldPosition(new THREE.Vector3()));const bc=briefcase();bc.position.set(p.x,p.y-0.2,p.z+0.02);m.pivot.add(bc);}
+    const top=posedBox(m.root).max.y;
+    const d=document.createElement('div');d.className='lb k-law';d.textContent=L.label;el.appendChild(d);
+    labels.push({d,v:new THREE.Vector3(L.x,top+0.22,L.z),law:true});
+    lawGroup.push(m.pivot);
+  }))).then(()=>{statusEl.textContent='Lucian, 1.83 m';refreshLabels();});
+  return lawBuilt;
+}
+const lawBox=document.getElementById('t-law');
+function setLawyers(){
+  const on=lawBox.checked;
+  if(on)buildLawyers().then(()=>{lawGroup.forEach(p=>p.visible=lawBox.checked);refreshLabels();}).catch(err=>{console.error(err);statusEl.textContent='Couldn’t load the lawyers';});
+  lawGroup.forEach(p=>p.visible=on);refreshLabels();
+  if(on){tgt=[0.28,0.16];dist=Math.max(dist,10);views.forEach(x=>x.setAttribute('aria-pressed','false'));}
+}
+lawBox.addEventListener('change',setLawyers);
+function refreshLabels(){labels.forEach(l=>l.d.hidden=!lb.checked||(l.law&&!lawBox.checked));}
+
+const op=document.getElementById('t-op'),opv=document.getElementById('t-opv');
+op.addEventListener('input',()=>{jelly.userData.mesh.material.opacity=op.value/100;opv.textContent=op.value+'%';});
+const lb=document.getElementById('t-labels');
+lb.addEventListener('change',()=>refreshLabels());
+document.getElementById('t-cut').addEventListener('change',e=>{
+  const planes=e.target.checked?[cut]:[];
+  jelly.userData.mesh.material.clippingPlanes=planes;jelly.userData.edge.material.clippingPlanes=planes;
+  jelly.userData.mesh.material.needsUpdate=true;jelly.userData.edge.material.needsUpdate=true;});
+const spin=document.getElementById('t-spin');
+
+let yaw=2.3,pitch=0.35,dist=8,tgt=null;
+const views=[...document.querySelectorAll('#views button')];
+views.forEach(b=>b.addEventListener('click',()=>{
+  const[a,p]=b.dataset.v.split(',').map(Number);
+  views.forEach(x=>x.setAttribute('aria-pressed',x===b?'true':'false'));
+  if(reduce){yaw=a;pitch=p;tgt=null;}else tgt=[a,p];}));
+const clearPressed=()=>views.forEach(x=>x.setAttribute('aria-pressed','false'));
+
+const pts=new Map();let pinch=0;
+el.addEventListener('pointerdown',e=>{pts.set(e.pointerId,[e.clientX,e.clientY]);tgt=null;el.setPointerCapture(e.pointerId);el.style.cursor='grabbing';});
+el.addEventListener('pointermove',e=>{
+  if(!pts.has(e.pointerId))return;const prev=pts.get(e.pointerId);pts.set(e.pointerId,[e.clientX,e.clientY]);
+  if(pts.size===2){const[a,b]=[...pts.values()];const d=Math.hypot(a[0]-b[0],a[1]-b[1]);if(pinch)dist=Math.max(3,Math.min(20,dist*pinch/d));pinch=d;return;}
+  yaw-=(e.clientX-prev[0])*0.01;pitch=Math.max(-0.2,Math.min(1.45,pitch+(e.clientY-prev[1])*0.01));clearPressed();});
+const up=e=>{pts.delete(e.pointerId);pinch=0;if(!pts.size)el.style.cursor='grab';};
+el.addEventListener('pointerup',up);el.addEventListener('pointercancel',up);
+el.addEventListener('wheel',e=>{e.preventDefault();dist=Math.max(3,Math.min(20,dist*(1+e.deltaY*0.001)));},{passive:false});
+new ResizeObserver(()=>{[W,H]=size();cam.aspect=W/H;cam.updateProjectionMatrix();r.setSize(W,H);}).observe(el);
+
+const look=new THREE.Vector3(0,1.15,-0.2), tmp=new THREE.Vector3();
+(function tick(){
+  if(tgt){const dy=((tgt[0]-yaw+Math.PI*3)%(Math.PI*2))-Math.PI;yaw+=dy*0.12;pitch+=(tgt[1]-pitch)*0.12;
+    if(Math.abs(dy)<0.002&&Math.abs(tgt[1]-pitch)<0.002)tgt=null;}
+  else if(spin.checked&&!pts.size&&!reduce){yaw+=0.004;clearPressed();}
+  cam.position.set(look.x+dist*Math.cos(pitch)*Math.sin(yaw),look.y+dist*Math.sin(pitch),look.z+dist*Math.cos(pitch)*Math.cos(yaw));
+  cam.lookAt(look);r.render(scene,cam);
+  labels.forEach(l=>{tmp.copy(l.v).project(cam);const hw=l.d.offsetWidth/2+4;l.d.style.left=Math.max(hw,Math.min(W-hw,(tmp.x+1)/2*W))+'px';l.d.style.top=((1-tmp.y)/2*H)+'px';l.d.style.visibility=tmp.z<1?'visible':'hidden';});
+  requestAnimationFrame(tick);})();
+})();
+</script>
+</body>
+</html>
